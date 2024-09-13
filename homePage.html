@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_blank">
+  <style type="text/css">
+    html {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background-color: #C1EEE1;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .back {
+      display: none;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.4);
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+      z-index: 13;
+    }
+
+    .loader {
+      margin: 25% auto;
+      border-top: 7px solid #34db80;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .homepage {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #113d47;
+      width: 100%
+    }
+
+    .navbar {
+      width: 100%;
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .title {
+      width: 53%;
+      display: flex;
+      align-items: flex-start
+    }
+
+    #btnNewArrival,
+    #btnCreateNewMovingZIP,
+    #btnCreateNewMovingPodmena,
+    #btnWriteOffZip,
+    #btnWriteOffPodmena,
+    #btnCreateDocumentZip,
+    #btnCreateDocumentPodmena,
+    #btnCollation,
+    #btnNewEmployee,
+    #btnNewEquipment,
+    #btnNewZIP,
+    #btnNewPodmena,
+    #btnNewClient,
+    #btnZIPReport,
+    #btnPodmenaReport {
+      color: #113d47;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 6px 12px;
+      margin: 10px auto;
+      border: 0;
+      border-radius: 4px;
+      width: 300px;
+      height: 40px;
+      background-color: #C1EEE1;
+      font-weight: bold;
+      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    }
+
+    .btnContainer {
+      display: flex;
+      flex-direction: row;
+      height: 95%;
+      width: 100%
+    }
+
+    .btnContainer1,
+    .btnContainer2 {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      height: 95%;
+      width: 50%
+    }
+
+
+    #btnNewArrival:hover,
+    #btnCreateNewMovingZIP:hover,
+    #btnCreateNewMovingPodmena:hover,
+    #btnWriteOffZip:hover,
+    #btnWriteOffPodmena:hover,
+    #btnCreateDocumentZip:hover,
+    #btnCreateDocumentPodmena:hover,
+    #btnCollation:hover,
+    #btnNewEmployee:hover,
+    #btnNewEquipment:hover,
+    #btnNewZIP:hover,
+    #btnNewPodmena:hover,
+    #btnNewClient:hover,
+    #btnZIPReport:hover,
+    #btnPodmenaReport:hover {
+      background-color: rgb(135, 166, 157);
+      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    hr {
+      color: #000000;
+      width: 50%;
+      margin: 20px auto;
+
+    }
+
+    .svg {
+      fill: #08793b;
+      color: #08793b
+    }
+
+    .newEmployeeContainer {
+      display: none;
+      position: absolute;
+      background-color: #C1EEE1;
+      width: 500px;
+      /* height: auto; */
+      height: 300px;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+      border: 0;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
+
+      z-index: 15;
+    }
+
+    .titleBar {
+      width: 100%;
+      height: 50px;
+      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body style="word-break:break-word;font-family:sans-serif;">
+  <div class="back">
+    <div class="loader"></div>
+  </div>
+  <div class="homepage">
+    <div class="navbar">
+      <div class="logo">
+        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="254" height="79"
+          viewBox="0 0 1204.000000 362.000000">
+
+          <g transform="translate(0.000000,362.000000) scale(0.100000,-0.100000)" fill="#08793b" stroke="none">
+            <path d="M1986 2328 c-37 -186 -29 -1658 9 -1697 3 -2 7 -2 10 1 38 37 45
+       1514 9 1697 -8 40 -20 40 -28 -1z" />
+            <path d="M1536 2152 c-41 -67 -43 -1269 -1 -1310 25 -26 36 103 42 528 7 498
+       -10 831 -41 782z" />
+            <path d="M2196 2138 c-19 -72 -28 -356 -23 -753 6 -398 13 -524 30 -542 12
+       -12 16 2 29 103 16 130 16 983 0 1108 -12 94 -25 124 -36 84z" />
+            <path d="M1746 1932 c-29 -33 -39 -180 -32 -467 7 -304 20 -407 46 -365 19 30
+       25 156 25 487 0 354 -3 384 -39 345z" />
+            <path d="M2406 1941 c-29 -46 -34 -737 -6 -825 32 -104 53 53 53 404 0 270
+       -10 401 -32 423 -5 5 -11 5 -15 -2z" />
+            <path d="M1273 1653 c-31 -76 -3 -343 36 -343 53 0 79 267 35 352 -21 41 -51
+       37 -71 -9z" />
+            <path d="M925 1533 c-82 -22 -44 -73 55 -73 122 0 138 67 18 75 -29 2 -62 1
+       -73 -2z" />
+            <path d="M3975 1530 c-883 -7 -1283 -16 -1319 -30 -12 -4 26 -10 90 -14 563
+       -35 7779 -35 8379 0 209 13 88 23 -385 34 -558 13 -5582 21 -6765 10z" />
+          </g>
+          <style>
+            tspan {
+              white-space: pre
+            }
+
+            .t0 {
+              font-size: 26px;
+              fill: #08793b;
+              font-weight: 400;
+              font-family: "DejaVuSans", "DejaVu Sans";
+              letter-spacing: -5.5px;
+              width: 20px;
+              z-index: 999;
+              margin-top: 10px;
+            }
+          </style>
+          <use id="Background" href="#img1" x="21" y="29" />
+          <text id="" style="transform: matrix(2.6,0,0,3,268.292,158.092)">
+          </text>
+          <text id="Text layer 2" style="transform: matrix(2.6,0,0,3,268.292,158.092)">
+            <tspan x="0" y="0" class="t0">С</tspan>
+            <tspan y="0" class="t0">е</tspan>
+            <tspan y="0" class="t0">р</tspan>
+            <tspan y="0" class="t0">в</tspan>
+            <tspan y="0" class="t0">и</tspan>
+            <tspan y="0" class="t0">с</tspan>
+            <tspan y="0" class="t0">н</tspan>
+            <tspan y="0" class="t0">о</tspan>
+            <tspan y="0" class="t0">е</tspan>
+            <tspan y="0" class="t0"> </tspan>
+            <tspan y="0" class="t0">Б</tspan>
+            <tspan y="0" class="t0">ю</tspan>
+            <tspan y="0" class="t0">р</tspan>
+            <tspan y="0" class="t0">о</tspan>
+            <tspan y="0" class="t0"> </tspan>
+            <tspan y="0" class="t0">И</tspan>
+            <tspan y="0" class="t0">н</tspan>
+            <tspan y="0" class="t0">н</tspan>
+            <tspan y="0" class="t0">о</tspan>
+            <tspan y="0" class="t0">в</tspan>
+            <tspan y="0" class="t0">а</tspan>
+            <tspan y="0" class="t0">ц</tspan>
+            <tspan y="0" class="t0">и</tspan>
+            <tspan y="0" class="t0">й</tspan>
+            <tspan y="0" class="t0">
+            </tspan>
+          </text>
+        </svg>
+      </div>
+      <div class="title">
+        Склад
+      </div>
+    </div>
+    <div class="btnContainer">
+      <div class="btnContainer1">
+        <button id="btnNewArrival" type="button" onclick="newArrival()">Новое поступление</button>
+        <hr size=1>
+        <button id="btnCreateNewMovingZIP" type="button" onclick="createNewMovingZIP()">Создать перемещение ЗИП</button>
+        <button id="btnCreateNewMovingPodmena" type="button" onclick="createNewMovingPodmena()">Создать перемещение
+          подмены</button>
+        <hr size=1>
+        <button id="btnWriteOffZip" type="button" onclick="witeOffZIP()">Списать ЗИП</button>
+        <button id="btnWriteOffPodmena" type="button" onclick="writeOffPodmena()">Списать подмену</button>
+        <hr size=1>
+        <button id="btnCreateDocumentZip" type="button" onclick="createDocumentZIP()">Создать документ ЗИП</button>
+        <button id="btnCreateDocumentPodmena" type="button" onclick="createDocumentPodmena()">Создать документ
+          подмена</button>
+        <hr size=1>
+        <button id="btnCollation" type="button" onclick="collation()">Сверка по складам</button>
+      </div>
+      <div class="btnContainer2">
+        <button id="btnNewEmployee" type="button" onclick="newEmployee()">Новый сотрудник</button>
+        <button id="btnNewClient" type="button" onclick="newClient()">Новый клиент</button>
+        <hr size=1>
+        <button id="btnNewEquipment" type="button" onclick="newEquipment()">Новый производитель</button>
+        <button id="btnNewZIP" type="button" onclick="newZIP()">Новый ЗИП</button>
+        <button id="btnNewPodmena" type="button" onclick="newPodmena()">Новая подмена</button>
+        <hr size=1>
+        <button id="btnZIPReport" type="button" onclick="ZIPReport()">Данные по ЗИП</button>
+        <button id="btnPodmenaReport" type="button" onclick="PodmenaReport()">Данные по подмене</button>
+      </div>
+    </div>
+  </div>
+  <div class="newEmployeeContainer">
+    <div class="titleBar">Ввод нового сотрудника</div>
+    <div>newEmployeeContainer</div>
+  </div>
+</body>
+<script>
+  const newEmployee = () => {
+    document.querySelector('.back').style.display = "block";
+    document.querySelector('.newEmployeeContainer').style.display = "flex";
+  }
+</script>
+
+</html>
