@@ -171,7 +171,6 @@
       font-size: 16px;
       font-weight: bold;
       box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
-
       z-index: 15;
     }
 
@@ -198,7 +197,7 @@
       vertical-align: top;
       margin-bottom: 8px;
       width: 90%;
-      margin-top: 20px;
+      margin-top: 30px;
     }
 
     .inputLabel {
@@ -275,43 +274,17 @@
       outline: none
     }
 
-    .inputFieldset {
-      border: none;
-      color: #FFF;
-      border-color: rgba(0, 0, 0, 0.86);
-      text-align: left;
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      top: -5px;
-      left: 0;
-      margin: 0;
-      padding: 0 8px;
-      pointer-events: none;
-      border-radius: inherit;
-      border-style: solid;
-      border-width: 1px;
-      overflow: hidden;
-      min-width: 0%;
+    .inputError {
+      display: block;
+      color: #ef5350;
+      font-size: 12px;
+      margin: 3px 12px;
     }
 
-    .inputLegend {
-      float: unset;
-      width: auto;
-      overflow: hidden;
-      display: block;
-      padding: 0;
-      height: 11px;
-      font-size: 0.75em;
-      visibility: hidden;
-      max-width: 0.01px;
-      -webkit-transition: max-width 50ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
-      transition: max-width 50ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
-      white-space: nowrap;
-    }
 
     .inputContainer:focus-within label,
-    .inputLabelActive {
+    .inputLabelActive1,
+    .inputLabelActive2 {
       color: #1E515D;
       top: -32px;
     }
@@ -440,14 +413,21 @@
   <form class="newEmployeeContainer">
     <div class="titleBar">Ввод нового сотрудника</div>
     <div class="inputContainer">
-      <label class="inputLabel" data-shrink="true" for="nEmpFIO">Введите Фамилию и инициалы</label>
+      <label class="inputLabel1 inputLabel" data-shrink="true" for="nEmpFIO1">Введите Фамилию и
+        инициалы*</label>
       <div class="inputOutlinedContainer">
-        <input aria-invalid="true" id="nEmpFIO" name="nE1.value" required="true" type="text" class="inputOutlined"
-          value="">
-        <fieldset aria-hidden="true" class="inputFieldset">
-          <legend class="inputLegend"><span>Введите Фамилию и инициалы *</span></legend>
-        </fieldset>
+        <input aria-invalid="true" id="nEmpFIO1" name="nE1.value" required="true" type="text"
+          class="inputOutlined1 inputOutlined" value="" autocomplete="off">
       </div>
+      <span class="inputError1 inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel2 inputLabel" data-shrink="true" for="nEmpFIO2">Введите email*</label>
+      <div class="inputOutlinedContainer">
+        <input aria-invalid="true" id="nEmpFIO2" name="nE2.value" required="true" type="text"
+          class="inputOutlined2 inputOutlined" value="" autocomplete="off">
+      </div>
+      <span class="inputError2 inputError"></span>
     </div>
   </form>
 </body>
@@ -456,16 +436,93 @@
     document.querySelector('.back').style.display = "block";
     document.querySelector('.newEmployeeContainer').style.display = "flex";
   }
-  const input = document.querySelector('.inputOutlined')
-  input.addEventListener('input', function () {
-    console.log('input.value = ', input.value)
-    const label = document.querySelector('.inputLabel')
-    if (!input.value) {
-      label.classList.remove("inputLabelActive")
-      return
+
+  const labelAll = document.querySelectorAll('.inputOutlined')
+  Array.from(labelAll).map((item, index) => {
+    item.addEventListener('blur', function (e) {
+      console.log('labelAll = ', labelAll)
+      console.log('e = ', e)
+
+      const label = document.querySelector(`.inputLabel${index+1}`)
+      const input = document.querySelector(`.inputOutlined${index+1}`)
+      if (!input.value) {
+        label.classList.remove(`inputLabelActive${index+1}`)
+      } else {
+        label.classList.add(`inputLabelActive${index+1}`)
+      }
+      const validate = textValidation(input.value)
+      const inputError = document.querySelector(`.inputError${index+1}`)
+      if (!validate.status && inputError.textContent) {
+        inputError.textContent = ""
+      }
+      if (validate.status) {
+        inputError.textContent = validate.error
+      }
+
+    })
+  })
+
+
+  const inputBlur = (e) => {
+    // const labelAll = document.querySelectorAll('.inputLabel')
+    // console.log('labelAll = ', labelAll)
+    // console.log('e = ', e)
+    // Array.from(labelAll).map((item, index) => {
+    //   const label = document.querySelector(`.inputLabel${index+1}`)
+    //   const input = document.querySelector(`.inputOutlined${index+1}`)
+    //   if (!input.value) {
+    //     label.classList.remove(`inputLabelActive${index+1}`)
+    //   } else {
+    //     label.classList.add(`inputLabelActive${index+1}`)
+    //   }
+    //   const validate = textValidation(input.value)
+    //   const inputError = document.querySelector(`.inputError${index+1}`)
+    //   if (!validate.status && inputError.textContent) {
+    //     inputError.textContent = ""
+    //   }
+    //   if (validate.status) {
+    //     inputError.textContent = validate.error
+    //   }
+    // })
+  }
+
+  const textValidation = (value) => {
+    if (value === '') return {
+      status: true,
+      error: 'Поле не может быть пустым!'
     }
-    label.classList.add("inputLabelActive")
-  });
+    if (!value.match('^[?!-, .а-яА-ЯёЁ0-9s]+$')) {
+      return {
+        status: true,
+        error: 'Только кирилица, цифры, точка, пробел, тире!'
+      }
+    }
+    if (!value.match('^[А-ЯA-Z]')) {
+      return {
+        status: true,
+        error: 'Должно начинаться с заглавной буквы!'
+      }
+    }
+    return {
+      status: false
+    }
+  }
+
+  const emailValidation = () => {
+    if (value === '') return {
+      status: true,
+      error: 'Поле не может быть пустым!'
+    }
+    if (!value.match('^[a-zA-z0-9]+[a-zA-Z\\d-_.]*@[a-z\\d-_]+\\.')) {
+      return {
+        status: true,
+        error: 'Неправильный email'
+      }
+    }
+    return {
+      status: false
+    }
+  }
 </script>
 
 </html>
