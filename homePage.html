@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <base target="_blank">
+  <base target="_top">
   <style type="text/css">
     html {
       width: 100%;
@@ -31,12 +31,46 @@
     }
 
     .loader {
+      display: block;
       margin: 25% auto;
       border-top: 7px solid #34db80;
       border-radius: 50%;
       width: 60px;
       height: 60px;
       animation: spin 2s linear infinite;
+    }
+
+    .modalMessage {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      justify-content: space-between;
+      align-items: center;
+      width: 30%;
+      height: auto;
+      min-height: 220px;
+      border-radius: 4px;
+      background-color: #C1EEE1;
+      -webkit-box-shadow: 0 0 17px 10px #666;
+      box-shadow: 0 0 17px 10px #666;
+      z-index: 99;
+      padding: 30px;
+    }
+
+    .modalMessage_text {
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    #buttonModalMessage {
+      width: 150px;
+      height: 30px;
+    }
+
+    .modalSVGOK,
+    .modalSVFErr {
+      width: 60px;
+      height: 60px;
     }
 
     @keyframes spin {
@@ -77,21 +111,7 @@
       align-items: flex-start
     }
 
-    #btnNewArrival,
-    #btnCreateNewMovingZIP,
-    #btnCreateNewMovingPodmena,
-    #btnWriteOffZip,
-    #btnWriteOffPodmena,
-    #btnCreateDocumentZip,
-    #btnCreateDocumentPodmena,
-    #btnCollation,
-    #btnNewEmployee,
-    #btnNewEquipment,
-    #btnNewZIP,
-    #btnNewPodmena,
-    #btnNewClient,
-    #btnZIPReport,
-    #btnPodmenaReport {
+    button {
       color: #113d47;
       cursor: pointer;
       font-size: 16px;
@@ -105,7 +125,13 @@
       font-weight: bold;
       box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
       transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      outline: none;
     }
+
+    button:focus {
+      border: 1px solid #0d5c11;
+    }
+
 
     .btnContainer {
       display: flex;
@@ -125,21 +151,7 @@
     }
 
 
-    #btnNewArrival:hover,
-    #btnCreateNewMovingZIP:hover,
-    #btnCreateNewMovingPodmena:hover,
-    #btnWriteOffZip:hover,
-    #btnWriteOffPodmena:hover,
-    #btnCreateDocumentZip:hover,
-    #btnCreateDocumentPodmena:hover,
-    #btnCollation:hover,
-    #btnNewEmployee:hover,
-    #btnNewEquipment:hover,
-    #btnNewZIP:hover,
-    #btnNewPodmena:hover,
-    #btnNewClient:hover,
-    #btnZIPReport:hover,
-    #btnPodmenaReport:hover {
+    button:hover {
       background-color: rgb(135, 166, 157);
       box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
     }
@@ -156,13 +168,15 @@
       color: #08793b
     }
 
-    .newEmployeeContainer {
+    .newEmployeeContainer,
+    .newClientContainer,
+    .newZIPContainer,
+    .newPodmenaContainer {
       display: none;
       position: absolute;
       background-color: #C1EEE1;
       width: 500px;
-      /* height: auto; */
-      height: 300px;
+      height: auto;
       align-items: center;
       justify-content: flex-start;
       flex-direction: column;
@@ -197,6 +211,9 @@
       vertical-align: top;
       margin-bottom: 8px;
       width: 90%;
+    }
+
+    .inputContainer.first {
       margin-top: 30px;
     }
 
@@ -274,17 +291,18 @@
       outline: none
     }
 
-    .inputError {
+    .inputError,
+    .inputsWarning {
       display: block;
       color: #ef5350;
       font-size: 12px;
       margin: 3px 12px;
+      height: 20px
     }
 
 
     .inputContainer:focus-within label,
-    .inputLabelActive1,
-    .inputLabelActive2 {
+    .inputLabelActive {
       color: #1E515D;
       top: -32px;
     }
@@ -296,6 +314,17 @@
     .inputContainer:focus-within fieldset {
       border: none
     }
+
+    .btnSubmitContainer {
+      display: flex;
+      width: 90%;
+      margin-bottom: 10px;
+    }
+
+    #btnSubmit,
+    #btnCancel {
+      width: 40%
+    }
   </style>
 </head>
 
@@ -303,6 +332,7 @@
   <div class="back">
     <div class="loader"></div>
   </div>
+  <div class="modalMessage"></div>
   <div class="homepage">
     <div class="navbar">
       <div class="logo">
@@ -401,9 +431,9 @@
         <button id="btnNewEmployee" type="button" onclick="newEmployee()">Новый сотрудник</button>
         <button id="btnNewClient" type="button" onclick="newClient()">Новый клиент</button>
         <hr size=1>
-        <button id="btnNewEquipment" type="button" onclick="newEquipment()">Новый производитель</button>
         <button id="btnNewZIP" type="button" onclick="newZIP()">Новый ЗИП</button>
         <button id="btnNewPodmena" type="button" onclick="newPodmena()">Новая подмена</button>
+        <button id="btnNewEquipment" type="button" onclick="newEquipment()">Новый производитель</button>
         <hr size=1>
         <button id="btnZIPReport" type="button" onclick="ZIPReport()">Данные по ЗИП</button>
         <button id="btnPodmenaReport" type="button" onclick="PodmenaReport()">Данные по подмене</button>
@@ -412,81 +442,279 @@
   </div>
   <form class="newEmployeeContainer">
     <div class="titleBar">Ввод нового сотрудника</div>
-    <div class="inputContainer">
-      <label class="inputLabel1 inputLabel" data-shrink="true" for="nEmpFIO1">Введите Фамилию и
-        инициалы*</label>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nEmp1">Введите Фамилию и инициалы*</label>
       <div class="inputOutlinedContainer">
-        <input aria-invalid="true" id="nEmpFIO1" name="nE1.value" required="true" type="text"
-          class="inputOutlined1 inputOutlined" value="" autocomplete="off">
+        <input id="nEmp1" name="nEmp1.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
       </div>
-      <span class="inputError1 inputError"></span>
+      <span class="inputError"></span>
     </div>
     <div class="inputContainer">
-      <label class="inputLabel2 inputLabel" data-shrink="true" for="nEmpFIO2">Введите email*</label>
+      <label class="inputLabel" for="nEmp2">Введите email*</label>
       <div class="inputOutlinedContainer">
-        <input aria-invalid="true" id="nEmpFIO2" name="nE2.value" required="true" type="text"
-          class="inputOutlined2 inputOutlined" value="" autocomplete="off">
+        <input id="nEmp2" name="nEmp2.email" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
       </div>
-      <span class="inputError2 inputError"></span>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nEmp3">Введите должность*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nEmp3" name="nEmp3.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newEmployeeContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newEmployeeContainer')">Отмена</button>
     </div>
   </form>
+  <form class="newClientContainer">
+    <div class="titleBar">Ввод нового клиента</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nCli1">Введите юр. наименование клиента*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nCli1" name="nCli1.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nCli2">Введите наименование клиента*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nCli2" name="nCli.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newClientContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newClientContainer')">Отмена</button>
+    </div>
+  </form>
+  <form class="newZIPContainer">
+    <div class="titleBar">Ввод новой запчасти</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nZIP1">Введите наименование запчасти*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nZIP1" name="nZIP1.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nZIP2">Введите наименование производителя запчасти*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nZIP2" name="nZIP2.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newZIPContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newZIPContainer')">Отмена</button>
+    </div>
+  </form>
+  <form class="newPodmenaContainer">
+    <div class="titleBar">Ввод новой подмены</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nPdm1">Введите наименование подмены*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nPdm1" name="nPdm1.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nPdm2">Введите наименование производителя подмены*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nPdm2" name="nPdm2.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newPodmenaContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newPodmenaContainer')">Отмена</button>
+    </div>
+  </form>
+
 </body>
 <script>
-  const newEmployee = () => {
+  function onSuccess({
+    result,
+    func,
+    data
+  }) {
+    if (func === 'newEmployee') {
+      const message1 = "Сотрудник ";
+      const message2 = " с должностью ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[2]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newEmployeeContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'newClient') {
+      const message1 = "Клиент ";
+      const message2 = " с наименованием ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newClientContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'newZIP') {
+      const message1 = "Запчасть ";
+      const message2 = " производителя ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b> записана в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newZIPContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'newPodmena') {
+      const message1 = "Подмена ";
+      const message2 = " производителя ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b> записана в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newPodmenaContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+  }
+
+  function closeModalMessage(container) {
+    document.querySelector('.modalMessage').style.display = "none";
+    document.querySelector('.back').style.display = "none";
+    document.querySelector('.back').style.zIndex = 13;
+    document.querySelector(container).style.display = "none";
+  }
+
+  function newEmployee() {
     document.querySelector('.back').style.display = "block";
     document.querySelector('.newEmployeeContainer').style.display = "flex";
   }
 
+  function newClient() {
+    document.querySelector('.back').style.display = "block";
+    document.querySelector('.newClientContainer').style.display = "flex";
+  }
+
+  function newZIP() {
+    document.querySelector('.back').style.display = "block";
+    document.querySelector('.newZIPContainer').style.display = "flex";
+  }
+
+  function newPodmena() {
+    document.querySelector('.back').style.display = "block";
+    document.querySelector('.newPodmenaContainer').style.display = "flex";
+  }
+
+
   const labelAll = document.querySelectorAll('.inputOutlined')
   Array.from(labelAll).map((item, index) => {
     item.addEventListener('blur', function (e) {
-      console.log('labelAll = ', labelAll)
-      console.log('e = ', e)
-
-      const label = document.querySelector(`.inputLabel${index+1}`)
-      const input = document.querySelector(`.inputOutlined${index+1}`)
+      const input = e.target
+      const label = input.parentNode.previousElementSibling
       if (!input.value) {
-        label.classList.remove(`inputLabelActive${index+1}`)
+        label.classList.remove('inputLabelActive')
       } else {
-        label.classList.add(`inputLabelActive${index+1}`)
+        label.classList.add('inputLabelActive')
       }
-      const validate = textValidation(input.value)
-      const inputError = document.querySelector(`.inputError${index+1}`)
+      let validate = ''
+      if (input.name.includes('text')) {
+        validate = textValidation(input.value)
+      }
+      if (input.name.includes('email')) {
+        validate = emailValidation(input.value)
+      }
+      const inputError = input.parentNode.nextElementSibling
       if (!validate.status && inputError.textContent) {
         inputError.textContent = ""
       }
       if (validate.status) {
         inputError.textContent = validate.error
       }
-
+      const inputsWarning = input.closest('form').querySelector('.inputsWarning')
+      inputsWarning.innerText = ''
     })
   })
 
-
-  const inputBlur = (e) => {
-    // const labelAll = document.querySelectorAll('.inputLabel')
-    // console.log('labelAll = ', labelAll)
-    // console.log('e = ', e)
-    // Array.from(labelAll).map((item, index) => {
-    //   const label = document.querySelector(`.inputLabel${index+1}`)
-    //   const input = document.querySelector(`.inputOutlined${index+1}`)
-    //   if (!input.value) {
-    //     label.classList.remove(`inputLabelActive${index+1}`)
-    //   } else {
-    //     label.classList.add(`inputLabelActive${index+1}`)
-    //   }
-    //   const validate = textValidation(input.value)
-    //   const inputError = document.querySelector(`.inputError${index+1}`)
-    //   if (!validate.status && inputError.textContent) {
-    //     inputError.textContent = ""
-    //   }
-    //   if (validate.status) {
-    //     inputError.textContent = validate.error
-    //   }
-    // })
+  function cancelContainer(container) {
+    document.querySelector('.back').style.display = "none";
+    document.querySelector(container).style.display = "none";
   }
 
-  const textValidation = (value) => {
+  function handleNewContainer(container) {
+    const formInputs = document.querySelectorAll(`${container} input`)
+    const data = Array.from(formInputs).map(item => item.value)
+    const errors = document.querySelectorAll(`${container} .inputError`)
+    const dataErr = Array.from(errors).map(item => item.innerText).filter(value => value)
+    if (dataErr.length > 0 || data.includes('')) {
+      const inputsWarning = document.querySelector(`${container} .inputsWarning`)
+      inputsWarning.textContent = 'Заполните все поля и без ошибок!'
+      return
+    }
+    document.querySelector('.back').style.zIndex = 88;
+    if (data.includes('')) return
+    const form = document.querySelector(`${container}`)
+    form.reset()
+    if (container.includes('newEmployeeContainer')) {
+      data.push('Активный')
+      // onSuccess({
+      //   result: 'success',
+      //   func: 'newEmployee',
+      //   data
+      // })
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewEmployee(data)
+    }
+    if (container.includes('newClientContainer')) {
+      data.push('Активный')
+      // onSuccess({
+      //   result: 'success',
+      //   func: 'newClient',
+      //   data
+      // })
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewClient(data)
+    }
+    if (container.includes('newZIPContainer')) {
+      data.push('Активный')
+      // onSuccess({
+      //   result: 'success',
+      //   func: 'newZIP',
+      //   data
+      // })
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewZIP(data)
+    }
+    if (container.includes('newPodmenaContainer')) {
+      data.push('Активный')
+      // onSuccess({
+      //   result: 'success',
+      //   func: 'newPodmena',
+      //   data
+      // })
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewPodmena(data)
+    }
+
+
+  }
+
+  function textValidation(value) {
     if (value === '') return {
       status: true,
       error: 'Поле не может быть пустым!'
@@ -508,7 +736,7 @@
     }
   }
 
-  const emailValidation = () => {
+  function emailValidation(value) {
     if (value === '') return {
       status: true,
       error: 'Поле не может быть пустым!'
@@ -523,6 +751,11 @@
       status: false
     }
   }
+
+  const svgErr =
+    "<svg class='modalSVGErr' version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 455.111 455.111' style='enable-background:new 0 0 455.111 455.111;' xml:space='preserve'><circle style='fill:#E24C4B;' cx='227.556' cy='227.556' r='227.556'/><path style='fill:#D1403F;' d='M455.111,227.556c0,125.156-102.4,227.556-227.556,227.556c-72.533,0-136.533-32.711-177.778-85.333c38.4,31.289,88.178,49.778,142.222,49.778c125.156,0,227.556-102.4,227.556-227.556c0-54.044-18.489-103.822-49.778-142.222C422.4,91.022,455.111,155.022,455.111,227.556z'/><path style='fill:#FFFFFF;' d='M331.378,331.378c-8.533,8.533-22.756,8.533-31.289,0l-72.533-72.533l-72.533,72.533c-8.533,8.533-22.756,8.533-31.289,0c-8.533-8.533-8.533-22.756,0-31.289l72.533-72.533l-72.533-72.533c-8.533-8.533-8.533-22.756,0-31.289c8.533-8.533,22.756-8.533,31.289,0l72.533,72.533l72.533-72.533c8.533-8.533,22.756-8.533,31.289,0c8.533,8.533,8.533,22.756,0,31.289l-72.533,72.533l72.533,72.533C339.911,308.622,339.911,322.844,331.378,331.378z'/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>";
+  const svgOk =
+    "<svg class='modalSVGOK' version='1.0' xmlns='http://www.w3.org/2000/svg'  width='1222.000000pt' height='1280.000000pt' viewBox='0 0 1222.000000 1280.000000' preserveAspectRatio='xMidYMid meet'><metadata>Created by potrace 1.15, written by Peter Selinger 2001-2017</metadata><g transform='translate(0.000000,1280.000000) scale(0.100000,-0.100000)'fill='#4caf50' stroke='none'><path d='M7271 12780 c-79 -21 -133 -55 -155 -98 -8 -16 -18 -93 -25 -187 -80 -1109 -253 -1873 -531 -2343 -141 -238 -279 -387 -585 -630 -340 -271 -528 -471 -629 -670 -15 -30 -72 -165 -128 -300 -300 -738 -565 -1282 -836 -1719 -265 -425 -548 -739 -783 -867 -116 -63 -180 -76 -365 -76 l-164 0 0 -2625 c0 -1444 2 -2625 5 -2625 3 0 62 -11 132 -24 71 -14 251 -48 400 -75 150 -28 393 -73 540 -101 1744 -324 1588 -298 1917 -325 485 -39 1028 -73 1566 -97 369 -16 1398 -16 1650 0 515 34 826 90 1010 182 324 163 742 555 873 818 l42 85 6 336 c4 246 9 345 19 371 29 76 94 154 305 366 236 236 306 319 360 429 80 163 68 256 -85 635 -101 252 -140 380 -140 464 0 103 64 208 270 441 229 260 292 369 276 481 -10 75 -62 184 -179 376 -202 333 -256 458 -243 557 10 73 56 154 182 321 223 295 252 353 240 486 -19 213 -189 556 -409 829 -83 103 -245 260 -322 311 -169 114 -421 159 -1110 195 -242 13 -1334 18 -2050 9 l-410 -5 -24 70 c-48 138 -29 362 53 622 81 256 179 480 450 1021 107 215 214 434 236 488 85 205 148 438 187 698 22 140 25 637 5 761 -73 454 -193 740 -413 978 -296 321 -816 521 -1138 437z'/> <path d='M386 6129 c-123 -29 -263 -139 -324 -255 -66 -127 -62 65 -62 -2674 0 -2181 2 -2493 15 -2549 43 -182 187 -329 370 -377 64 -17 1712 -20 1785 -3 181 42 346 215 380 398 14 74 14 4988 0 5062 -34 183 -199 356 -380 398 -57 13 -1728 13 -1784 0z'/> </g> </svg>";
 </script>
 
 </html>
