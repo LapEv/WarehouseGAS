@@ -325,6 +325,27 @@
     #btnCancel {
       width: 40%
     }
+
+    .popover {
+      width: 433px;
+      position: absolute;
+      inset: 0px auto auto 0px;
+      margin: 0px;
+      transform: translate(470px, 723px);
+    }
+
+    .paper {
+      background-color: #C1EEE1;
+      transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      border-radius: 4px;
+      box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      font-size: 16px;
+      font-weight: bold;
+      color: #000000;
+      font-family: Raleway;
+      line-height: 1.5;
+      overflow: auto;
+    }
   </style>
 </head>
 
@@ -544,7 +565,41 @@
       <button id="btnCancel" type="button" onclick="cancelContainer('.newPodmenaContainer')">Отмена</button>
     </div>
   </form>
-
+  <form class="newArrivalContainer">
+    <div class="titleBar">Ввод нового поступления</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nArr1">Введите наименование поставщика*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nArr1" name="nArr1.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nArr2">Выберите запчасть*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nArr2" name="nArr2.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newPodmenaContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newPodmenaContainer')">Отмена</button>
+    </div>
+  </form>
+  <div class="popover" data-popper-placement="bottom">
+    <div class="paper">
+      <ul class="listbox" role="listbox" id=":rf:-listbox" aria-labelledby=":rf:-label">
+        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
+          aria-selected="true" class="MuiAutocomplete-option">
+          <span class="MuiBox-root custom-1q1dc2r"></span>
+          <div class="MuiBox-root custom-i9gxme">РВР</div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </body>
 <script>
   function onSuccess({
@@ -617,6 +672,10 @@
     document.querySelector('.newPodmenaContainer').style.display = "flex";
   }
 
+  function newArrival() {
+    document.querySelector('.back').style.display = "block";
+    document.querySelector('.newPodmenaContainer').style.display = "flex";
+  }
 
   const labelAll = document.querySelectorAll('.inputOutlined')
   Array.from(labelAll).map((item, index) => {
@@ -710,8 +769,6 @@
         .withSuccessHandler(onSuccess)
         .writeNewPodmena(data)
     }
-
-
   }
 
   function textValidation(value) {
