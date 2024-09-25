@@ -171,7 +171,8 @@
     .newEmployeeContainer,
     .newClientContainer,
     .newZIPContainer,
-    .newPodmenaContainer {
+    .newPodmenaContainer,
+    .newArrivalContainer {
       display: none;
       position: absolute;
       background-color: #C1EEE1;
@@ -327,24 +328,44 @@
     }
 
     .popover {
-      width: 433px;
+      display: none;
       position: absolute;
       inset: 0px auto auto 0px;
       margin: 0px;
-      transform: translate(470px, 723px);
+      transform: translate(413px, 341px);
+      z-index: 9999;
+      margin-top: 5px;
     }
 
-    .paper {
-      background-color: #C1EEE1;
-      transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    .popover_paper {
+      background-color: #1E515D;
       border-radius: 4px;
-      box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-      font-size: 16px;
-      font-weight: bold;
-      color: #000000;
-      font-family: Raleway;
-      line-height: 1.5;
       overflow: auto;
+    }
+
+    .popover_listbox {
+      color: #FFFFFF;
+      list-style: none;
+      margin: 0;
+      padding: 8px 10px;
+      overflow: auto;
+      position: relative;
+      border-width: 1px;
+      font-weight: normal;
+      font-size: 14px;
+      min-height: 0;
+      max-height: 0;
+      cursor: pointer;
+    }
+
+    .popover li {
+      margin: 10px 4px;
+      border-bottom: 1px solid #017151;
+    }
+
+    .popover li:hover {
+      color: #C1EEE1;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -583,6 +604,22 @@
       </div>
       <span class="inputError"></span>
     </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nArr3">Выберите производителя*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nArr3" name="nArr3.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nArr4">Выберите склад*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nArr4" name="nArr4.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
     <span class="inputsWarning"></span>
     <div class="btnSubmitContainer">
       <button id="btnSubmit" type="button" onclick="handleNewContainer('.newPodmenaContainer')">Сохранить</button>
@@ -590,12 +627,43 @@
     </div>
   </form>
   <div class="popover" data-popper-placement="bottom">
-    <div class="paper">
-      <ul class="listbox" role="listbox" id=":rf:-listbox" aria-labelledby=":rf:-label">
+    <div class="popover_paper">
+      <ul class="popover_listbox" role="listbox" id=":rf:-listbox" aria-labelledby=":rf:-label">
         <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
           aria-selected="true" class="MuiAutocomplete-option">
-          <span class="MuiBox-root custom-1q1dc2r"></span>
-          <div class="MuiBox-root custom-i9gxme">РВР</div>
+          РВР
+        </li>
+        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
+          aria-selected="true" class="MuiAutocomplete-option">
+          ППР
+        </li>
+        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
+          aria-selected="true" class="MuiAutocomplete-option">
+          СПО
+        </li>
+        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
+          aria-selected="true" class="MuiAutocomplete-option">
+          СПО
+        </li>
+        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
+          aria-selected="true" class="MuiAutocomplete-option">
+          СПО
+        </li>
+        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
+          aria-selected="true" class="MuiAutocomplete-option">
+          СПО
+        </li>
+        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
+          aria-selected="true" class="MuiAutocomplete-option">
+          СПО
+        </li>
+        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
+          aria-selected="true" class="MuiAutocomplete-option">
+          СПО
+        </li>
+        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
+          aria-selected="true" class="MuiAutocomplete-option">
+          СПО
         </li>
       </ul>
     </div>
@@ -674,11 +742,25 @@
 
   function newArrival() {
     document.querySelector('.back').style.display = "block";
-    document.querySelector('.newPodmenaContainer').style.display = "flex";
+    document.querySelector('.newArrivalContainer').style.display = "flex";
   }
 
-  const labelAll = document.querySelectorAll('.inputOutlined')
-  Array.from(labelAll).map((item, index) => {
+  const popover = document.querySelector('.popover')
+  document.addEventListener('mouseup', function (e) {
+    console.log('Popover none')
+    const input = e.target.childNodes[1]
+    console.log('input = ', input)
+    if (!popover.contains(e.target) && !input.classList.contains('popover')) {
+      console.log('here')
+      const inputPopover = document.querySelector('.popover')
+      inputPopover.classList.remove('popover')
+      popover.style.display = "none";
+    }
+
+  })
+
+  const inputOutlined = document.querySelectorAll('.inputOutlined')
+  Array.from(inputOutlined).map((item, index) => {
     item.addEventListener('blur', function (e) {
       const input = e.target
       const label = input.parentNode.previousElementSibling
@@ -703,6 +785,23 @@
       }
       const inputsWarning = input.closest('form').querySelector('.inputsWarning')
       inputsWarning.innerText = ''
+    })
+    item.addEventListener('focus', function (e) {
+
+      const input = e.target
+      const popover_listbox = document.querySelector('.popover_listbox')
+      // console.log('input.getBoundingClientRect() = ', input.getBoundingClientRect())
+      console.log('Popover block')
+      popover.style.display = "block";
+      popover.style.width = `${input.offsetWidth}px`
+      popover.style.width = `${input.offsetWidth}px`
+      popover.style.transform =
+        `translate(${input.getBoundingClientRect().left},${input.getBoundingClientRect().bottom})`
+      popover_listbox.style.minHeight = '75px'
+      popover_listbox.style.maxHeight = '140px'
+      console.log('class = ', input.classList)
+      input.classList.add('popover')
+
     })
   })
 
