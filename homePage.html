@@ -591,7 +591,7 @@
     <div class="inputContainer first">
       <label class="inputLabel" for="nArr1">Введите наименование поставщика*</label>
       <div class="inputOutlinedContainer">
-        <input id="nArr1" name="nArr1.text" required="true" type="text" class="inputOutlined" value=""
+        <input id="nArr1" name="nArr1.text" required="true" type="text" class="inputOutlined dropdown" value=""
           autocomplete="off">
       </div>
       <span class="inputError"></span>
@@ -599,7 +599,7 @@
     <div class="inputContainer">
       <label class="inputLabel" for="nArr2">Выберите запчасть*</label>
       <div class="inputOutlinedContainer">
-        <input id="nArr2" name="nArr2.text" required="true" type="text" class="inputOutlined" value=""
+        <input id="nArr2" name="nArr2.text" required="true" type="text" class="inputOutlined dropdown" value=""
           autocomplete="off">
       </div>
       <span class="inputError"></span>
@@ -607,7 +607,7 @@
     <div class="inputContainer">
       <label class="inputLabel" for="nArr3">Выберите производителя*</label>
       <div class="inputOutlinedContainer">
-        <input id="nArr3" name="nArr3.text" required="true" type="text" class="inputOutlined" value=""
+        <input id="nArr3" name="nArr3.text" required="true" type="text" class="inputOutlined dropdown" value=""
           autocomplete="off">
       </div>
       <span class="inputError"></span>
@@ -615,7 +615,7 @@
     <div class="inputContainer">
       <label class="inputLabel" for="nArr4">Выберите склад*</label>
       <div class="inputOutlinedContainer">
-        <input id="nArr4" name="nArr4.text" required="true" type="text" class="inputOutlined" value=""
+        <input id="nArr4" name="nArr4.text" required="true" type="text" class="inputOutlined dropdown" value=""
           autocomplete="off">
       </div>
       <span class="inputError"></span>
@@ -630,39 +630,19 @@
     <div class="popover_paper">
       <ul class="popover_listbox" role="listbox" id=":rf:-listbox" aria-labelledby=":rf:-label">
         <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
-          aria-selected="true" class="MuiAutocomplete-option">
+          aria-selected="true">
           РВР
         </li>
-        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
-          aria-selected="true" class="MuiAutocomplete-option">
+        <li tabindex="-1" role="option" id=":rf:-option-1" data-option-index="1" aria-disabled="false"
+          aria-selected="true">
           ППР
         </li>
-        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
-          aria-selected="true" class="MuiAutocomplete-option">
+        <li tabindex="-1" role="option" id=":rf:-option-2" data-option-index="2" aria-disabled="false"
+          aria-selected="true">
           СПО
         </li>
-        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
-          aria-selected="true" class="MuiAutocomplete-option">
-          СПО
-        </li>
-        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
-          aria-selected="true" class="MuiAutocomplete-option">
-          СПО
-        </li>
-        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
-          aria-selected="true" class="MuiAutocomplete-option">
-          СПО
-        </li>
-        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
-          aria-selected="true" class="MuiAutocomplete-option">
-          СПО
-        </li>
-        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
-          aria-selected="true" class="MuiAutocomplete-option">
-          СПО
-        </li>
-        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
-          aria-selected="true" class="MuiAutocomplete-option">
+        <li tabindex="-1" role="option" id=":rf:-option-3" data-option-index="3" aria-disabled="false"
+          aria-selected="true">
           СПО
         </li>
       </ul>
@@ -743,17 +723,17 @@
   function newArrival() {
     document.querySelector('.back').style.display = "block";
     document.querySelector('.newArrivalContainer').style.display = "flex";
+    console.log('get info ')
   }
 
   const popover = document.querySelector('.popover')
   document.addEventListener('mouseup', function (e) {
-    console.log('Popover none')
+    // Проверка закрытия popover при потери фокуса
     const input = e.target.childNodes[1]
-    console.log('input = ', input)
-    if (!popover.contains(e.target) && !input.classList.contains('popover')) {
-      console.log('here')
-      const inputPopover = document.querySelector('.popover')
-      inputPopover.classList.remove('popover')
+    console.log('imput = ', e.target.childNodes)
+    if (!popover.contains(e.target) && !input.classList.contains('inputPopover')) {
+      const inputPopover = document.querySelector('.inputPopover')
+      inputPopover.classList.remove('inputPopover')
       popover.style.display = "none";
     }
 
@@ -787,21 +767,18 @@
       inputsWarning.innerText = ''
     })
     item.addEventListener('focus', function (e) {
-
       const input = e.target
-      const popover_listbox = document.querySelector('.popover_listbox')
-      // console.log('input.getBoundingClientRect() = ', input.getBoundingClientRect())
-      console.log('Popover block')
-      popover.style.display = "block";
-      popover.style.width = `${input.offsetWidth}px`
-      popover.style.width = `${input.offsetWidth}px`
-      popover.style.transform =
-        `translate(${input.getBoundingClientRect().left},${input.getBoundingClientRect().bottom})`
-      popover_listbox.style.minHeight = '75px'
-      popover_listbox.style.maxHeight = '140px'
-      console.log('class = ', input.classList)
-      input.classList.add('popover')
-
+      if (input.classList.contains('dropdown')) {
+        const popover_listbox = document.querySelector('.popover_listbox')
+        popover.style.display = "block";
+        popover.style.width = `${input.offsetWidth}px`
+        popover.style.height = `${input.offsetHeight}px`
+        popover.style.transform =
+          `translate(${input.getBoundingClientRect().left}px,${input.getBoundingClientRect().bottom}px)`
+        popover_listbox.style.minHeight = '75px'
+        popover_listbox.style.maxHeight = '140px'
+        input.classList.add('inputPopover')
+      }
     })
   })
 
