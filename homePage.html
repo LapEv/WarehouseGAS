@@ -626,28 +626,24 @@
       <button id="btnCancel" type="button" onclick="cancelContainer('.newPodmenaContainer')">Отмена</button>
     </div>
   </form>
-  <div class="popover" data-popper-placement="bottom">
+  <!-- <div class="popover">
     <div class="popover_paper">
-      <ul class="popover_listbox" role="listbox" id=":rf:-listbox" aria-labelledby=":rf:-label">
-        <li tabindex="-1" role="option" id=":rf:-option-0" data-option-index="0" aria-disabled="false"
-          aria-selected="true">
-          РВР
+      <ul class="popover_listbox" role="listbox" id=":rf:-listbox">
+        <li role="option" id="option-0" data-option-index="0" aria-disabled="false" aria-selected="true">
+          Ремонт
         </li>
-        <li tabindex="-1" role="option" id=":rf:-option-1" data-option-index="1" aria-disabled="false"
-          aria-selected="true">
-          ППР
+        <li role="option" id="option-1" data-option-index="1" aria-disabled="false" aria-selected="true">
+          Профилактика
         </li>
-        <li tabindex="-1" role="option" id=":rf:-option-2" data-option-index="2" aria-disabled="false"
-          aria-selected="true">
-          СПО
+        <li role="option" id="option-2" data-option-index="2" aria-disabled="false" aria-selected="true">
+          Плановые работы
         </li>
-        <li tabindex="-1" role="option" id=":rf:-option-3" data-option-index="3" aria-disabled="false"
-          aria-selected="true">
-          СПО
+        <li role="option" id=":option-3" data-option-index="3" aria-disabled="false" aria-selected="true">
+          Инциденты
         </li>
       </ul>
     </div>
-  </div>
+  </div> -->
 </body>
 <script>
   function onSuccess({
@@ -726,18 +722,27 @@
     console.log('get info ')
   }
 
-  const popover = document.querySelector('.popover')
   document.addEventListener('mouseup', function (e) {
-    // Проверка закрытия popover при потери фокуса
-    const input = e.target.childNodes[1]
-    console.log('imput = ', e.target.childNodes)
-    if (!popover.contains(e.target) && !input.classList.contains('inputPopover')) {
-      const inputPopover = document.querySelector('.inputPopover')
-      inputPopover.classList.remove('inputPopover')
-      popover.style.display = "none";
+    const popover = document.querySelector('.popover')
+    const inputClasses = e.target.classList
+    console.log('inputClasses = ', inputClasses)
+    if (popover && inputClasses) {
+      console.log('popover.contains(e.target) = ', popover.contains(e.target))
+      console.log("inputClasses.contains('.inputPopover') = ", inputClasses.contains('inputPopover'))
+      if (!popover.contains(e.target) && !inputClasses.contains('inputPopover')) {
+        const inputPopover = document.querySelector('.inputPopover')
+        inputPopover.classList.remove('inputPopover')
+        popover.remove();
+      }
+
     }
 
   })
+
+  document.addEventListener('keyDown', function (e) {
+    console.log('here = ', )
+  })
+
 
   const inputOutlined = document.querySelectorAll('.inputOutlined')
   Array.from(inputOutlined).map((item, index) => {
@@ -769,14 +774,41 @@
     item.addEventListener('focus', function (e) {
       const input = e.target
       if (input.classList.contains('dropdown')) {
-        const popover_listbox = document.querySelector('.popover_listbox')
-        popover.style.display = "block";
-        popover.style.width = `${input.offsetWidth}px`
-        popover.style.height = `${input.offsetHeight}px`
-        popover.style.transform =
+        // 
+        const list = ['Ремонт', 'Профилактика', 'Плановые работы', 'Массовые работы']
+        // 
+        const popover = document.querySelector('.popover')
+        if (popover) {
+          popover.remove()
+        }
+        const popoverdiv = document.createElement("div");
+        popoverdiv.className = "popover";
+        document.body.appendChild(popoverdiv);
+        const popoverPaperdiv = document.createElement("div");
+        popoverPaperdiv.className = "popover_paper";
+        popoverdiv.appendChild(popoverPaperdiv)
+        const popoverUL = document.createElement("ul");
+        popoverUL.className = "popover_listbox";
+        popoverUL.role = "listbox"
+        popoverUL.id = "popover_listbox"
+        popoverPaperdiv.appendChild(popoverUL)
+        list.map((value, index) => {
+          const popoverLi = document.createElement("li");
+          popoverLi.role = "popover_option"
+          popoverLi.id = `popover_option_${index}`
+          popoverLi.innerText = value
+          popoverUL.appendChild(popoverLi)
+
+        })
+
+        popoverdiv.style.display = "block";
+        popoverdiv.style.width = `${input.offsetWidth}px`
+        popoverdiv.style.height = `${input.offsetHeight}px`
+        popoverdiv.style.transform =
           `translate(${input.getBoundingClientRect().left}px,${input.getBoundingClientRect().bottom}px)`
-        popover_listbox.style.minHeight = '75px'
-        popover_listbox.style.maxHeight = '140px'
+        popoverUL.style.minHeight = '75px'
+        popoverUL.style.maxHeight = '140px'
+        console.log('setPopover')
         input.classList.add('inputPopover')
       }
     })
