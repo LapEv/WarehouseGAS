@@ -594,9 +594,17 @@
       <span class="inputError"></span>
     </div>
     <div class="inputContainer">
-      <label class="inputLabel" for="nPdm2">Введите наименование производителя подмены*</label>
+      <label class="inputLabel" for="nPdm2">Введите классификатор подмены*</label>
       <div class="inputOutlinedContainer">
         <input id="nPdm2" name="nPdm2.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nPdm3">Введите модель подмены*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nPdm3" name="nPdm3.text" required="true" type="text" class="inputOutlined" value=""
           autocomplete="off">
       </div>
       <span class="inputError"></span>
@@ -613,16 +621,16 @@
       <label class="inputLabel" for="nArr1">Введите наименование поставщика*</label>
       <div class="inputOutlinedContainer">
         <input id="nArr1" name="nArr1.text" required="true" type="text" class="inputOutlined dropdown" value=""
-          autocomplete="off" oninput="changeInputDropDown(this)" onclick="changeInputClickDropDown(this)"
-          onchange="changeInputDropDownCross(this)">
+          autocomplete="off" oninput="changeInputDropDown(this, 'client')"
+          onclick="changeInputClickDropDown(this, 'client')" onchange="changeInputDropDownCross(this)">
       </div>
       <span class="inputError"></span>
     </div>
     <div class="inputContainer">
-      <label class="inputLabel" for="nArr2">Выберите запчасть*</label>
+      <label class="inputLabel" for="nArr2">Выберите классификатор*</label>
       <div class="inputOutlinedContainer">
         <input id="nArr2" name="nArr2.text" required="true" type="text" class="inputOutlined dropdown" value=""
-          autocomplete="off" oninput="changeInputDropDown(this)" onclick="changeInputClickDropDown(this)"
+          autocomplete="off" oninput="changeInputDropDown(this, 'ZIP')" onclick="changeInputClickDropDown(this, 'ZIP')"
           onchange="changeInputDropDownCross(this)">
       </div>
       <span class=" inputError"></span>
@@ -631,13 +639,13 @@
       <label class="inputLabel" for="nArr3">Выберите производителя*</label>
       <div class="inputOutlinedContainer">
         <input id="nArr3" name="nArr3.text" required="true" type="text" class="inputOutlined dropdown" value=""
-          autocomplete="off" oninput="changeInputDropDown(this)" onclick="changeInputClickDropDown(this)"
+          autocomplete="off" oninput="changeInputDropDown(this, 'ZIP')" onclick="changeInputClickDropDown(this)"
           onchange="changeInputDropDownCross(this)">
       </div>
       <span class=" inputError"></span>
     </div>
     <div class="inputContainer">
-      <label class="inputLabel" for="nArr4">Выберите склад*</label>
+      <label class="inputLabel" for="nArr4">Выберите модель*</label>
       <div class="inputOutlinedContainer">
         <input id="nArr4" name="nArr4.text" required="true" type="text" class="inputOutlined dropdown" value=""
           autocomplete="off" oninput="changeInputDropDown(this)" onclick="changeInputClickDropDown(this)"
@@ -645,10 +653,18 @@
       </div>
       <span class=" inputError"></span>
     </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nArr5">Укажите количество*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nArr5" name="nArr5.number" required="true" type="number" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class=" inputError"></span>
+    </div>
     <span class="inputsWarning"></span>
     <div class="btnSubmitContainer">
-      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newPodmenaContainer')">Сохранить</button>
-      <button id="btnCancel" type="button" onclick="cancelContainer('.newPodmenaContainer')">Отмена</button>
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newArrivalContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newArrivalContainer')">Отмена</button>
     </div>
   </form>
 </body>
@@ -814,7 +830,6 @@
       const label = input.parentNode.previousElementSibling
       const noElements = document.querySelector('.popoverNoElements')
       if (noElements) {
-        console.log('here')
         input.value = ''
         input.classList.remove('inputPopover')
         const popover = document.querySelector('.popover')
@@ -833,6 +848,9 @@
       if (input.name.includes('email')) {
         validate = emailValidation(input.value)
       }
+      if (input.name.includes('number')) {
+        validate = numberValidation(input.value)
+      }
       const inputError = input.parentNode.nextElementSibling
       if (!validate.status && inputError.textContent) {
         inputError.textContent = ""
@@ -846,12 +864,12 @@
   })
 
   function changeInputClickDropDown(input) {
-    createPopever(input, 'click')
+    createPopover(input, 'click')
     changeInputDropDownCross(input)
   }
 
   function changeInputDropDown(input) {
-    createPopever(input, 'input')
+    createPopover(input, 'input')
     changeInputDropDownCross(input)
   }
 
@@ -864,10 +882,9 @@
     if (!input.value && svg) {
       container.querySelector('.svgDropdownCross').remove()
     }
-
   }
 
-  function createPopever(input, type) {
+  function createPopover(input, type) {
     const popover = document.querySelector('.popover')
     if (popover) {
       popover.remove()
@@ -1021,6 +1038,23 @@
       status: false
     }
   }
+
+  function numberValidation(value) {
+    if (value === '') return {
+      status: true,
+      error: 'Поле не может быть пустым!'
+    }
+    if (!value.match('^[0-9]+$')) {
+      return {
+        status: true,
+        error: 'Только числа'
+      }
+    }
+    return {
+      status: false
+    }
+  }
+
 
   const svgErr =
     "<svg class='modalSVGErr' version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 455.111 455.111' style='enable-background:new 0 0 455.111 455.111;' xml:space='preserve'><circle style='fill:#E24C4B;' cx='227.556' cy='227.556' r='227.556'/><path style='fill:#D1403F;' d='M455.111,227.556c0,125.156-102.4,227.556-227.556,227.556c-72.533,0-136.533-32.711-177.778-85.333c38.4,31.289,88.178,49.778,142.222,49.778c125.156,0,227.556-102.4,227.556-227.556c0-54.044-18.489-103.822-49.778-142.222C422.4,91.022,455.111,155.022,455.111,227.556z'/><path style='fill:#FFFFFF;' d='M331.378,331.378c-8.533,8.533-22.756,8.533-31.289,0l-72.533-72.533l-72.533,72.533c-8.533,8.533-22.756,8.533-31.289,0c-8.533-8.533-8.533-22.756,0-31.289l72.533-72.533l-72.533-72.533c-8.533-8.533-8.533-22.756,0-31.289c8.533-8.533,22.756-8.533,31.289,0l72.533,72.533l72.533-72.533c8.533-8.533,22.756-8.533,31.289,0c8.533,8.533,8.533,22.756,0,31.289l-72.533,72.533l72.533,72.533C339.911,308.622,339.911,322.844,331.378,331.378z'/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>";
