@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_top">
+  <style type="text/css">
+    html {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background-color: #C1EEE1;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .back {
+      display: none;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.4);
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+      z-index: 13;
+    }
+
+    .loader {
+      display: block;
+      margin: 25% auto;
+      border-top: 7px solid #34db80;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 2s linear infinite;
+    }
+
+    .modalMessage {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      justify-content: space-between;
+      align-items: center;
+      width: 30%;
+      height: auto;
+      min-height: 220px;
+      border-radius: 4px;
+      background-color: #C1EEE1;
+      -webkit-box-shadow: 0 0 17px 10px #666;
+      box-shadow: 0 0 17px 10px #666;
+      z-index: 99;
+      padding: 30px;
+    }
+
+    .modalMessage_text {
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    #buttonModalMessage {
+      width: 150px;
+      height: 30px;
+    }
+
+    .modalSVGOK,
+    .modalSVGErr {
+      width: 60px;
+      height: 60px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .homepage {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #113d47;
+      width: 100%
+    }
+
+    .navbar {
+      width: 100%;
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .title {
+      width: 53%;
+      display: flex;
+      align-items: flex-start
+    }
+
+    button {
+      color: #113d47;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 6px 12px;
+      margin: 10px auto;
+      border: 0;
+      border-radius: 4px;
+      width: 300px;
+      height: 40px;
+      background-color: #C1EEE1;
+      font-weight: bold;
+      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      outline: none;
+    }
+
+    button:focus {
+      border: 1px solid #0d5c11;
+    }
+
+
+    .btnContainer {
+      display: flex;
+      flex-direction: column;
+      height: 95%;
+      width: 100%
+    }
+
+    button:hover {
+      background-color: rgb(135, 166, 157);
+      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    hr {
+      color: #000000;
+      width: 50%;
+      margin: 20px auto;
+
+    }
+
+    .svg {
+      fill: #08793b;
+      color: #08793b
+    }
+
+    .newСlassifierContainer,
+    .newModelContainer,
+    .newZIPContainer,
+    .newPodmenaContainer {
+      display: none;
+      position: absolute;
+      background-color: #C1EEE1;
+      width: 500px;
+      height: auto;
+      min-height: 300px;
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: column;
+      border: 0;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
+      z-index: 15;
+    }
+
+    .titleBar {
+      width: 100%;
+      height: 50px;
+      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .inputContainer {
+      display: inline-flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      position: relative;
+      min-width: 0;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      vertical-align: top;
+      margin-bottom: 8px;
+      width: 90%;
+    }
+
+    .inputContainer.first {
+      margin-top: 30px;
+    }
+
+    .inputLabel {
+      top: -7px;
+      margin-top: 0;
+      font-weight: normal;
+      color: #C1EEE1;
+      font-size: 12px;
+      font-family: Raleway;
+      line-height: 1.4375em;
+      padding: 0;
+      position: relative;
+      display: block;
+      transform-origin: top left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: calc(100% - 24px);
+      position: absolute;
+      left: 0;
+      -webkit-transform: translate(14px, 16px) scale(1);
+      -moz-transform: translate(14px, 16px) scale(1);
+      -ms-transform: translate(14px, 16px) scale(1);
+      transform: translate(14px, 16px) scale(1);
+      -webkit-transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, -webkit-transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, top 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+      transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, top 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .inputOutlinedContainer {
+      border-radius: 5px;
+      font-weight: normal;
+      background-color: #1E515D;
+      color: #FFFFFF;
+      font-size: 12px;
+      font-family: Raleway;
+      line-height: 1.4375em;
+      box-sizing: border-box;
+      cursor: text;
+      display: -webkit-inline-box;
+      display: -webkit-inline-flex;
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      height: 35px;
+      position: relative;
+      border-radius: 4px;
+    }
+
+    .inputOutlined {
+      height: 40px;
+      font-size: 14px;
+      letter-spacing: inherit;
+      color: currentColor;
+      padding: 4px 0 5px;
+      border: 0;
+      box-sizing: content-box;
+      background: none;
+      height: 1.4375em;
+      margin: 0;
+      -webkit-tap-highlight-color: transparent;
+      display: block;
+      min-width: 0;
+      width: 100%;
+      -webkit-animation-name: mui-auto-fill-cancel;
+      animation-name: mui-auto-fill-cancel;
+      -webkit-animation-duration: 10ms;
+      animation-duration: 10ms;
+      padding: 0 14px;
+      outline: none
+    }
+
+    .inputError,
+    .inputsWarning {
+      display: block;
+      color: #ef5350;
+      font-size: 12px;
+      margin: 3px 12px;
+      height: 20px
+    }
+
+
+    .inputContainer:focus-within label,
+    .inputLabelActive {
+      color: #1E515D;
+      top: -32px;
+    }
+
+    .inputContainer:focus-within input {
+      border: none
+    }
+
+    .inputContainer:focus-within fieldset {
+      border: none
+    }
+
+    .btnSubmitContainer {
+      display: flex;
+      width: 90%;
+      margin-bottom: 10px;
+    }
+
+    #btnSubmit,
+    #btnCancel {
+      width: 40%
+    }
+
+    .popover {
+      display: none;
+      position: absolute;
+      inset: 0px auto auto 0px;
+      margin: 0px;
+      transform: translate(413px, 341px);
+      z-index: 9999;
+      margin-top: 5px;
+    }
+
+    .popover_paper {
+      background-color: #1E515D;
+      border-radius: 4px;
+      overflow: auto;
+      box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.3);
+    }
+
+    .popover_listbox,
+    .popoverNoElements {
+      color: #FFFFFF;
+      list-style: none;
+      margin: 0;
+      padding: 8px 10px;
+      overflow: auto;
+      position: relative;
+      border-width: 1px;
+      font-weight: normal;
+      font-size: 14px;
+      min-height: 0;
+      max-height: 0;
+      cursor: pointer;
+    }
+
+    .popoverNoElements {
+      min-height: 20px;
+      color: rgba(255, 255, 255, 0.6);
+
+    }
+
+    .popover li {
+      height: 25px;
+      display: flex;
+      align-items: center
+    }
+
+    .popover li.popoverKeyActive,
+    .popover li.popoverKeySelected {
+      background-color: rgba(193, 238, 225, 0.08);
+    }
+
+    .popover li:hover {
+      color: #C1EEE1;
+      font-weight: bold;
+    }
+
+    .svgDropdownCross {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+      cursor: pointer
+    }
+  </style>
+</head>
+
+<body style="word-break:break-word;font-family:sans-serif;">
+  <div class="back">
+    <div class="loader"></div>
+  </div>
+  <div class="modalMessage"></div>
+  <div class="homepage">
+    <div class="navbar">
+      <div class="logo">
+        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="254" height="79"
+          viewBox="0 0 1204.000000 362.000000">
+
+          <g transform="translate(0.000000,362.000000) scale(0.100000,-0.100000)" fill="#08793b" stroke="none">
+            <path d="M1986 2328 c-37 -186 -29 -1658 9 -1697 3 -2 7 -2 10 1 38 37 45
+       1514 9 1697 -8 40 -20 40 -28 -1z" />
+            <path d="M1536 2152 c-41 -67 -43 -1269 -1 -1310 25 -26 36 103 42 528 7 498
+       -10 831 -41 782z" />
+            <path d="M2196 2138 c-19 -72 -28 -356 -23 -753 6 -398 13 -524 30 -542 12
+       -12 16 2 29 103 16 130 16 983 0 1108 -12 94 -25 124 -36 84z" />
+            <path d="M1746 1932 c-29 -33 -39 -180 -32 -467 7 -304 20 -407 46 -365 19 30
+       25 156 25 487 0 354 -3 384 -39 345z" />
+            <path d="M2406 1941 c-29 -46 -34 -737 -6 -825 32 -104 53 53 53 404 0 270
+       -10 401 -32 423 -5 5 -11 5 -15 -2z" />
+            <path d="M1273 1653 c-31 -76 -3 -343 36 -343 53 0 79 267 35 352 -21 41 -51
+       37 -71 -9z" />
+            <path d="M925 1533 c-82 -22 -44 -73 55 -73 122 0 138 67 18 75 -29 2 -62 1
+       -73 -2z" />
+            <path d="M3975 1530 c-883 -7 -1283 -16 -1319 -30 -12 -4 26 -10 90 -14 563
+       -35 7779 -35 8379 0 209 13 88 23 -385 34 -558 13 -5582 21 -6765 10z" />
+          </g>
+          <style>
+            tspan {
+              white-space: pre
+            }
+
+            .t0 {
+              font-size: 26px;
+              fill: #08793b;
+              font-weight: 400;
+              font-family: "DejaVuSans", "DejaVu Sans";
+              letter-spacing: -5.5px;
+              width: 20px;
+              z-index: 999;
+              margin-top: 10px;
+            }
+          </style>
+          <use id="Background" href="#img1" x="21" y="29" />
+          <text id="" style="transform: matrix(2.6,0,0,3,268.292,158.092)">
+          </text>
+          <text id="Text layer 2" style="transform: matrix(2.6,0,0,3,268.292,158.092)">
+            <tspan x="0" y="0" class="t0">С</tspan>
+            <tspan y="0" class="t0">е</tspan>
+            <tspan y="0" class="t0">р</tspan>
+            <tspan y="0" class="t0">в</tspan>
+            <tspan y="0" class="t0">и</tspan>
+            <tspan y="0" class="t0">с</tspan>
+            <tspan y="0" class="t0">н</tspan>
+            <tspan y="0" class="t0">о</tspan>
+            <tspan y="0" class="t0">е</tspan>
+            <tspan y="0" class="t0"> </tspan>
+            <tspan y="0" class="t0">Б</tspan>
+            <tspan y="0" class="t0">ю</tspan>
+            <tspan y="0" class="t0">р</tspan>
+            <tspan y="0" class="t0">о</tspan>
+            <tspan y="0" class="t0"> </tspan>
+            <tspan y="0" class="t0">И</tspan>
+            <tspan y="0" class="t0">н</tspan>
+            <tspan y="0" class="t0">н</tspan>
+            <tspan y="0" class="t0">о</tspan>
+            <tspan y="0" class="t0">в</tspan>
+            <tspan y="0" class="t0">а</tspan>
+            <tspan y="0" class="t0">ц</tspan>
+            <tspan y="0" class="t0">и</tspan>
+            <tspan y="0" class="t0">й</tspan>
+            <tspan y="0" class="t0">
+            </tspan>
+          </text>
+        </svg>
+      </div>
+      <div class="title">
+        Административные
+      </div>
+    </div>
+    <div class="btnContainer">
+      <button id="btnNewСlassifier" type="button" onclick="newСlassifier()">Новый классификатор</button>
+      <button id="btnNewModel" type="button" onclick="newModel()">Новая модель</button>
+      <hr size=1>
+      <button id="btnNewZIP" type="button" onclick="newZIP()">Новый ЗИП</button>
+      <button id="btnNewPodmena" type="button" onclick="newPodmena()">Новая подмена</button>
+      <hr size=1>
+    </div>
+  </div>
+  <form class="newСlassifierContainer">
+    <div class="titleBar">Ввод нового классификатора</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nClsf1">Введите наименование классификатора*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nClsf1" name="nClsf1.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newСlassifierContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newСlassifierContainer')">Отмена</button>
+    </div>
+  </form>
+  <form class="newModelContainer">
+    <div class="titleBar">Ввод новой модели</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nMdl1">Введите новую модель*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nMdl1" name="nMdl1.textRuEng" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nMdl2">Выберите классификатор*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nMdl2" name="nMdl2.text" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
+          onclick="changeInputClickDropDown(this, 'listClassifier')" onchange="changeInputDropDownCross(this)">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newModelContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newModelContainer')">Отмена</button>
+    </div>
+  </form>
+  <form class="newZIPContainer">
+    <div class="titleBar">Ввод новой запчасти</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nZIP1">Введите наименование запчасти*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nZIP1" name="nZIP1.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nZIP2">Выберите классификатор*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nZIP2" name="nZIP2.text" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
+          onclick="changeInputClickDropDown(this, 'listClassifier')" onchange="changeInputDropDownCross(this)">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nZIP3">Выберите модель*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nZIP3" name="nZIP3.text" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'newZip')" onclick="changeInputClickDropDown(this)"
+          onchange="changeInputDropDownCross(this)">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newZIPContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newZIPContainer')">Отмена</button>
+    </div>
+  </form>
+  <form class="newPodmenaContainer">
+    <div class="titleBar">Ввод новой подмены</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nPdm1">Введите наименование подмены*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nPdm1" name="nPdm1.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nPdm2">Выберите классификатор*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nPdm2" name="nPdm2.text" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'newPodmena')" onclick="changeInputClickDropDown(this)"
+          onchange="changeInputDropDownCross(this)">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newPodmenaContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newPodmenaContainer')">Отмена</button>
+    </div>
+  </form>
+</body>
+<script>
+  window.onload = function () {
+    const admin = true
+    if (!admin) {
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgErr +
+        `<div class='modalMessage_text'><b>Отказано в доступе!</b></div>`;
+      modal.style.display = "flex";
+      document.querySelector('.back').style.display = "block";
+      setTimeout(() => {
+        window.history.back()
+      }, 3000)
+    }
+  }
+
+  const list = {
+    listClassifier: []
+  }
+
+  function onSuccess({
+    result,
+    func,
+    data,
+    type
+  }) {
+    if (func === 'newСlassifier') {
+      const message1 = "Классификатор ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newСlassifierContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'newModel') {
+      const message1 = "Модель ";
+      const message2 = " с классификатором ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newModelContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'newZIP') {
+      const message1 = "Запчасть ";
+      const message2 = " в классификатор ";
+      const message3 = " и модель ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b>${message3}<b>${data[2]}</b> записана в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newZIPContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'newPodmena') {
+      const message1 = "Подмена ";
+      const message2 = " в классификатор ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b> записана в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newPodmenaContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'getDataList') {
+      list[type] = data
+      document.querySelector('.newModelContainer').style.display = "flex";
+    }
+  }
+
+  function closeModalMessage(container) {
+    document.querySelector('.modalMessage').style.display = "none";
+    document.querySelector('.back').style.display = "none";
+    document.querySelector('.back').style.zIndex = 13;
+    document.querySelector(container).style.display = "none";
+  }
+
+  function newСlassifier() {
+    document.querySelector('.back').style.display = "block";
+    document.querySelector('.newСlassifierContainer').style.display = "flex";
+  }
+
+  function newModel() {
+    document.querySelector('.back').style.display = "block";
+    onSuccess({
+      result: 'success',
+      func: 'getDataList',
+      data: ['Ремонт', 'Профилактика', 'Плановые работы', 'Массовые работы'],
+      type: 'listClassifier'
+    })
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getСlassifier('listClassifier')
+  }
+
+  function newZIP() {
+    document.querySelector('.back').style.display = "block";
+    document.querySelector('.newZIPContainer').style.display = "flex";
+  }
+
+  function newPodmena() {
+    document.querySelector('.back').style.display = "block";
+    document.querySelector('.newPodmenaContainer').style.display = "flex";
+  }
+
+  document.addEventListener('mouseup', function (e) {
+    const popover = document.querySelector('.popover')
+    const inputClasses = e.target.classList
+    if (popover && inputClasses) {
+      if (!popover.contains(e.target) && !inputClasses.contains('inputPopover')) {
+        const inputPopover = document.querySelector('.inputPopover')
+        inputPopover.classList.remove('inputPopover')
+        popover.remove();
+      }
+      if (popover.contains(e.target) && e.srcElement.tagName === 'LI') {
+        const inputPopover = document.querySelector('.inputPopover')
+        inputPopover.value = e.target.innerText
+        inputPopover.classList.remove('inputPopover')
+        popover.remove();
+        const label = inputPopover.parentNode.previousElementSibling
+        label.classList.add('inputLabelActive')
+        const inputError = inputPopover.parentNode.nextElementSibling
+        inputError.textContent = ""
+        const container = inputPopover.parentNode
+        const svg = container.querySelector('.svgDropdownCross')
+        if (inputPopover.value && !svg) {
+          container.insertAdjacentHTML('beforeend', svgCrossDropdown)
+        }
+      }
+    }
+  })
+
+  document.addEventListener('keydown', function (e) {
+    const popoverUL = document.querySelector('.popover_listbox')
+    if (popoverUL && e.target.classList.contains('inputPopover')) {
+      const listOptions = document.querySelectorAll('[role="popover_option"]')
+      const popoverKeyActive = Array.from(listOptions).findIndex(value => value.classList.value.includes(
+        'popoverKeyActive'))
+      if (e.key === 'ArrowDown') {
+        if (popoverKeyActive < 0) {
+          document.querySelectorAll('[role="popover_option"]:first-of-type')[0].classList.add('popoverKeyActive')
+        }
+        if (popoverKeyActive >= 0 && popoverKeyActive < listOptions.length - 1) {
+          document.querySelectorAll('[role="popover_option"]')[popoverKeyActive].classList.remove(
+            'popoverKeyActive')
+          document.querySelectorAll('[role="popover_option"]')[popoverKeyActive + 1].classList.add(
+            'popoverKeyActive')
+        }
+      }
+      if (e.key === 'ArrowUp') {
+        if (popoverKeyActive > 0) {
+          const number = popoverKeyActive - 1
+          document.querySelectorAll('[role="popover_option"]')[popoverKeyActive].classList.remove(
+            'popoverKeyActive')
+          document.querySelectorAll('[role="popover_option"]')[popoverKeyActive - 1].classList.add(
+            'popoverKeyActive')
+        }
+      }
+      if (e.key === 'Enter') {
+        const option = document.querySelectorAll('[role="popover_option"]')[popoverKeyActive < 0 ? 0 :
+          popoverKeyActive].innerText
+        const inputPopover = document.querySelector('.inputPopover')
+        inputPopover.value = option
+        inputPopover.classList.remove('inputPopover')
+        const popover = document.querySelector('.popover')
+        popover.remove();
+        const label = inputPopover.parentNode.previousElementSibling
+        label.classList.add('inputLabelActive')
+        const inputError = inputPopover.parentNode.nextElementSibling
+        inputError.textContent = ""
+        const container = inputPopover.parentNode
+        const svg = container.querySelector('.svgDropdownCross')
+        if (inputPopover.value && !svg) {
+          container.insertAdjacentHTML('beforeend', svgCrossDropdown)
+        }
+      }
+    }
+  })
+
+  const inputOutlined = document.querySelectorAll('.inputOutlined')
+  Array.from(inputOutlined).map((item, index) => {
+    item.addEventListener('blur', function (e) {
+      const input = e.target
+      const label = input.parentNode.previousElementSibling
+      const noElements = document.querySelector('.popoverNoElements')
+      if (noElements) {
+        input.value = ''
+        input.classList.remove('inputPopover')
+        const popover = document.querySelector('.popover')
+        popover.remove();
+      }
+
+      if (!input.value) {
+        label.classList.remove('inputLabelActive')
+      } else {
+        label.classList.add('inputLabelActive')
+      }
+      let validate = ''
+      if (input.name.includes('text')) {
+        validate = textValidation(input.value)
+      }
+      if (input.name.includes('email')) {
+        validate = emailValidation(input.value)
+      }
+      if (input.name.includes('number')) {
+        validate = numberValidation(input.value)
+      }
+      if (input.name.includes('textRuEng')) {
+        validate = textRuEngValidation(input.value)
+      }
+      const inputError = input.parentNode.nextElementSibling
+      if (!validate.status && inputError.textContent) {
+        inputError.textContent = ""
+      }
+      if (validate.status) {
+        inputError.textContent = validate.error
+      }
+      const inputsWarning = input.closest('form').querySelector('.inputsWarning')
+      inputsWarning.innerText = ''
+    })
+  })
+
+  function changeInputClickDropDown(input, listType) {
+    createPopover(input, 'click', list[listType])
+    changeInputDropDownCross(input)
+  }
+
+  function changeInputDropDown(input, listType) {
+    createPopover(input, 'input', list[listType])
+    changeInputDropDownCross(input)
+  }
+
+  function changeInputDropDownCross(input) {
+    const container = input.parentNode
+    const svg = container.querySelector('.svgDropdownCross')
+    if (input.value && !svg) {
+      container.insertAdjacentHTML('beforeend', svgCrossDropdown)
+    }
+    if (!input.value && svg) {
+      container.querySelector('.svgDropdownCross').remove()
+    }
+  }
+
+  function createPopover(input, type, list) {
+    const popover = document.querySelector('.popover')
+    if (popover) {
+      popover.remove()
+    }
+    const popoverdiv = document.createElement("div");
+    popoverdiv.className = "popover";
+    document.body.appendChild(popoverdiv);
+    const popoverPaperdiv = document.createElement("div");
+    popoverPaperdiv.className = "popover_paper";
+    popoverdiv.appendChild(popoverPaperdiv)
+    popoverdiv.style.display = "block";
+    popoverdiv.style.width = `${input.parentNode.offsetWidth}px`
+    popoverdiv.style.height = `${input.parentNode.offsetHeight}px`
+    popoverdiv.style.transform =
+      `translate(${input.getBoundingClientRect().left}px,${input.getBoundingClientRect().bottom}px)`
+    input.classList.add('inputPopover')
+    const listFilter = type === 'input' ? list.filter(value => value.toLocaleLowerCase().includes(input.value
+      .toLocaleLowerCase()) || input.value === '') : list
+    if (listFilter.length) {
+      const popoverUL = document.createElement("ul");
+      popoverUL.className = "popover_listbox";
+      popoverUL.role = "listbox"
+      popoverUL.id = "popover_listbox"
+      popoverPaperdiv.appendChild(popoverUL)
+      popoverUL.style.minHeight = '75px'
+      popoverUL.style.maxHeight = '140px'
+      listFilter.map(
+        (value,
+          index) => {
+          const popoverLi = document.createElement("li");
+          popoverLi.role = "popover_option"
+          popoverLi.id = `popover_option_${index}`
+          popoverLi.innerText = value
+          if (value === input.value) {
+            popoverLi.className = 'popoverKeySelected'
+          }
+          popoverUL.appendChild(popoverLi)
+        })
+      return
+    }
+    const popoverNoElements = document.createElement("div");
+    popoverNoElements.innerText = 'Нет данных'
+    popoverNoElements.className = 'popoverNoElements'
+    popoverPaperdiv.appendChild(popoverNoElements)
+  }
+
+  function clearInput(svg) {
+    svg.parentNode.querySelector('.inputOutlined').value = ''
+    svg.parentNode.previousElementSibling.classList.remove('inputLabelActive')
+  }
+
+  function cancelContainer(container) {
+    document.querySelector('.back').style.display = "none";
+    document.querySelector(container).style.display = "none";
+  }
+
+  function handleNewContainer(container) {
+    const formInputs = document.querySelectorAll(`${container} input`)
+    const data = Array.from(formInputs).map(item => item.value)
+    const errors = document.querySelectorAll(`${container} .inputError`)
+    const dataErr = Array.from(errors).map(item => item.innerText).filter(value => value)
+    if (dataErr.length > 0 || data.includes('')) {
+      const inputsWarning = document.querySelector(`${container} .inputsWarning`)
+      inputsWarning.textContent = 'Заполните все поля и без ошибок!'
+      return
+    }
+    document.querySelector('.back').style.zIndex = 88;
+    if (data.includes('')) return
+    const form = document.querySelector(`${container}`)
+    form.reset()
+    if (container.includes('newСlassifierContainer')) {
+      data.push('Активный')
+      // onSuccess({
+      //   result: 'success',
+      //   func: 'newСlassifier',
+      //   data
+      // })
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewСlassifier(data)
+    }
+    if (container.includes('newModelContainer')) {
+      data.push('Активный')
+      // onSuccess({
+      //   result: 'success',
+      //   func: 'newModel',
+      //   data
+      // })
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewModel(data)
+    }
+    if (container.includes('newZIPContainer')) {
+      data.push('Активный')
+      // onSuccess({
+      //   result: 'success',
+      //   func: 'newZIP',
+      //   data
+      // })
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewZIP(data)
+    }
+    if (container.includes('newPodmenaContainer')) {
+      data.push('Активный')
+      // onSuccess({
+      //   result: 'success',
+      //   func: 'newPodmena',
+      //   data
+      // })
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewPodmena(data)
+    }
+  }
+
+  function textValidation(value) {
+    if (value === '') return {
+      status: true,
+      error: 'Поле не может быть пустым!'
+    }
+    if (!value.match('^[?!-, .а-яА-ЯёЁ0-9s]+$')) {
+      return {
+        status: true,
+        error: 'Только кирилица, цифры, точка, пробел, тире!'
+      }
+    }
+    if (!value.match('^[А-ЯA-Z]')) {
+      return {
+        status: true,
+        error: 'Должно начинаться с заглавной буквы!'
+      }
+    }
+    return {
+      status: false
+    }
+  }
+
+  function textRuEngValidation(value) {
+    if (value === '') return {
+      status: true,
+      error: 'Поле не может быть пустым!'
+    }
+    if (!value.match('^[-_?!, .а-яА-ЯёЁ0-9a-zA-Zs]+$')) {
+      return {
+        status: true,
+        error: 'Только кирилица и английский, цифры, точка, пробел, тире!'
+      }
+    }
+    if (!value.match('^[А-ЯA-Z]')) {
+      return {
+        status: true,
+        error: 'Должно начинаться с заглавной буквы!'
+      }
+    }
+    return {
+      status: false
+    }
+  }
+
+  function emailValidation(value) {
+    if (value === '') return {
+      status: true,
+      error: 'Поле не может быть пустым!'
+    }
+    if (!value.match('^[a-zA-z0-9]+[a-zA-Z\\d-_.]*@[a-z\\d-_]+\\.')) {
+      return {
+        status: true,
+        error: 'Неправильный email'
+      }
+    }
+    return {
+      status: false
+    }
+  }
+
+  function numberValidation(value) {
+    if (value === '') return {
+      status: true,
+      error: 'Поле не может быть пустым!'
+    }
+    if (!value.match('^[0-9]+$')) {
+      return {
+        status: true,
+        error: 'Только числа'
+      }
+    }
+    return {
+      status: false
+    }
+  }
+
+
+  const svgErr =
+    "<svg class='modalSVGErr' version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 455.111 455.111' style='enable-background:new 0 0 455.111 455.111;' xml:space='preserve'><circle style='fill:#E24C4B;' cx='227.556' cy='227.556' r='227.556'/><path style='fill:#D1403F;' d='M455.111,227.556c0,125.156-102.4,227.556-227.556,227.556c-72.533,0-136.533-32.711-177.778-85.333c38.4,31.289,88.178,49.778,142.222,49.778c125.156,0,227.556-102.4,227.556-227.556c0-54.044-18.489-103.822-49.778-142.222C422.4,91.022,455.111,155.022,455.111,227.556z'/><path style='fill:#FFFFFF;' d='M331.378,331.378c-8.533,8.533-22.756,8.533-31.289,0l-72.533-72.533l-72.533,72.533c-8.533,8.533-22.756,8.533-31.289,0c-8.533-8.533-8.533-22.756,0-31.289l72.533-72.533l-72.533-72.533c-8.533-8.533-8.533-22.756,0-31.289c8.533-8.533,22.756-8.533,31.289,0l72.533,72.533l72.533-72.533c8.533-8.533,22.756-8.533,31.289,0c8.533,8.533,8.533,22.756,0,31.289l-72.533,72.533l72.533,72.533C339.911,308.622,339.911,322.844,331.378,331.378z'/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>";
+  const svgOk =
+    "<svg class='modalSVGOK' version='1.0' xmlns='http://www.w3.org/2000/svg'  width='1222.000000pt' height='1280.000000pt' viewBox='0 0 1222.000000 1280.000000' preserveAspectRatio='xMidYMid meet'><metadata>Created by potrace 1.15, written by Peter Selinger 2001-2017</metadata><g transform='translate(0.000000,1280.000000) scale(0.100000,-0.100000)'fill='#4caf50' stroke='none'><path d='M7271 12780 c-79 -21 -133 -55 -155 -98 -8 -16 -18 -93 -25 -187 -80 -1109 -253 -1873 -531 -2343 -141 -238 -279 -387 -585 -630 -340 -271 -528 -471 -629 -670 -15 -30 -72 -165 -128 -300 -300 -738 -565 -1282 -836 -1719 -265 -425 -548 -739 -783 -867 -116 -63 -180 -76 -365 -76 l-164 0 0 -2625 c0 -1444 2 -2625 5 -2625 3 0 62 -11 132 -24 71 -14 251 -48 400 -75 150 -28 393 -73 540 -101 1744 -324 1588 -298 1917 -325 485 -39 1028 -73 1566 -97 369 -16 1398 -16 1650 0 515 34 826 90 1010 182 324 163 742 555 873 818 l42 85 6 336 c4 246 9 345 19 371 29 76 94 154 305 366 236 236 306 319 360 429 80 163 68 256 -85 635 -101 252 -140 380 -140 464 0 103 64 208 270 441 229 260 292 369 276 481 -10 75 -62 184 -179 376 -202 333 -256 458 -243 557 10 73 56 154 182 321 223 295 252 353 240 486 -19 213 -189 556 -409 829 -83 103 -245 260 -322 311 -169 114 -421 159 -1110 195 -242 13 -1334 18 -2050 9 l-410 -5 -24 70 c-48 138 -29 362 53 622 81 256 179 480 450 1021 107 215 214 434 236 488 85 205 148 438 187 698 22 140 25 637 5 761 -73 454 -193 740 -413 978 -296 321 -816 521 -1138 437z'/> <path d='M386 6129 c-123 -29 -263 -139 -324 -255 -66 -127 -62 65 -62 -2674 0 -2181 2 -2493 15 -2549 43 -182 187 -329 370 -377 64 -17 1712 -20 1785 -3 181 42 346 215 380 398 14 74 14 4988 0 5062 -34 183 -199 356 -380 398 -57 13 -1728 13 -1784 0z'/> </g> </svg>";
+  const svgCrossDropdown =
+    '<svg class="svgDropdownCross" width="800px" height="800px" viewBox="0 0 24 24" fill="#C1EEE1" onclick="clearInput(this)"><path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"></path></svg>'
+</script>
+
+</html>
