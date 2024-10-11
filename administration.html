@@ -20,6 +20,15 @@
       flex-direction: column;
     }
 
+    .checkAccessPaper {
+      display: none;
+      position: absolute;
+      background-color: #C1EEE1;
+      z-index: 12;
+      width: 100%;
+      height: 100%;
+    }
+
     .back {
       display: none;
       position: absolute;
@@ -381,6 +390,7 @@
 </head>
 
 <body style="word-break:break-word;font-family:sans-serif;">
+  <div class="checkAccessPaper"></div>
   <div class="back">
     <div class="loader"></div>
   </div>
@@ -574,17 +584,17 @@
 </body>
 <script>
   window.onload = function () {
-    const admin = true
-    if (!admin) {
-      const modal = document.querySelector('.modalMessage');
-      modal.innerHTML = svgErr +
-        `<div class='modalMessage_text'><b>Отказано в доступе!</b></div>`;
-      modal.style.display = "flex";
-      document.querySelector('.back').style.display = "block";
-      setTimeout(() => {
-        window.history.back()
-      }, 3000)
-    }
+    document.querySelector('.checkAccessPaper').style.display = "block";
+    document.querySelector('.back').style.display = "block";
+    onSuccess({
+      result: 'success',
+      func: 'checkAccess',
+      data: ['evglapkin@gmail.com', 'admin'],
+      type: 'listClassifier'
+    })
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .checkAccess('checkAccess')
   }
 
   const list = {
@@ -597,6 +607,20 @@
     data,
     type
   }) {
+    if (func === 'checkAccess') {
+      if (!data.includes('admin')) {
+        const modal = document.querySelector('.modalMessage');
+        modal.innerHTML = svgErr +
+          `<div class='modalMessage_text'><b>Отказано в доступе!</b></div>`;
+        modal.style.display = "flex";
+        setTimeout(() => {
+          window.history.back()
+        }, 3000)
+        return
+      }
+      document.querySelector('.checkAccessPaper').style.display = "none";
+      document.querySelector('.back').style.display = "none";
+    }
     if (func === 'newСlassifier') {
       const message1 = "Классификатор ";
       const modal = document.querySelector('.modalMessage');
