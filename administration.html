@@ -169,7 +169,8 @@
     .newСlassifierContainer,
     .newModelContainer,
     .newZIPContainer,
-    .newPodmenaContainer {
+    .newPodmenaContainer,
+    .newEmployeeContainer {
       display: none;
       position: absolute;
       background-color: #C1EEE1;
@@ -475,10 +476,12 @@
     <div class="btnContainer">
       <button id="btnNewСlassifier" type="button" onclick="newСlassifier()">Новый классификатор</button>
       <button id="btnNewModel" type="button" onclick="newModel()">Новая модель</button>
-      <hr size=1>
       <button id="btnNewZIP" type="button" onclick="newZIP()">Новый ЗИП</button>
       <button id="btnNewPodmena" type="button" onclick="newPodmena()">Новая подмена</button>
       <hr size=1>
+      <button id="btnNewEmployee" type="button" onclick="newEmployee()">Новый сотрудник</button>
+      <button id="btnNewClient" type="button" onclick="newClient()">Новый клиент</button>
+
     </div>
   </div>
   <form class="newСlassifierContainer">
@@ -527,7 +530,7 @@
     <div class="inputContainer first">
       <label class="inputLabel" for="nZIP1">Введите наименование запчасти*</label>
       <div class="inputOutlinedContainer">
-        <input id="nZIP1" name="nZIP1.text" required="true" type="text" class="inputOutlined" value=""
+        <input id="nZIP1" name="nZIP1.textRuEng" required="true" type="text" class="inputOutlined" value=""
           autocomplete="off">
       </div>
       <span class="inputError"></span>
@@ -535,18 +538,21 @@
     <div class="inputContainer">
       <label class="inputLabel" for="nZIP2">Выберите классификатор*</label>
       <div class="inputOutlinedContainer">
-        <input id="nZIP2" name="nZIP2.text" required="true" type="text" class="inputOutlined dropdown" value=""
+        <input id="nZIP2" name="nZIP2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
           autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
-          onclick="changeInputClickDropDown(this, 'listClassifier')" onchange="changeInputDropDownCross(this)">
+          onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClassifier')"
+          onclick="changeInputClickDropDown(this, 'listClassifier', event.key)"
+          onchange="changeInputDropDownCross(this)">
       </div>
       <span class="inputError"></span>
     </div>
     <div class="inputContainer">
       <label class="inputLabel" for="nZIP3">Выберите модель*</label>
       <div class="inputOutlinedContainer">
-        <input id="nZIP3" name="nZIP3.text" required="true" type="text" class="inputOutlined dropdown" value=""
-          autocomplete="off" oninput="changeInputDropDown(this, 'newZip')" onclick="changeInputClickDropDown(this)"
-          onchange="changeInputDropDownCross(this)">
+        <input id="nZIP3" name="nZIP3.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listModel')"
+          onkeydown="changeInputKeyDownDropDown(event.key, this, 'listModel')"
+          onclick="changeInputClickDropDown(this, 'listModel')" onchange="changeInputDropDownCross(this)">
       </div>
       <span class="inputError"></span>
     </div>
@@ -569,8 +575,10 @@
     <div class="inputContainer">
       <label class="inputLabel" for="nPdm2">Выберите классификатор*</label>
       <div class="inputOutlinedContainer">
-        <input id="nPdm2" name="nPdm2.text" required="true" type="text" class="inputOutlined dropdown" value=""
-          autocomplete="off" oninput="changeInputDropDown(this, 'newPodmena')" onclick="changeInputClickDropDown(this)"
+        <input id="nPdm2" name="nPdm2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
+          onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClassifier')"
+          onclick="changeInputClickDropDown(this, 'listClassifier', event.key)"
           onchange="changeInputDropDownCross(this)">
       </div>
       <span class="inputError"></span>
@@ -581,6 +589,59 @@
       <button id="btnCancel" type="button" onclick="cancelContainer('.newPodmenaContainer')">Отмена</button>
     </div>
   </form>
+  <form class="newEmployeeContainer">
+    <div class="titleBar">Ввод нового сотрудника</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nEmp1">Введите Фамилию и инициалы*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nEmp1" name="nEmp1.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nEmp2">Введите аккаунт от гугл*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nEmp2" name="nEmp2.email" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nEmp3">Введите рабочий email*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nEmp3" name="nEmp3.email" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nPdm2">Выберите должность*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nEmp4" name="nEmp4.text" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listPost')"
+          onkeydown="changeInputKeyDownDropDown(event.key, this, 'listPost')"
+          onclick="changeInputClickDropDown(this, 'listPost', event.key)" onchange="changeInputDropDownCross(this)">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nPdm2">Выберите уроень доступа*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nEmp5" name="nEmp5.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listRole')"
+          onkeydown="changeInputKeyDownDropDown(event.key, this, 'listRole')"
+          onclick="changeInputClickDropDown(this, 'listRole', event.key)" onchange="changeInputDropDownCross(this)">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newEmployeeContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newEmployeeContainer')">Отмена</button>
+    </div>
+  </form>
+
 </body>
 <script>
   window.onload = function () {
@@ -589,7 +650,7 @@
     onSuccess({
       result: 'success',
       func: 'checkAccess',
-      data: ['evglapkin@gmail.com', 'admin'],
+      data: ['evglapkin@gmail.com', 'Admin'],
       type: 'listClassifier'
     })
     // google.script.run
@@ -598,7 +659,13 @@
   }
 
   const list = {
-    listClassifier: []
+    listClassifier: [],
+    listModel: [],
+    listPost: [],
+    listRole: [],
+    prepareListModel: [],
+    count: 0,
+    fullLoad: 0
   }
 
   function onSuccess({
@@ -608,7 +675,7 @@
     type
   }) {
     if (func === 'checkAccess') {
-      if (!data.includes('admin')) {
+      if (!data.includes('Admin')) {
         const modal = document.querySelector('.modalMessage');
         modal.innerHTML = svgErr +
           `<div class='modalMessage_text'><b>Отказано в доступе!</b></div>`;
@@ -657,9 +724,35 @@
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
-    if (func === 'getDataList') {
+    if (func === 'newEmployee') {
+      const message1 = "Сотрудник ";
+      const message2 = " с должностью ";
+      const message3 = " и ролью ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[3]}</b>${message3}<b>${data[4]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newEmployeeContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'getDataListForNewModel') {
       list[type] = data
       document.querySelector('.newModelContainer').style.display = "flex";
+    }
+    if (func === 'getDataListForNewZIP') {
+      list[type] = data
+      list.count++
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.newZIPContainer').style.display = "flex";
+        list.fullLoad = 0
+      }
+    }
+    if (func === 'getDataListForNewPodmena') {
+      list[type] = data
+      document.querySelector('.newPodmenaContainer').style.display = "flex";
+    }
+    if (func === 'getDataListForNewEmployee') {
+      list[type] = data
+      document.querySelector('.newEmployeeContainer').style.display = "flex";
     }
   }
 
@@ -679,7 +772,7 @@
     document.querySelector('.back').style.display = "block";
     onSuccess({
       result: 'success',
-      func: 'getDataList',
+      func: 'getDataListForNewModel',
       data: ['Ремонт', 'Профилактика', 'Плановые работы', 'Массовые работы'],
       type: 'listClassifier'
     })
@@ -690,12 +783,98 @@
 
   function newZIP() {
     document.querySelector('.back').style.display = "block";
-    document.querySelector('.newZIPContainer').style.display = "flex";
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewZIP',
+      data: ['Весы',
+        'ФР',
+        'ФН',
+        'ИБП',
+        'Кассовое оборудование',
+        'Прочее',
+        'Сетевое оборудование',
+        'Оргтехника',
+        'Прайсчекеры',
+        'Термопринтеры'
+      ],
+      type: 'listClassifier'
+    })
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewZIP',
+      data: [
+        ['Digi SM-100', 'Весы'],
+        ['Digi SM-300', 'Весы'],
+        ['Digi SM-500', 'Весы'],
+        ['Атол-77Ф', 'ФР'],
+        ['Retail 01Ф', 'ФР'],
+        ['DataPrint', 'Весы'],
+        ['Noname', 'ИБП'],
+        ['Dosmar', 'Кассовое оборудование'],
+        ['A-data', 'Прочее'],
+        ['Noname', 'Прочее'],
+        ['Noname', 'ФН'],
+        ['СП-802', 'ФР'],
+        ['Netac', 'Прочее'],
+        ['AMD', 'Прочее'],
+        ['ChWay', 'Кассовое оборудование'],
+        ['ФН-1.2_Х5', 'ФН']
+      ],
+      type: 'prepareListModel'
+    })
+    list.fullLoad = 2
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getСlassifier('getDataListForNewZIP', 'listClassifier')
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getModel('getDataListForNewZIP','prepareListModel')
   }
 
   function newPodmena() {
     document.querySelector('.back').style.display = "block";
-    document.querySelector('.newPodmenaContainer').style.display = "flex";
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewPodmena',
+      data: ['Весы',
+        'ФР',
+        'ФН',
+        'ИБП',
+        'Кассовое оборудование',
+        'Прочее',
+        'Сетевое оборудование',
+        'Оргтехника',
+        'Прайсчекеры',
+        'Термопринтеры'
+      ],
+      type: 'listClassifier'
+    })
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getСlassifier('getDataListForNewPodmena', 'listClassifier')
+  }
+
+  function newEmployee() {
+    document.querySelector('.back').style.display = "block";
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewEmployee',
+      data: ['Директор по сервису', 'Клиент', 'Диспетчер', 'Руководитель диспетчерской'],
+      type: 'listPost'
+    })
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewEmployee',
+      data: ['admin', 'engineer', 'dispatcher', 'client'],
+      type: 'listRole'
+    })
+    list.fullLoad = 2
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getPosts('getDataListForNewEmployee','listPost')
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getRoles('getDataListForNewEmployee','listRole')
   }
 
   document.addEventListener('mouseup', function (e) {
@@ -710,6 +889,11 @@
       if (popover.contains(e.target) && e.srcElement.tagName === 'LI') {
         const inputPopover = document.querySelector('.inputPopover')
         inputPopover.value = e.target.innerText
+        if (inputPopover.name.includes('nZIP2')) {
+          list['listModel'] = list.prepareListModel.filter(value => value[1] === e.target.innerText).map(value =>
+            value[0])
+          document.getElementById('nZIP3').value = ''
+        }
         inputPopover.classList.remove('inputPopover')
         popover.remove();
         const label = inputPopover.parentNode.previousElementSibling
@@ -756,6 +940,11 @@
           popoverKeyActive].innerText
         const inputPopover = document.querySelector('.inputPopover')
         inputPopover.value = option
+        if (inputPopover.name.includes('nZIP2')) {
+          list['listModel'] = list.prepareListModel.filter(value => value[1] === option).map(value =>
+            value[0])
+          document.getElementById('nZIP3').value = ''
+        }
         inputPopover.classList.remove('inputPopover')
         const popover = document.querySelector('.popover')
         popover.remove();
@@ -815,6 +1004,14 @@
     })
   })
 
+  function changeInputKeyDownDropDown(key, input, listType) {
+    const popoverUL = document.querySelector('.popover_listbox')
+    if (!popoverUL && key === 'ArrowDown') {
+      createPopover(input, 'click', list[listType])
+      changeInputDropDownCross(input)
+    }
+  }
+
   function changeInputClickDropDown(input, listType) {
     createPopover(input, 'click', list[listType])
     changeInputDropDownCross(input)
@@ -855,7 +1052,7 @@
     input.classList.add('inputPopover')
     const listFilter = type === 'input' ? list.filter(value => value.toLocaleLowerCase().includes(input.value
       .toLocaleLowerCase()) || input.value === '') : list
-    if (listFilter.length) {
+    if (listFilter && listFilter.length) {
       const popoverUL = document.createElement("ul");
       popoverUL.className = "popover_listbox";
       popoverUL.role = "listbox"
@@ -886,11 +1083,19 @@
   function clearInput(svg) {
     svg.parentNode.querySelector('.inputOutlined').value = ''
     svg.parentNode.previousElementSibling.classList.remove('inputLabelActive')
+    svg.parentNode.nextElementSibling.textContent = 'Поле не может быть пустым!'
   }
 
   function cancelContainer(container) {
     document.querySelector('.back').style.display = "none";
     document.querySelector(container).style.display = "none";
+    const form = document.querySelector(container)
+    form.reset()
+    const allLabels = form.querySelectorAll('.inputLabelActive')
+    Array.from(allLabels).map(item => item.classList.remove('inputLabelActive'))
+    const allInputError = form.querySelectorAll('.inputError')
+    Array.from(allInputError).map(item => item.textContent = '')
+    form.querySelector('.inputsWarning').textContent = ''
   }
 
   function handleNewContainer(container) {
@@ -950,6 +1155,17 @@
       google.script.run
         .withSuccessHandler(onSuccess)
         .writeNewPodmena(data)
+    }
+    if (container.includes('newEmployeeContainer')) {
+      data.push('Активный')
+      onSuccess({
+        result: 'success',
+        func: 'newEmployee',
+        data
+      })
+      // google.script.run
+      //   .withSuccessHandler(onSuccess)
+      //   .writeNewPodmena(data)
     }
   }
 
@@ -1028,7 +1244,6 @@
       status: false
     }
   }
-
 
   const svgErr =
     "<svg class='modalSVGErr' version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 455.111 455.111' style='enable-background:new 0 0 455.111 455.111;' xml:space='preserve'><circle style='fill:#E24C4B;' cx='227.556' cy='227.556' r='227.556'/><path style='fill:#D1403F;' d='M455.111,227.556c0,125.156-102.4,227.556-227.556,227.556c-72.533,0-136.533-32.711-177.778-85.333c38.4,31.289,88.178,49.778,142.222,49.778c125.156,0,227.556-102.4,227.556-227.556c0-54.044-18.489-103.822-49.778-142.222C422.4,91.022,455.111,155.022,455.111,227.556z'/><path style='fill:#FFFFFF;' d='M331.378,331.378c-8.533,8.533-22.756,8.533-31.289,0l-72.533-72.533l-72.533,72.533c-8.533,8.533-22.756,8.533-31.289,0c-8.533-8.533-8.533-22.756,0-31.289l72.533-72.533l-72.533-72.533c-8.533-8.533-8.533-22.756,0-31.289c8.533-8.533,22.756-8.533,31.289,0l72.533,72.533l72.533-72.533c8.533-8.533,22.756-8.533,31.289,0c8.533,8.533,8.533,22.756,0,31.289l-72.533,72.533l72.533,72.533C339.911,308.622,339.911,322.844,331.378,331.378z'/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>";
