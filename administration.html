@@ -144,9 +144,19 @@
 
     .btnContainer {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       height: 95%;
       width: 100%
+    }
+
+    .btnContainer1,
+    .btnContainer2 {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      height: 95%;
+      width: 50%
     }
 
     button:hover {
@@ -174,7 +184,8 @@
     .newPostContainer,
     .newRoleContainer,
     .newClientContainer,
-    .newObjectContainer {
+    .newObjectContainer,
+    .newRegionContainer {
       display: none;
       position: absolute;
       background-color: #C1EEE1;
@@ -478,18 +489,24 @@
       </div>
     </div>
     <div class="btnContainer">
-      <button id="btnNewСlassifier" type="button" onclick="newСlassifier()">Новый классификатор</button>
-      <button id="btnNewModel" type="button" onclick="newModel()">Новая модель</button>
-      <button id="btnNewZIP" type="button" onclick="newZIP()">Новый ЗИП</button>
-      <button id="btnNewPodmena" type="button" onclick="newPodmena()">Новая подмена</button>
-      <hr size=1>
-      <button id="btnNewEmployee" type="button" onclick="newEmployee()">Новый сотрудник</button>
-      <button id="btnNewPost" type="button" onclick="newPost()">Новая должность</button>
-      <button id="btnNewRole" type="button" onclick="newRole()">Новая роль</button>
-      <hr size=1>
-      <button id="btnNewClient" type="button" onclick="newClient()">Новый клиент</button>
-      <button id="btnNewObject" type="button" onclick="newObject()">Новый объект</button>
+      <div class="btnContainer1">
+        <button id="btnNewСlassifier" type="button" onclick="newСlassifier()">Новый классификатор</button>
+        <button id="btnNewModel" type="button" onclick="newModel()">Новая модель</button>
+        <button id="btnNewZIP" type="button" onclick="newZIP()">Новый ЗИП</button>
+        <button id="btnNewPodmena" type="button" onclick="newPodmena()">Новая подмена</button>
+        <hr size=1>
+        <button id="btnNewEmployee" type="button" onclick="newEmployee()">Новый сотрудник</button>
+        <button id="btnNewPost" type="button" onclick="newPost()">Новая должность</button>
+        <button id="btnNewRole" type="button" onclick="newRole()">Новая роль</button>
+      </div>
+      <div class="btnContainer2">
+        <button id="btnNewClient" type="button" onclick="newClient()">Новый клиент</button>
+        <button id="btnNewObject" type="button" onclick="newObject()">Новый объект</button>
+        <button id="btnNewRegion" type="button" onclick="newRegion()">Новый регион</button>
+        <hr size=1>
+      </div>
     </div>
+  </div>
   </div>
   <form class="newСlassifierContainer">
     <div class="titleBar">Ввод нового классификатора</div>
@@ -709,7 +726,7 @@
     <div class="inputContainer first">
       <label class="inputLabel" for="nObj1">Введите наименование нового объекта*</label>
       <div class="inputOutlinedContainer">
-        <input id="nPdm1" name="nPdm1.textRuEng" required="true" type="text" class="inputOutlined" value=""
+        <input id="nObj1" name="nObj1.textRuEng" required="true" type="text" class="inputOutlined" value=""
           autocomplete="off">
       </div>
       <span class="inputError"></span>
@@ -753,7 +770,7 @@
     <div class="inputContainer">
       <label class="inputLabel" for="nObj6">Введите клиентской название</label>
       <div class="inputOutlinedContainer">
-        <input id="nObj6" name="nObj6.textNoValidRequired" required="false" type="text" class="inputOutlined" value=""
+        <input id="nObj6" name="nObj6.textNoValidRequired" type="text" class="inputOutlined" value=""
           autocomplete="off">
       </div>
       <span class="inputError"></span>
@@ -761,7 +778,7 @@
     <div class="inputContainer">
       <label class="inputLabel" for="nObj7">Введите клиентский номер</label>
       <div class="inputOutlinedContainer">
-        <input id="nObj7" name="nObj7.textNoValidRequired" required="false" type="text" class="inputOutlined" value=""
+        <input id="nObj7" name="nObj7.textNoValidRequired" type="text" class="inputOutlined" value=""
           autocomplete="off">
       </div>
       <span class="inputError"></span>
@@ -770,6 +787,22 @@
     <div class="btnSubmitContainer">
       <button id="btnSubmit" type="button" onclick="handleNewContainer('.newObjectContainer')">Сохранить</button>
       <button id="btnCancel" type="button" onclick="cancelContainer('.newObjectContainer')">Отмена</button>
+    </div>
+  </form>
+  <form class="newRegionContainer">
+    <div class="titleBar">Ввод нового региона</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nReg1">Введите новый регион*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nReg1" name="nReg1.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newRegionContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newRegionContainer')">Отмена</button>
     </div>
   </form>
 
@@ -900,6 +933,14 @@
       const modal = document.querySelector('.modalMessage');
       modal.innerHTML = svgOk +
         `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b>${message3}<b>${data[2]}</b>${message4}<b>${data[3]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newObjectContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'newRegion') {
+      const message1 = "Регион ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b> записана в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newRegionContainer")'>OK</button>`;
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
@@ -1086,11 +1127,16 @@
     list.fullLoad = 2
     // google.script.run
     //   .withSuccessHandler(onSuccess)
-    //   .getClient('getDataListForNewObject','listClient')
+    //   .getClients('getDataListForNewObject','listClient')
     // google.script.run
     //   .withSuccessHandler(onSuccess)
-    //   .getRegion('getDataListForNewObject','listRegion')
+    //   .getRegions('getDataListForNewObject','listRegion')
 
+  }
+
+  function newRegion() {
+    document.querySelector('.back').style.display = "block";
+    document.querySelector('.newRegionContainer').style.display = "flex";
   }
 
   document.addEventListener('mouseup', function (e) {
@@ -1216,12 +1262,7 @@
       }
       if (input.name.includes('textNoValidRequired')) {
         validate = textNoValidRequired(input.value)
-        console.log('validate = ', validate)
       }
-
-      console.log('input.name = ', input.name)
-      console.log('vali = ', validate)
-      console.log('inputError.textContent = ', inputError.textContent)
       const inputError = input.parentNode.nextElementSibling
       if (!validate.status && inputError.textContent) {
         inputError.textContent = ""
@@ -1331,17 +1372,15 @@
   function handleNewContainer(container) {
     const formInputs = document.querySelectorAll(`${container} input`)
     const data = Array.from(formInputs).map(item => item.value)
-    const temp = Array.from(formInputs).map(item => item.required)
-    console.log('temp = ', temp)
     const errors = document.querySelectorAll(`${container} .inputError`)
     const dataErr = Array.from(errors).map(item => item.innerText).filter(value => value)
-    if (dataErr.length > 0 || data.includes('')) {
+    const checkEmptyValue = Array.from(formInputs).map(item => !item.value && item.required).filter(item => item)
+    if (dataErr.length > 0 || checkEmptyValue.length > 0) {
       const inputsWarning = document.querySelector(`${container} .inputsWarning`)
       inputsWarning.textContent = 'Заполните необходимые поля и без ошибок!'
       return
     }
     document.querySelector('.back').style.zIndex = 88;
-    if (data.includes('')) return
     const form = document.querySelector(`${container}`)
     form.reset()
     if (container.includes('newСlassifierContainer')) {
@@ -1437,6 +1476,17 @@
       onSuccess({
         result: 'success',
         func: 'newObject',
+        data
+      })
+      // google.script.run
+      //   .withSuccessHandler(onSuccess)
+      //   .writeNewObject(data)
+    }
+    if (container.includes('newRegionContainer')) {
+      data.push('Активный')
+      onSuccess({
+        result: 'success',
+        func: 'newRegion',
         data
       })
       // google.script.run
