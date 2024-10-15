@@ -177,8 +177,6 @@
       color: #08793b
     }
 
-    .newEmployeeContainer,
-    .newClientContainer,
     .newZIPContainer,
     .newPodmenaContainer,
     .newArrivalContainer {
@@ -508,30 +506,6 @@
       </div>
     </div>
   </div>
-  <form class="newClientContainer">
-    <div class="titleBar">Ввод нового клиента</div>
-    <div class="inputContainer first">
-      <label class="inputLabel" for="nCli1">Введите юр. наименование клиента*</label>
-      <div class="inputOutlinedContainer">
-        <input id="nCli1" name="nCli1.text" required="true" type="text" class="inputOutlined" value=""
-          autocomplete="off">
-      </div>
-      <span class="inputError"></span>
-    </div>
-    <div class="inputContainer">
-      <label class="inputLabel" for="nCli2">Введите наименование клиента*</label>
-      <div class="inputOutlinedContainer">
-        <input id="nCli2" name="nCli.text" required="true" type="text" class="inputOutlined" value=""
-          autocomplete="off">
-      </div>
-      <span class="inputError"></span>
-    </div>
-    <span class="inputsWarning"></span>
-    <div class="btnSubmitContainer">
-      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newClientContainer')">Сохранить</button>
-      <button id="btnCancel" type="button" onclick="cancelContainer('.newClientContainer')">Отмена</button>
-    </div>
-  </form>
   <form class="newZIPContainer">
     <div class="titleBar">Ввод новой запчасти</div>
     <div class="inputContainer first">
@@ -679,15 +653,6 @@
         window.history.back()
       }, 3000)
     }
-    if (func === 'newClient') {
-      const message1 = "Клиент ";
-      const message2 = " с наименованием ";
-      const modal = document.querySelector('.modalMessage');
-      modal.innerHTML = svgOk +
-        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newClientContainer")'>OK</button>`;
-      modal.style.display = "flex";
-      document.getElementById('buttonModalMessage').focus();
-    }
     if (func === 'newZIP') {
       const message1 = "Запчасть ";
       const message2 = " производителя ";
@@ -713,16 +678,6 @@
     document.querySelector('.back').style.display = "none";
     document.querySelector('.back').style.zIndex = 13;
     document.querySelector(container).style.display = "none";
-  }
-
-  function newEmployee() {
-    document.querySelector('.back').style.display = "block";
-    document.querySelector('.newEmployeeContainer').style.display = "flex";
-  }
-
-  function newClient() {
-    document.querySelector('.back').style.display = "block";
-    document.querySelector('.newClientContainer').style.display = "flex";
   }
 
   function newZIP() {
@@ -963,28 +918,6 @@
     if (data.includes('')) return
     const form = document.querySelector(`${container}`)
     form.reset()
-    if (container.includes('newEmployeeContainer')) {
-      data.push('Активный')
-      // onSuccess({
-      //   result: 'success',
-      //   func: 'newEmployee',
-      //   data
-      // })
-      google.script.run
-        .withSuccessHandler(onSuccess)
-        .writeNewEmployee(data)
-    }
-    if (container.includes('newClientContainer')) {
-      data.push('Активный')
-      // onSuccess({
-      //   result: 'success',
-      //   func: 'newClient',
-      //   data
-      // })
-      google.script.run
-        .withSuccessHandler(onSuccess)
-        .writeNewClient(data)
-    }
     if (container.includes('newZIPContainer')) {
       data.push('Активный')
       // onSuccess({

@@ -170,7 +170,11 @@
     .newModelContainer,
     .newZIPContainer,
     .newPodmenaContainer,
-    .newEmployeeContainer {
+    .newEmployeeContainer,
+    .newPostContainer,
+    .newRoleContainer,
+    .newClientContainer,
+    .newObjectContainer {
       display: none;
       position: absolute;
       background-color: #C1EEE1;
@@ -480,8 +484,11 @@
       <button id="btnNewPodmena" type="button" onclick="newPodmena()">Новая подмена</button>
       <hr size=1>
       <button id="btnNewEmployee" type="button" onclick="newEmployee()">Новый сотрудник</button>
+      <button id="btnNewPost" type="button" onclick="newPost()">Новая должность</button>
+      <button id="btnNewRole" type="button" onclick="newRole()">Новая роль</button>
+      <hr size=1>
       <button id="btnNewClient" type="button" onclick="newClient()">Новый клиент</button>
-
+      <button id="btnNewObject" type="button" onclick="newObject()">Новый объект</button>
     </div>
   </div>
   <form class="newСlassifierContainer">
@@ -641,6 +648,130 @@
       <button id="btnCancel" type="button" onclick="cancelContainer('.newEmployeeContainer')">Отмена</button>
     </div>
   </form>
+  <form class="newPostContainer">
+    <div class="titleBar">Ввод новой должности</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nPst1">Введите наименование должности*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nPst1" name="nPst1.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newPostContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newPostContainer')">Отмена</button>
+    </div>
+  </form>
+  <form class="newRoleContainer">
+    <div class="titleBar">Ввод новой роли</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nRol1">Введите наименование роли*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nRol1" name="nRol1.textRuEng" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newRoleContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newRoleContainer')">Отмена</button>
+    </div>
+  </form>
+  <form class="newClientContainer">
+    <div class="titleBar">Ввод нового клиента</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nCli1">Введите юр. наименование клиента*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nCli1" name="nCli1.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nCli2">Введите наименование клиента*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nCli2" name="nCli.text" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newClientContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newClientContainer')">Отмена</button>
+    </div>
+  </form>
+  <form class="newObjectContainer">
+    <div class="titleBar">Ввод нового объекта</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nObj1">Введите наименование нового объекта*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nPdm1" name="nPdm1.textRuEng" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nObj2">Выберите клиента*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nObj2" name="nObj2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listClient')"
+          onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClient')"
+          onclick="changeInputClickDropDown(this, 'listClient', event.key)" onchange="changeInputDropDownCross(this)">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nObj3">Введите адрес объекта*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nObj3" name="nObj3.textLht" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nObj4">Выберите регион объекта*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nObj4" name="nObj4.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listRegion')"
+          onkeydown="changeInputKeyDownDropDown(event.key, this, 'listRegion')"
+          onclick="changeInputClickDropDown(this, 'listRegion', event.key)" onchange="changeInputDropDownCross(this)">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nObj5">Введите координаты объекта*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nObj5" name="nObj5.textCRDNT" required="true" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nObj6">Введите клиентской название</label>
+      <div class="inputOutlinedContainer">
+        <input id="nObj6" name="nObj6.textNoValidRequired" required="false" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nObj7">Введите клиентский номер</label>
+      <div class="inputOutlinedContainer">
+        <input id="nObj7" name="nObj7.textNoValidRequired" required="false" type="text" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newObjectContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newObjectContainer')">Отмена</button>
+    </div>
+  </form>
 
 </body>
 <script>
@@ -663,6 +794,8 @@
     listModel: [],
     listPost: [],
     listRole: [],
+    listClient: [],
+    listRegion: [],
     prepareListModel: [],
     count: 0,
     fullLoad: 0
@@ -734,6 +867,42 @@
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
+    if (func === 'newPost') {
+      const message1 = "Должность ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b> записана в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newPostContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'newRole') {
+      const message1 = "Роль ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b> записана в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newRoleContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'newClient') {
+      const message1 = "Клиент ";
+      const message2 = " с наименованием ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newClientContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'newObject') {
+      const message1 = "Объект ";
+      const message2 = " для клиента ";
+      const message3 = " с адресом ";
+      const message4 = " в регионе ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b>${message3}<b>${data[2]}</b>${message4}<b>${data[3]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newObjectContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
     if (func === 'getDataListForNewModel') {
       list[type] = data
       document.querySelector('.newModelContainer').style.display = "flex";
@@ -753,6 +922,14 @@
     if (func === 'getDataListForNewEmployee') {
       list[type] = data
       document.querySelector('.newEmployeeContainer').style.display = "flex";
+    }
+    if (func === 'getDataListForNewObject') {
+      list[type] = data
+      list.count++
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.newObjectContainer').style.display = "flex";
+        list.fullLoad = 0
+      }
     }
   }
 
@@ -778,7 +955,7 @@
     })
     // google.script.run
     //   .withSuccessHandler(onSuccess)
-    //   .getСlassifier('listClassifier')
+    //   .getСlassifier('getDataListForNewModel','listClassifier')
   }
 
   function newZIP() {
@@ -875,6 +1052,45 @@
     // google.script.run
     //   .withSuccessHandler(onSuccess)
     //   .getRoles('getDataListForNewEmployee','listRole')
+  }
+
+  function newPost() {
+    document.querySelector('.back').style.display = "block";
+    document.querySelector('.newPostContainer').style.display = "flex";
+  }
+
+  function newRole() {
+    document.querySelector('.back').style.display = "block";
+    document.querySelector('.newRoleContainer').style.display = "flex";
+  }
+
+  function newClient() {
+    document.querySelector('.back').style.display = "block";
+    document.querySelector('.newClientContainer').style.display = "flex";
+  }
+
+  function newObject() {
+    document.querySelector('.back').style.display = "block";
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewObject',
+      data: ['Перекресток', 'Азбука вкуса', 'Лента', 'Мираторг'],
+      type: 'listClient'
+    })
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewObject',
+      data: ['Москва', 'Московская область', 'Санкт-Петербург', 'Ленинградская область'],
+      type: 'listRegion'
+    })
+    list.fullLoad = 2
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getClient('getDataListForNewObject','listClient')
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getRegion('getDataListForNewObject','listRegion')
+
   }
 
   document.addEventListener('mouseup', function (e) {
@@ -992,6 +1208,20 @@
       if (input.name.includes('textRuEng')) {
         validate = textRuEngValidation(input.value)
       }
+      if (input.name.includes('textCRDNT')) {
+        validate = coordinatesValidation(input.value)
+      }
+      if (input.name.includes('textLht')) {
+        validate = textLightValidation(input.value)
+      }
+      if (input.name.includes('textNoValidRequired')) {
+        validate = textNoValidRequired(input.value)
+        console.log('validate = ', validate)
+      }
+
+      console.log('input.name = ', input.name)
+      console.log('vali = ', validate)
+      console.log('inputError.textContent = ', inputError.textContent)
       const inputError = input.parentNode.nextElementSibling
       if (!validate.status && inputError.textContent) {
         inputError.textContent = ""
@@ -1101,11 +1331,13 @@
   function handleNewContainer(container) {
     const formInputs = document.querySelectorAll(`${container} input`)
     const data = Array.from(formInputs).map(item => item.value)
+    const temp = Array.from(formInputs).map(item => item.required)
+    console.log('temp = ', temp)
     const errors = document.querySelectorAll(`${container} .inputError`)
     const dataErr = Array.from(errors).map(item => item.innerText).filter(value => value)
     if (dataErr.length > 0 || data.includes('')) {
       const inputsWarning = document.querySelector(`${container} .inputsWarning`)
-      inputsWarning.textContent = 'Заполните все поля и без ошибок!'
+      inputsWarning.textContent = 'Заполните необходимые поля и без ошибок!'
       return
     }
     document.querySelector('.back').style.zIndex = 88;
@@ -1167,6 +1399,50 @@
       //   .withSuccessHandler(onSuccess)
       //   .writeNewPodmena(data)
     }
+    if (container.includes('newPostContainer')) {
+      data.push('Активный')
+      onSuccess({
+        result: 'success',
+        func: 'newPost',
+        data
+      })
+      // google.script.run
+      //   .withSuccessHandler(onSuccess)
+      //   .writeNewPost(data)
+    }
+    if (container.includes('newRoleContainer')) {
+      data.push('Активный')
+      onSuccess({
+        result: 'success',
+        func: 'newRole',
+        data
+      })
+      // google.script.run
+      //   .withSuccessHandler(onSuccess)
+      //   .writeNewRole(data)
+    }
+    if (container.includes('newClientContainer')) {
+      data.push('Активный')
+      onSuccess({
+        result: 'success',
+        func: 'newClient',
+        data
+      })
+      // google.script.run
+      //   .withSuccessHandler(onSuccess)
+      //   .writeNewClient(data)
+    }
+    if (container.includes('newObjectContainer')) {
+      data.push('Активный')
+      onSuccess({
+        result: 'success',
+        func: 'newObject',
+        data
+      })
+      // google.script.run
+      //   .withSuccessHandler(onSuccess)
+      //   .writeNewObject(data)
+    }
   }
 
   function textValidation(value) {
@@ -1213,6 +1489,22 @@
     }
   }
 
+  function textLightValidation(value) {
+    if (value === '') return {
+      status: true,
+      error: 'Поле не может быть пустым!'
+    }
+    return {
+      status: false
+    }
+  }
+
+  function textNoValidRequired(value) {
+    return {
+      status: false
+    }
+  }
+
   function emailValidation(value) {
     if (value === '') return {
       status: true,
@@ -1244,6 +1536,25 @@
       status: false
     }
   }
+
+  function coordinatesValidation(value) {
+    if (value === '') return {
+      status: true,
+      error: 'Поле не может быть пустым!'
+    }
+    if (!value.match(
+        '^([-+]?)([0-9]{1,2})([,.])([0-9]{1,6})([,])([ ])([-+]?)([0-9]{1,2})([,.])([0-9]{1,6})'
+      )) {
+      return {
+        status: true,
+        error: 'Не соответсвует формату координат'
+      }
+    }
+    return {
+      status: false
+    }
+  }
+
 
   const svgErr =
     "<svg class='modalSVGErr' version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 455.111 455.111' style='enable-background:new 0 0 455.111 455.111;' xml:space='preserve'><circle style='fill:#E24C4B;' cx='227.556' cy='227.556' r='227.556'/><path style='fill:#D1403F;' d='M455.111,227.556c0,125.156-102.4,227.556-227.556,227.556c-72.533,0-136.533-32.711-177.778-85.333c38.4,31.289,88.178,49.778,142.222,49.778c125.156,0,227.556-102.4,227.556-227.556c0-54.044-18.489-103.822-49.778-142.222C422.4,91.022,455.111,155.022,455.111,227.556z'/><path style='fill:#FFFFFF;' d='M331.378,331.378c-8.533,8.533-22.756,8.533-31.289,0l-72.533-72.533l-72.533,72.533c-8.533,8.533-22.756,8.533-31.289,0c-8.533-8.533-8.533-22.756,0-31.289l72.533-72.533l-72.533-72.533c-8.533-8.533-8.533-22.756,0-31.289c8.533-8.533,22.756-8.533,31.289,0l72.533,72.533l72.533-72.533c8.533-8.533,22.756-8.533,31.289,0c8.533,8.533,8.533,22.756,0,31.289l-72.533,72.533l72.533,72.533C339.911,308.622,339.911,322.844,331.378,331.378z'/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>";
