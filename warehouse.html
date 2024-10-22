@@ -6,17 +6,14 @@
   <style type="text/css">
     html {
       width: 100%;
-      height: 100%;
     }
 
     body {
       margin: 0;
       background-color: #C1EEE1;
       width: 100%;
-      height: 100%;
       display: flex;
       align-items: center;
-      justify-content: center;
       flex-direction: column;
     }
 
@@ -41,12 +38,23 @@
 
     .loader {
       display: block;
-      margin: 25% auto;
+      margin: 20% auto;
       border-top: 7px solid #34db80;
       border-radius: 50%;
       width: 60px;
       height: 60px;
       animation: spin 2s linear infinite;
+    }
+
+    .container {
+      width: 90%;
+      padding: 20px;
+      margin-top: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
+      border-radius: 5px
     }
 
     .modalMessage {
@@ -105,19 +113,13 @@
       width: 100%;
       height: 60px;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       position: fixed;
       top: 0;
-      font-size: 20px;
+      font-size: 24px;
       font-weight: bold;
       box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    .title {
-      width: 53%;
-      display: flex;
-      align-items: flex-start
     }
 
     button {
@@ -179,7 +181,8 @@
 
     .newZIPContainer,
     .newPodmenaContainer,
-    .newArrivalContainer {
+    .newArrivalZIPContainer,
+    .newArrivalPodmenaContainer {
       display: none;
       position: absolute;
       background-color: #C1EEE1;
@@ -306,7 +309,8 @@
       color: #ef5350;
       font-size: 12px;
       margin: 3px 12px;
-      height: 20px
+      height: 20px;
+      text-align: left;
     }
 
 
@@ -396,6 +400,107 @@
       margin-right: 10px;
       cursor: pointer
     }
+
+    @media screen and (max-width: 800px) {
+      button {
+        width: 150px;
+        height: 30px;
+        font-size: 11px;
+      }
+
+      .container {
+        width: 400px;
+      }
+
+      .newСlassifierContainer,
+      .newModelContainer,
+      .newZIPContainer,
+      .newPodmenaContainer,
+      .newEmployeeContainer,
+      .newPostContainer,
+      .newRoleContainer,
+      .newClientContainer,
+      .newObjectContainer,
+      .newRegionContainer {
+        width: 320px;
+      }
+
+      .titleBar {
+        font-size: 16px;
+      }
+
+      .inputLabel {
+        font-size: 10px;
+        top: -10px
+      }
+
+      .inputContainer:focus-within label,
+      .inputLabelActive {
+        color: #1E515D;
+        top: -28px;
+      }
+
+
+
+      .inputOutlinedContainer {
+        height: 25px;
+      }
+
+      .inputOutlined {
+        font-size: 12px;
+      }
+
+      .inputContainer {
+        margin-bottom: 0px;
+      }
+
+      .inputContainer.first {
+        margin-top: 20px;
+      }
+
+      .popover_listbox,
+      .popoverNoElements {
+        font-size: 12px;
+      }
+
+      .inputError,
+      .inputsWarning {
+        font-size: 10px;
+      }
+    }
+
+    @media screen and (max-width: 400px) {
+      body {
+        min-height: 400vh;
+      }
+
+      button {
+        width: 120px;
+        height: 20px;
+        font-size: 8px;
+      }
+
+      .container {
+        width: 380px;
+      }
+
+      .newСlassifierContainer,
+      .newModelContainer,
+      .newZIPContainer,
+      .newPodmenaContainer,
+      .newEmployeeContainer,
+      .newPostContainer,
+      .newRoleContainer,
+      .newClientContainer,
+      .newObjectContainer,
+      .newRegionContainer {
+        width: 280px;
+      }
+
+      .titleBar {
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 
@@ -404,108 +509,100 @@
   <div class="back">
     <div class="loader"></div>
   </div>
-  <div class="modalMessage"></div>
-  <div class="homepage">
-    <div class="navbar">
-      <div class="logo">
-        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="254" height="79"
-          viewBox="0 0 1204.000000 362.000000">
-
-          <g transform="translate(0.000000,362.000000) scale(0.100000,-0.100000)" fill="#08793b" stroke="none">
-            <path d="M1986 2328 c-37 -186 -29 -1658 9 -1697 3 -2 7 -2 10 1 38 37 45
-       1514 9 1697 -8 40 -20 40 -28 -1z" />
-            <path d="M1536 2152 c-41 -67 -43 -1269 -1 -1310 25 -26 36 103 42 528 7 498
-       -10 831 -41 782z" />
-            <path d="M2196 2138 c-19 -72 -28 -356 -23 -753 6 -398 13 -524 30 -542 12
-       -12 16 2 29 103 16 130 16 983 0 1108 -12 94 -25 124 -36 84z" />
-            <path d="M1746 1932 c-29 -33 -39 -180 -32 -467 7 -304 20 -407 46 -365 19 30
-       25 156 25 487 0 354 -3 384 -39 345z" />
-            <path d="M2406 1941 c-29 -46 -34 -737 -6 -825 32 -104 53 53 53 404 0 270
-       -10 401 -32 423 -5 5 -11 5 -15 -2z" />
-            <path d="M1273 1653 c-31 -76 -3 -343 36 -343 53 0 79 267 35 352 -21 41 -51
-       37 -71 -9z" />
-            <path d="M925 1533 c-82 -22 -44 -73 55 -73 122 0 138 67 18 75 -29 2 -62 1
-       -73 -2z" />
-            <path d="M3975 1530 c-883 -7 -1283 -16 -1319 -30 -12 -4 26 -10 90 -14 563
-       -35 7779 -35 8379 0 209 13 88 23 -385 34 -558 13 -5582 21 -6765 10z" />
-          </g>
-          <style>
-            tspan {
-              white-space: pre
-            }
-
-            .t0 {
-              font-size: 26px;
-              fill: #08793b;
-              font-weight: 400;
-              font-family: "DejaVuSans", "DejaVu Sans";
-              letter-spacing: -5.5px;
-              width: 20px;
-              z-index: 999;
-              margin-top: 10px;
-            }
-          </style>
-          <use id="Background" href="#img1" x="21" y="29" />
-          <text id="" style="transform: matrix(2.6,0,0,3,268.292,158.092)">
-          </text>
-          <text id="Text layer 2" style="transform: matrix(2.6,0,0,3,268.292,158.092)">
-            <tspan x="0" y="0" class="t0">С</tspan>
-            <tspan y="0" class="t0">е</tspan>
-            <tspan y="0" class="t0">р</tspan>
-            <tspan y="0" class="t0">в</tspan>
-            <tspan y="0" class="t0">и</tspan>
-            <tspan y="0" class="t0">с</tspan>
-            <tspan y="0" class="t0">н</tspan>
-            <tspan y="0" class="t0">о</tspan>
-            <tspan y="0" class="t0">е</tspan>
-            <tspan y="0" class="t0"> </tspan>
-            <tspan y="0" class="t0">Б</tspan>
-            <tspan y="0" class="t0">ю</tspan>
-            <tspan y="0" class="t0">р</tspan>
-            <tspan y="0" class="t0">о</tspan>
-            <tspan y="0" class="t0"> </tspan>
-            <tspan y="0" class="t0">И</tspan>
-            <tspan y="0" class="t0">н</tspan>
-            <tspan y="0" class="t0">н</tspan>
-            <tspan y="0" class="t0">о</tspan>
-            <tspan y="0" class="t0">в</tspan>
-            <tspan y="0" class="t0">а</tspan>
-            <tspan y="0" class="t0">ц</tspan>
-            <tspan y="0" class="t0">и</tspan>
-            <tspan y="0" class="t0">й</tspan>
-            <tspan y="0" class="t0">
-            </tspan>
-          </text>
-        </svg>
-      </div>
-      <div class="title">
-        Склад
+  <div class="container">
+    <div class="modalMessage"></div>
+    <div class="homepage">
+      <div class="navbar">Склад</div>
+      <div class="btnContainer">
+        <div class="btnContainer1">
+          <button id="btnNewArrivalZIP" type="button" onclick="newArrivalZIP()">Новое поступление ЗИП</button>
+          <button id="btnNewArrivalPodmena" type="button" onclick="newArrivalPodmena()">Новое поступление подмены</button>
+          <hr size=1>
+          <button id="btnCreateNewMovingZIP" type="button" onclick="createNewMovingZIP()">Создать перемещение ЗИП</button>
+          <button id="btnCreateNewMovingPodmena" type="button" onclick="createNewMovingPodmena()">Создать перемещение
+            подмены</button>
+          <hr size=1>
+          <button id="btnWriteOffZip" type="button" onclick="witeOffZIP()">Списать ЗИП</button>
+          <button id="btnWriteOffPodmena" type="button" onclick="writeOffPodmena()">Списать подмену</button>
+        </div>
+        <div class="btnContainer2">
+          <button id="btnCreateDocumentZip" type="button" onclick="createDocumentZIP()">Создать документ ЗИП</button>
+          <button id="btnCreateDocumentPodmena" type="button" onclick="createDocumentPodmena()">Создать документ подмены</button>
+          <hr size=1>
+          <button id="btnZIPReport" type="button" onclick="ZIPReport()">Данные по ЗИП</button>
+          <button id="btnPodmenaReport" type="button" onclick="PodmenaReport()">Данные по подмене</button>
+          <hr size=1>
+          <button id="btnCollation" type="button" onclick="collation()">Сверка по складам</button>
+        </div>
       </div>
     </div>
-    <div class="btnContainer">
-      <div class="btnContainer1">
-        <button id="btnNewArrival" type="button" onclick="newArrival()">Новое поступление</button>
-        <hr size=1>
-        <button id="btnCreateNewMovingZIP" type="button" onclick="createNewMovingZIP()">Создать перемещение ЗИП</button>
-        <button id="btnCreateNewMovingPodmena" type="button" onclick="createNewMovingPodmena()">Создать перемещение
-          подмены</button>
-        <hr size=1>
-        <button id="btnWriteOffZip" type="button" onclick="witeOffZIP()">Списать ЗИП</button>
-        <button id="btnWriteOffPodmena" type="button" onclick="writeOffPodmena()">Списать подмену</button>
-        <hr size=1>
-        <button id="btnCreateDocumentZip" type="button" onclick="createDocumentZIP()">Создать документ ЗИП</button>
-        <button id="btnCreateDocumentPodmena" type="button" onclick="createDocumentPodmena()">Создать документ
-          подмена</button>
-        <hr size=1>
-        <button id="btnCollation" type="button" onclick="collation()">Сверка по складам</button>
+  <form class="newArrivalZIPContainer">
+    <div class="titleBar">Ввод нового поступления ЗИП</div>
+    <div class="inputContainer first">
+      <label class="inputLabel" for="nArZ1">Выберите поставщика*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nArZ1" name="nArZ1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listClient')"
+          onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClient')"
+          onclick="changeInputClickDropDown(this, 'listClient', event.key)" onchange="changeInputDropDownCross(this)">
       </div>
-      <div class="btnContainer2">
-        <hr size=1>
-        <button id="btnZIPReport" type="button" onclick="ZIPReport()">Данные по ЗИП</button>
-        <button id="btnPodmenaReport" type="button" onclick="PodmenaReport()">Данные по подмене</button>
-      </div>
+      <span class="inputError"></span>
     </div>
-  </div>
+  <div class="inputContainer">
+      <label class="inputLabel" for="nArZ2">Выберите классификатор*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nArZ2" name="nArZ2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
+          onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClassifier')"
+          onclick="changeInputClickDropDown(this, 'listClassifier', event.key)"
+          onchange="changeInputDropDownCross(this)">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nArZ3">Выберите модель*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nArZ3" name="nArZ3.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listModel')"
+          onkeydown="changeInputKeyDownDropDown(event.key, this, 'listModel')"
+          onclick="changeInputClickDropDown(this, 'listModel')" onchange="changeInputDropDownCross(this)">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nArZ4">Выберите ЗИП*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nArZ4" name="nArZ4.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listZIP')"
+          onkeydown="changeInputKeyDownDropDown(event.key, this, 'listZIP')"
+          onclick="changeInputClickDropDown(this, 'listZIP')" onchange="changeInputDropDownCross(this)">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nArZ5">На какой склад*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nArZ5" name="nArZ5.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+          autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+          onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+          onclick="changeInputClickDropDown(this, 'listWarehouses')" onchange="changeInputDropDownCross(this)">
+      </div>
+      <span class="inputError"></span>
+    </div>
+    <div class="inputContainer">
+      <label class="inputLabel" for="nArZ6">Укажите количество*</label>
+      <div class="inputOutlinedContainer">
+        <input id="nArZ6" name="nArZ6.number" required="true" type="number" class="inputOutlined" value=""
+          autocomplete="off">
+      </div>
+      <span class=" inputError"></span>
+    </div>
+    <span class="inputsWarning"></span>
+    <div class="btnSubmitContainer">
+      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newArrivalZIPContainer')">Сохранить</button>
+      <button id="btnCancel" type="button" onclick="cancelContainer('.newArrivalZIPContainer')">Отмена</button>
+    </div>
+  </form>
   <form class="newZIPContainer">
     <div class="titleBar">Ввод новой запчасти</div>
     <div class="inputContainer first">
@@ -562,58 +659,8 @@
       <button id="btnCancel" type="button" onclick="cancelContainer('.newPodmenaContainer')">Отмена</button>
     </div>
   </form>
-  <form class="newArrivalContainer">
-    <div class="titleBar">Ввод нового поступления</div>
-    <div class="inputContainer first">
-      <label class="inputLabel" for="nArr1">Введите наименование поставщика*</label>
-      <div class="inputOutlinedContainer">
-        <input id="nArr1" name="nArr1.text" required="true" type="text" class="inputOutlined dropdown" value=""
-          autocomplete="off" oninput="changeInputDropDown(this, 'client')"
-          onclick="changeInputClickDropDown(this, 'client')" onchange="changeInputDropDownCross(this)">
-      </div>
-      <span class="inputError"></span>
-    </div>
-    <div class="inputContainer">
-      <label class="inputLabel" for="nArr2">Выберите классификатор*</label>
-      <div class="inputOutlinedContainer">
-        <input id="nArr2" name="nArr2.text" required="true" type="text" class="inputOutlined dropdown" value=""
-          autocomplete="off" oninput="changeInputDropDown(this, 'ZIP')" onclick="changeInputClickDropDown(this, 'ZIP')"
-          onchange="changeInputDropDownCross(this)">
-      </div>
-      <span class=" inputError"></span>
-    </div>
-    <div class="inputContainer">
-      <label class="inputLabel" for="nArr3">Выберите производителя*</label>
-      <div class="inputOutlinedContainer">
-        <input id="nArr3" name="nArr3.text" required="true" type="text" class="inputOutlined dropdown" value=""
-          autocomplete="off" oninput="changeInputDropDown(this, 'ZIP')" onclick="changeInputClickDropDown(this)"
-          onchange="changeInputDropDownCross(this)">
-      </div>
-      <span class=" inputError"></span>
-    </div>
-    <div class="inputContainer">
-      <label class="inputLabel" for="nArr4">Выберите модель*</label>
-      <div class="inputOutlinedContainer">
-        <input id="nArr4" name="nArr4.text" required="true" type="text" class="inputOutlined dropdown" value=""
-          autocomplete="off" oninput="changeInputDropDown(this)" onclick="changeInputClickDropDown(this)"
-          onchange="changeInputDropDownCross(this)">
-      </div>
-      <span class=" inputError"></span>
-    </div>
-    <div class="inputContainer">
-      <label class="inputLabel" for="nArr5">Укажите количество*</label>
-      <div class="inputOutlinedContainer">
-        <input id="nArr5" name="nArr5.number" required="true" type="number" class="inputOutlined" value=""
-          autocomplete="off">
-      </div>
-      <span class=" inputError"></span>
-    </div>
-    <span class="inputsWarning"></span>
-    <div class="btnSubmitContainer">
-      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newArrivalContainer')">Сохранить</button>
-      <button id="btnCancel" type="button" onclick="cancelContainer('.newArrivalContainer')">Отмена</button>
-    </div>
-  </form>
+</div>
+
 </body>
 <script>
   window.onload = function () {
@@ -631,16 +678,25 @@
   }
 
   const list = {
-    listClassifier: []
-  }
+    listClassifier: [],
+    listModel: [],
+    listClient: [],
+    listZIP: [],
+    listWarehouses: [],
+    prepareListModel: [],
+    prepareListZIP: [],
+    count: 0,
+    fullLoad: 0
+}
 
   function onSuccess({
     result,
     func,
-    data
+    data,
+    type
   }) {
     if (func === 'checkAccess') {
-      if (data.includes('Admin') || data.includes('warehouse')) {
+      if (data.includes('Admin') || data.includes('Warehouse')) {
         document.querySelector('.checkAccessPaper').style.display = "none";
         document.querySelector('.back').style.display = "none";
         return
@@ -652,6 +708,18 @@
       setTimeout(() => {
         window.history.back()
       }, 3000)
+    }
+    if (func === 'newArrivalZIP') {
+      const message1 = "ЗИП ";
+      const message2 = " для классификатора ";
+      const message3 = " и модели ";
+      const message4 = " на склад ";
+      const message5 = " в количестве ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[3]}</b>${message2}<b>${data[1]}</b>${message3}<b>${data[2]}</b>${message4}<b>${data[4]}</b>${message5}<b>${data[5]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newArrivalZIPContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
     }
     if (func === 'newZIP') {
       const message1 = "Запчасть ";
@@ -671,6 +739,15 @@
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
+    if (func === 'getDataListForNewArrivalZIP') {
+      list[type] = data
+      list.count++
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.newArrivalZIPContainer').style.display = "flex";
+        list.fullLoad = 0
+        list.count = 0
+      }
+    }
   }
 
   function closeModalMessage(container) {
@@ -678,6 +755,90 @@
     document.querySelector('.back').style.display = "none";
     document.querySelector('.back').style.zIndex = 13;
     document.querySelector(container).style.display = "none";
+  }
+
+  function newArrivalZIP() {
+    document.querySelector('.back').style.display = "block";
+    setTimeout(()=>{
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewArrivalZIP',
+      data: ['Перекресток', 'Азбука вкуса', 'Лента', 'Мираторг'],
+      type: 'listClient'
+    })},500)
+    setTimeout(()=>{
+      onSuccess({
+      result: 'success',
+      func: 'getDataListForNewArrivalZIP',
+      data: ['Весы',
+        'ФР',
+        'ФН',
+        'ИБП',
+        'Кассовое оборудование',
+        'Прочее',
+        'Сетевое оборудование',
+        'Оргтехника',
+        'Прайсчекеры',
+        'Термопринтеры'
+      ],
+      type: 'listClassifier'
+    })},1000)
+    setTimeout(()=>{
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewArrivalZIP',
+      data: [
+        ['Digi', 'Весы'],
+        ['Атол-77Ф', 'ФР'],
+        ['Retail 01Ф', 'ФР'],
+        ['DataPrint', 'Весы'],
+        ['Noname', 'ИБП'],
+        ['Dosmar', 'Кассовое оборудование'],
+        ['A-data', 'Прочее'],
+        ['Noname', 'Прочее'],
+        ['Noname', 'ФН'],
+        ['СП-802', 'ФР'],
+        ['Netac', 'Прочее'],
+        ['AMD', 'Прочее'],
+        ['ChWay', 'Кассовое оборудование'],
+        ['ФН-1.2_Х5', 'ФН']
+      ],
+      type: 'prepareListModel'
+    })},1500)
+    setTimeout(()=>{
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewArrivalZIP',
+      data: [
+        ['Кабель от Raspberry к принтеру весов DP 403213',	'DP'],
+        ['Кабель питания принтера для весов DP 30503489',	'DP'],
+        ['Кассета для весов Dibal M525/D900',	'Dibal'],
+        ['Кассета для Dibal 500', 'Digi'],
+        ['Кассета для Digi SM100', 'Digi'],
+        ['Кассета для Digi SM5000bs', 'Digi']
+      ],
+      type: 'prepareListZIP'
+    })},1500)
+    setTimeout(()=>{
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewArrivalZIP',
+      data: ['офис СБИ', 'Клиент', 'Лапкин Е.В.', 'Четов П.А.'],
+      type: 'listWarehouses'
+    })},500)
+    list.fullLoad = 4
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getClients('getDataListForNewArrivalZIP','listClient')
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getСlassifier('getDataListForNewArrivalZIP','listClassifier')
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getModel('getDataListForNewArrivalZIP','prepareListModel')
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getModel('getDataListForNewArrivalZIP','listWarehouses')
   }
 
   function newZIP() {
@@ -690,11 +851,6 @@
     document.querySelector('.newPodmenaContainer').style.display = "flex";
   }
 
-  function newArrival() {
-    document.querySelector('.back').style.display = "block";
-    document.querySelector('.newArrivalContainer').style.display = "flex";
-    console.log('get info ')
-  }
 
   document.addEventListener('mouseup', function (e) {
     const popover = document.querySelector('.popover')
@@ -708,6 +864,16 @@
       if (popover.contains(e.target) && e.srcElement.tagName === 'LI') {
         const inputPopover = document.querySelector('.inputPopover')
         inputPopover.value = e.target.innerText
+        if (inputPopover.name.includes('nArZ2')) {
+          list['listModel'] = list.prepareListModel.filter(value => value[1] === e.target.innerText).map(value =>
+            value[0])
+          document.getElementById('nArZ3').value = ''
+        }
+        if (inputPopover.name.includes('nArZ3')) {
+          list['listZIP'] = list.prepareListZIP.filter(value => value[1] === e.target.innerText).map(value =>
+            value[0])
+          document.getElementById('nArZ4').value = ''
+        }
         inputPopover.classList.remove('inputPopover')
         popover.remove();
         const label = inputPopover.parentNode.previousElementSibling
@@ -754,6 +920,16 @@
           popoverKeyActive].innerText
         const inputPopover = document.querySelector('.inputPopover')
         inputPopover.value = option
+        if (inputPopover.name.includes('nArr2')) {
+          list['listModel'] = list.prepareListModel.filter(value => value[1] === option).map(value =>
+            value[0])
+          document.getElementById('nZIP3').value = ''
+        }
+        if (inputPopover.name.includes('nArZ3')) {
+          list['listZIP'] = list.prepareListZIP.filter(value => value[1] === e.target.innerText).map(value =>
+            value[0])
+          document.getElementById('nArZ4').value = ''
+        }
         inputPopover.classList.remove('inputPopover')
         const popover = document.querySelector('.popover')
         popover.remove();
@@ -798,6 +974,18 @@
       if (input.name.includes('number')) {
         validate = numberValidation(input.value)
       }
+      if (input.name.includes('textRuEng')) {
+        validate = textRuEngValidation(input.value)
+      }
+      if (input.name.includes('textCRDNT')) {
+        validate = coordinatesValidation(input.value)
+      }
+      if (input.name.includes('textLht')) {
+        validate = textLightValidation(input.value)
+      }
+      if (input.name.includes('textNoValidRequired')) {
+        validate = textNoValidRequired(input.value)
+      }
       const inputError = input.parentNode.nextElementSibling
       if (!validate.status && inputError.textContent) {
         inputError.textContent = ""
@@ -818,13 +1006,13 @@
     }
   }
 
-  function changeInputClickDropDown(input) {
-    createPopover(input, 'click')
+  function changeInputClickDropDown(input, listType) {
+    createPopover(input, 'click', list[listType])
     changeInputDropDownCross(input)
   }
 
-  function changeInputDropDown(input) {
-    createPopover(input, 'input')
+  function changeInputDropDown(input, listType) {
+    createPopover(input, 'input', list[listType])
     changeInputDropDownCross(input)
   }
 
@@ -839,7 +1027,7 @@
     }
   }
 
-  function createPopover(input, type) {
+  function createPopover(input, type, list) {
     const popover = document.querySelector('.popover')
     if (popover) {
       popover.remove()
@@ -858,7 +1046,7 @@
     input.classList.add('inputPopover')
     const listFilter = type === 'input' ? list.filter(value => value.toLocaleLowerCase().includes(input.value
       .toLocaleLowerCase()) || input.value === '') : list
-    if (listFilter.length) {
+    if (listFilter && listFilter.length) {
       const popoverUL = document.createElement("ul");
       popoverUL.className = "popover_listbox";
       popoverUL.role = "listbox"
@@ -909,13 +1097,13 @@
     const data = Array.from(formInputs).map(item => item.value)
     const errors = document.querySelectorAll(`${container} .inputError`)
     const dataErr = Array.from(errors).map(item => item.innerText).filter(value => value)
-    if (dataErr.length > 0 || data.includes('')) {
+    const checkEmptyValue = Array.from(formInputs).map(item => !item.value && item.required).filter(item => item)
+    if (dataErr.length > 0 || checkEmptyValue.length > 0) {
       const inputsWarning = document.querySelector(`${container} .inputsWarning`)
-      inputsWarning.textContent = 'Заполните все поля и без ошибок!'
+      inputsWarning.textContent = 'Заполните необходимые поля и без ошибок!'
       return
     }
     document.querySelector('.back').style.zIndex = 88;
-    if (data.includes('')) return
     const form = document.querySelector(`${container}`)
     form.reset()
     if (container.includes('newZIPContainer')) {
@@ -940,6 +1128,17 @@
         .withSuccessHandler(onSuccess)
         .writeNewPodmena(data)
     }
+    if (container.includes('newArrivalZIPContainer')) {
+      data.push('Активный')
+      onSuccess({
+        result: 'success',
+        func: 'newArrivalZIP',
+        data
+      })
+    //   google.script.run
+    //     .withSuccessHandler(onSuccess)
+    //     .writeNewPodmena(data)
+    }
   }
 
   function textValidation(value) {
@@ -959,6 +1158,44 @@
         error: 'Должно начинаться с заглавной буквы!'
       }
     }
+    return {
+      status: false
+    }
+  }
+
+  function textRuEngValidation(value) {
+    if (value === '') return {
+      status: true,
+      error: 'Поле не может быть пустым!'
+    }
+    if (!value.match('^[-_?!, .а-яА-ЯёЁ0-9a-zA-Zs]+$')) {
+      return {
+        status: true,
+        error: 'Только кирилица и английский, цифры, точка, пробел, тире!'
+      }
+    }
+    if (!value.match('^[А-ЯA-Z]')) {
+      return {
+        status: true,
+        error: 'Должно начинаться с заглавной буквы!'
+      }
+    }
+    return {
+      status: false
+    }
+  }
+
+  function textLightValidation(value) {
+    if (value === '') return {
+      status: true,
+      error: 'Поле не может быть пустым!'
+    }
+    return {
+      status: false
+    }
+  }
+
+  function textNoValidRequired(value) {
     return {
       status: false
     }
@@ -996,6 +1233,23 @@
     }
   }
 
+  function coordinatesValidation(value) {
+    if (value === '') return {
+      status: true,
+      error: 'Поле не может быть пустым!'
+    }
+    if (!value.match(
+        '^([-+]?)([0-9]{1,2})([,.])([0-9]{1,6})([,])([ ])([-+]?)([0-9]{1,2})([,.])([0-9]{1,6})'
+      )) {
+      return {
+        status: true,
+        error: 'Не соответсвует формату координат'
+      }
+    }
+    return {
+      status: false
+    }
+  }
 
   const svgErr =
     "<svg class='modalSVGErr' version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 455.111 455.111' style='enable-background:new 0 0 455.111 455.111;' xml:space='preserve'><circle style='fill:#E24C4B;' cx='227.556' cy='227.556' r='227.556'/><path style='fill:#D1403F;' d='M455.111,227.556c0,125.156-102.4,227.556-227.556,227.556c-72.533,0-136.533-32.711-177.778-85.333c38.4,31.289,88.178,49.778,142.222,49.778c125.156,0,227.556-102.4,227.556-227.556c0-54.044-18.489-103.822-49.778-142.222C422.4,91.022,455.111,155.022,455.111,227.556z'/><path style='fill:#FFFFFF;' d='M331.378,331.378c-8.533,8.533-22.756,8.533-31.289,0l-72.533-72.533l-72.533,72.533c-8.533,8.533-22.756,8.533-31.289,0c-8.533-8.533-8.533-22.756,0-31.289l72.533-72.533l-72.533-72.533c-8.533-8.533-8.533-22.756,0-31.289c8.533-8.533,22.756-8.533,31.289,0l72.533,72.533l72.533-72.533c8.533-8.533,22.756-8.533,31.289,0c8.533,8.533,8.533,22.756,0,31.289l-72.533,72.533l72.533,72.533C339.911,308.622,339.911,322.844,331.378,331.378z'/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>";

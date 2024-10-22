@@ -38,7 +38,7 @@
 
     .loader {
       display: block;
-      margin: 25% auto;
+      margin: 20% auto;
       border-top: 7px solid #34db80;
       border-radius: 50%;
       width: 60px;
@@ -47,12 +47,14 @@
     }
 
     .container {
-      width: 800px;
+      width: 90%;
       padding: 20px;
       margin-top: 100px;
       display: flex;
       justify-content: center;
       align-items: center;
+      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
+      border-radius: 5px
     }
 
     .modalMessage {
@@ -107,10 +109,17 @@
       width: 100%
     }
 
-    .title {
-      width: 53%;
+    .navbar {
+      width: 100%;
+      height: 60px;
       display: flex;
-      align-items: flex-start
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
     }
 
     button {
@@ -305,7 +314,8 @@
       color: #ef5350;
       font-size: 12px;
       margin: 3px 12px;
-      height: 20px
+      height: 20px;
+      text-align: left;
     }
 
 
@@ -419,6 +429,82 @@
       .newRegionContainer {
         width: 320px;
       }
+
+      .titleBar {
+        font-size: 16px;
+      }
+
+      .inputLabel {
+        font-size: 10px;
+        top: -10px
+      }
+
+      .inputContainer:focus-within label,
+      .inputLabelActive {
+        color: #1E515D;
+        top: -28px;
+      }
+
+
+
+      .inputOutlinedContainer {
+        height: 25px;
+      }
+
+      .inputOutlined {
+        font-size: 12px;
+      }
+
+      .inputContainer {
+        margin-bottom: 0px;
+      }
+
+      .inputContainer.first {
+        margin-top: 20px;
+      }
+
+      .popover_listbox,
+      .popoverNoElements {
+        font-size: 12px;
+      }
+
+      .inputError,
+      .inputsWarning {
+        font-size: 10px;
+      }
+    }
+
+    @media screen and (max-width: 400px) {
+      body {
+        min-height: 400vh;
+      }
+
+      button {
+        width: 120px;
+        height: 20px;
+        font-size: 8px;
+      }
+
+      .container {
+        width: 270px;
+      }
+
+      .newСlassifierContainer,
+      .newModelContainer,
+      .newZIPContainer,
+      .newPodmenaContainer,
+      .newEmployeeContainer,
+      .newPostContainer,
+      .newRoleContainer,
+      .newClientContainer,
+      .newObjectContainer,
+      .newRegionContainer {
+        width: 280px;
+      }
+
+      .titleBar {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -431,6 +517,7 @@
   <div class="container">
     <div class="modalMessage"></div>
     <div class="homepage">
+      <div class="navbar">Административные</div>
       <div class="btnContainer">
         <div class="btnContainer1">
           <button id="btnNewСlassifier" type="button" onclick="newСlassifier()">Новый классификатор</button>
@@ -896,6 +983,7 @@
       if (list.count >= list.fullLoad) {
         document.querySelector('.newZIPContainer').style.display = "flex";
         list.fullLoad = 0
+        list.count = 0
       }
     }
     if (func === 'getDataListForNewPodmena') {
@@ -903,8 +991,14 @@
       document.querySelector('.newPodmenaContainer').style.display = "flex";
     }
     if (func === 'getDataListForNewEmployee') {
+      console.log(data)
       list[type] = data
-      document.querySelector('.newEmployeeContainer').style.display = "flex";
+      list.count++
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.newEmployeeContainer').style.display = "flex";
+        list.fullLoad = 0
+        list.count = 0
+      }
     }
     if (func === 'getDataListForNewObject') {
       list[type] = data
@@ -912,6 +1006,7 @@
       if (list.count >= list.fullLoad) {
         document.querySelector('.newObjectContainer').style.display = "flex";
         list.fullLoad = 0
+        list.count = 0
       }
     }
   }
