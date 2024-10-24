@@ -4,6 +4,35 @@
 <head>
   <base target="_top">
   <style type="text/css">
+    *::-webkit-scrollbar {
+      background-color: #1E515D;
+      border-radius: 8px;
+      width: 12px
+    }
+    *::-webkit-scrollbar-track {
+      background-color: #326f7c;
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      -webkit-border-radius: 8px;
+      border-radius: 8px;
+      width: 12px
+    } 
+    *::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: #1E515D;
+      min-height: 14px;
+      -webkit-border-radius: 8px;
+      border-radius: 8px;
+      -webkit-box-shadow: inset 0 0 6px rgba(31, 10, 10, 0.5);
+      width: 12px
+    }
+    *::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-track:hover{
+      cursor: pointer
+    }
+
+    ::-moz-scrollbar-button, ::-webkit-scrollbar-button {
+      display:none;
+    }
+
     html {
       width: 100%;
     }
@@ -189,20 +218,29 @@
     .newObjectContainer,
     .newRegionContainer {
       display: none;
+      justify-content: flex-start;
+      flex-direction: column;
       position: absolute;
       background-color: #C1EEE1;
       width: 500px;
       height: auto;
+      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
+      max-height: 650px;
       min-height: 300px;
-      align-items: center;
-      justify-content: flex-start;
-      flex-direction: column;
+      z-index: 15;
       border: 0;
       border-radius: 4px;
       font-size: 16px;
       font-weight: bold;
-      box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.2);
-      z-index: 15;
+    }
+
+    .inputsContainer{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: column;
+      overflow-y: overlay;
     }
 
     .titleBar {
@@ -409,25 +447,18 @@
     @media screen and (max-width: 800px) {
       button {
         width: 150px;
-        height: 30px;
+        height: 32px;
         font-size: 11px;
       }
 
       .container {
-        width: 400px;
+        width: 360px;
       }
 
-      .newСlassifierContainer,
-      .newModelContainer,
-      .newZIPContainer,
-      .newPodmenaContainer,
-      .newEmployeeContainer,
-      .newPostContainer,
-      .newRoleContainer,
-      .newClientContainer,
-      .newObjectContainer,
-      .newRegionContainer {
+      .newArrivalZIPContainer,
+      .newArrivalPodmenaContainer {
         width: 320px;
+        max-height: 600px;
       }
 
       .titleBar {
@@ -445,14 +476,21 @@
         top: -28px;
       }
 
-
-
       .inputOutlinedContainer {
         height: 25px;
       }
 
+      .multiInputContainer{
+        height: 100px;
+      }
+
       .inputOutlined {
         font-size: 12px;
+      }
+
+      .textareaOutlined {
+        font-size: 12px;
+        min-width: 93%
       }
 
       .inputContainer {
@@ -472,38 +510,50 @@
       .inputsWarning {
         font-size: 10px;
       }
+      .inputFileLabel{
+        font-size: 12px;
+      }
+      
+      .inputFile{
+        font-size: 12px;
+      }
+      .inputFile::file-selector-button {
+        font-size: 11px;
+        width: 110px;
+        height: 25px;
+        padding: 3px 6px;
+      }
     }
 
     @media screen and (max-width: 400px) {
-      body {
-        min-height: 400vh;
-      }
-
       button {
         width: 120px;
-        height: 20px;
+        height: 26px;
         font-size: 8px;
       }
 
       .container {
-        width: 270px;
+        width: 300px;
       }
 
-      .newСlassifierContainer,
-      .newModelContainer,
-      .newZIPContainer,
-      .newPodmenaContainer,
-      .newEmployeeContainer,
-      .newPostContainer,
-      .newRoleContainer,
-      .newClientContainer,
-      .newObjectContainer,
-      .newRegionContainer {
+      .newArrivalZIPContainer,
+      .newArrivalPodmenaContainer{
         width: 280px;
+        max-height: 570px;
+      }
+
+      .textareaOutlined {
+        font-size: 12px;
+        min-width: 92%
       }
 
       .titleBar {
         font-size: 14px;
+      }
+
+      .inputFileLabel{
+        font-size: 12px;
+        height: 50px
       }
     }
   </style>
@@ -539,7 +589,8 @@
     </div>
     <form class="newСlassifierContainer">
       <div class="titleBar">Ввод нового классификатора</div>
-      <div class="inputContainer first">
+      <div class="inputsContainer">
+        <div class="inputContainer first">
         <label class="inputLabel" for="nClsf1">Введите наименование классификатора*</label>
         <div class="inputOutlinedContainer">
           <input id="nClsf1" name="nClsf1.text" required="true" type="text" class="inputOutlined" value=""
@@ -552,286 +603,305 @@
         <button id="btnSubmit" type="button" onclick="handleNewContainer('.newСlassifierContainer')">Сохранить</button>
         <button id="btnCancel" type="button" onclick="cancelContainer('.newСlassifierContainer')">Отмена</button>
       </div>
+    </div>
     </form>
     <form class="newModelContainer">
       <div class="titleBar">Ввод новой модели</div>
-      <div class="inputContainer first">
-        <label class="inputLabel" for="nMdl1">Введите новую модель*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nMdl1" name="nMdl1.textRuEng" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nMdl1">Введите новую модель*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nMdl1" name="nMdl1.textRuEng" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nMdl2">Выберите классификатор*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nMdl2" name="nMdl2.text" required="true" type="text" class="inputOutlined dropdown" value=""
-            autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
-            onclick="changeInputClickDropDown(this, 'listClassifier')" onchange="changeInputDropDownCross(this)">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nMdl2">Выберите классификатор*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nMdl2" name="nMdl2.text" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
+              onclick="changeInputClickDropDown(this, 'listClassifier')" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <span class="inputsWarning"></span>
-      <div class="btnSubmitContainer">
-        <button id="btnSubmit" type="button" onclick="handleNewContainer('.newModelContainer')">Сохранить</button>
-        <button id="btnCancel" type="button" onclick="cancelContainer('.newModelContainer')">Отмена</button>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button" onclick="handleNewContainer('.newModelContainer')">Сохранить</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.newModelContainer')">Отмена</button>
+        </div>
       </div>
     </form>
     <form class="newZIPContainer">
       <div class="titleBar">Ввод новой запчасти</div>
-      <div class="inputContainer first">
-        <label class="inputLabel" for="nZIP1">Введите наименование запчасти*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nZIP1" name="nZIP1.textRuEng" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nZIP1">Введите наименование запчасти*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nZIP1" name="nZIP1.textRuEng" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nZIP2">Выберите классификатор*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nZIP2" name="nZIP2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-            autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
-            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClassifier')"
-            onclick="changeInputClickDropDown(this, 'listClassifier', event.key)"
-            onchange="changeInputDropDownCross(this)">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nZIP2">Выберите классификатор*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nZIP2" name="nZIP2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClassifier')"
+              onclick="changeInputClickDropDown(this, 'listClassifier', event.key)"
+              onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nZIP3">Выберите модель*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nZIP3" name="nZIP3.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-            autocomplete="off" oninput="changeInputDropDown(this, 'listModel')"
-            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listModel')"
-            onclick="changeInputClickDropDown(this, 'listModel')" onchange="changeInputDropDownCross(this)">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nZIP3">Выберите модель*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nZIP3" name="nZIP3.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listModel')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listModel')"
+              onclick="changeInputClickDropDown(this, 'listModel')" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <span class="inputsWarning"></span>
-      <div class="btnSubmitContainer">
-        <button id="btnSubmit" type="button" onclick="handleNewContainer('.newZIPContainer')">Сохранить</button>
-        <button id="btnCancel" type="button" onclick="cancelContainer('.newZIPContainer')">Отмена</button>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button" onclick="handleNewContainer('.newZIPContainer')">Сохранить</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.newZIPContainer')">Отмена</button>
+        </div>
       </div>
     </form>
     <form class="newPodmenaContainer">
       <div class="titleBar">Ввод новой подмены</div>
-      <div class="inputContainer first">
-        <label class="inputLabel" for="nPdm1">Введите наименование подмены*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nPdm1" name="nPdm1.text" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nPdm1">Введите наименование подмены*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nPdm1" name="nPdm1.text" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nPdm2">Выберите классификатор*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nPdm2" name="nPdm2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-            autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
-            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClassifier')"
-            onclick="changeInputClickDropDown(this, 'listClassifier', event.key)"
-            onchange="changeInputDropDownCross(this)">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nPdm2">Выберите классификатор*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nPdm2" name="nPdm2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClassifier')"
+              onclick="changeInputClickDropDown(this, 'listClassifier', event.key)"
+              onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <span class="inputsWarning"></span>
-      <div class="btnSubmitContainer">
-        <button id="btnSubmit" type="button" onclick="handleNewContainer('.newPodmenaContainer')">Сохранить</button>
-        <button id="btnCancel" type="button" onclick="cancelContainer('.newPodmenaContainer')">Отмена</button>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button" onclick="handleNewContainer('.newPodmenaContainer')">Сохранить</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.newPodmenaContainer')">Отмена</button>
+        </div>
       </div>
     </form>
     <form class="newEmployeeContainer">
       <div class="titleBar">Ввод нового сотрудника</div>
-      <div class="inputContainer first">
-        <label class="inputLabel" for="nEmp1">Введите Фамилию и инициалы*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nEmp1" name="nEmp1.text" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nEmp1">Введите Фамилию и инициалы*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nEmp1" name="nEmp1.text" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nEmp2">Введите аккаунт от гугл*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nEmp2" name="nEmp2.email" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nEmp2">Введите аккаунт от гугл*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nEmp2" name="nEmp2.email" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nEmp3">Введите рабочий email*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nEmp3" name="nEmp3.email" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nEmp3">Введите рабочий email*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nEmp3" name="nEmp3.email" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nPdm2">Выберите должность*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nEmp4" name="nEmp4.text" required="true" type="text" class="inputOutlined dropdown" value=""
-            autocomplete="off" oninput="changeInputDropDown(this, 'listPost')"
-            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listPost')"
-            onclick="changeInputClickDropDown(this, 'listPost', event.key)" onchange="changeInputDropDownCross(this)">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nPdm2">Выберите должность*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nEmp4" name="nEmp4.text" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listPost')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listPost')"
+              onclick="changeInputClickDropDown(this, 'listPost', event.key)" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nPdm2">Выберите уроень доступа*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nEmp5" name="nEmp5.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-            autocomplete="off" oninput="changeInputDropDown(this, 'listRole')"
-            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listRole')"
-            onclick="changeInputClickDropDown(this, 'listRole', event.key)" onchange="changeInputDropDownCross(this)">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nPdm2">Выберите уроень доступа*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nEmp5" name="nEmp5.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listRole')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listRole')"
+              onclick="changeInputClickDropDown(this, 'listRole', event.key)" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <span class="inputsWarning"></span>
-      <div class="btnSubmitContainer">
-        <button id="btnSubmit" type="button" onclick="handleNewContainer('.newEmployeeContainer')">Сохранить</button>
-        <button id="btnCancel" type="button" onclick="cancelContainer('.newEmployeeContainer')">Отмена</button>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button" onclick="handleNewContainer('.newEmployeeContainer')">Сохранить</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.newEmployeeContainer')">Отмена</button>
+        </div>
       </div>
     </form>
     <form class="newPostContainer">
       <div class="titleBar">Ввод новой должности</div>
-      <div class="inputContainer first">
-        <label class="inputLabel" for="nPst1">Введите наименование должности*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nPst1" name="nPst1.text" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nPst1">Введите наименование должности*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nPst1" name="nPst1.text" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <span class="inputsWarning"></span>
-      <div class="btnSubmitContainer">
-        <button id="btnSubmit" type="button" onclick="handleNewContainer('.newPostContainer')">Сохранить</button>
-        <button id="btnCancel" type="button" onclick="cancelContainer('.newPostContainer')">Отмена</button>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button" onclick="handleNewContainer('.newPostContainer')">Сохранить</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.newPostContainer')">Отмена</button>
+        </div>
       </div>
     </form>
     <form class="newRoleContainer">
       <div class="titleBar">Ввод новой роли</div>
-      <div class="inputContainer first">
-        <label class="inputLabel" for="nRol1">Введите наименование роли*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nRol1" name="nRol1.textRuEng" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nRol1">Введите наименование роли*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nRol1" name="nRol1.textRuEng" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <span class="inputsWarning"></span>
-      <div class="btnSubmitContainer">
-        <button id="btnSubmit" type="button" onclick="handleNewContainer('.newRoleContainer')">Сохранить</button>
-        <button id="btnCancel" type="button" onclick="cancelContainer('.newRoleContainer')">Отмена</button>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button" onclick="handleNewContainer('.newRoleContainer')">Сохранить</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.newRoleContainer')">Отмена</button>
+        </div>
       </div>
     </form>
     <form class="newClientContainer">
       <div class="titleBar">Ввод нового клиента</div>
-      <div class="inputContainer first">
-        <label class="inputLabel" for="nCli1">Введите юр. наименование клиента*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nCli1" name="nCli1.text" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nCli1">Введите юр. наименование клиента*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nCli1" name="nCli1.text" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nCli2">Введите наименование клиента*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nCli2" name="nCli.text" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nCli2">Введите наименование клиента*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nCli2" name="nCli.text" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <span class="inputsWarning"></span>
-      <div class="btnSubmitContainer">
-        <button id="btnSubmit" type="button" onclick="handleNewContainer('.newClientContainer')">Сохранить</button>
-        <button id="btnCancel" type="button" onclick="cancelContainer('.newClientContainer')">Отмена</button>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button" onclick="handleNewContainer('.newClientContainer')">Сохранить</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.newClientContainer')">Отмена</button>
+        </div>
       </div>
     </form>
     <form class="newObjectContainer">
       <div class="titleBar">Ввод нового объекта</div>
-      <div class="inputContainer first">
-        <label class="inputLabel" for="nObj1">Введите наименование нового объекта*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nObj1" name="nObj1.textRuEng" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nObj1">Введите наименование нового объекта*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nObj1" name="nObj1.textRuEng" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nObj2">Выберите клиента*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nObj2" name="nObj2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-            autocomplete="off" oninput="changeInputDropDown(this, 'listClient')"
-            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClient')"
-            onclick="changeInputClickDropDown(this, 'listClient', event.key)" onchange="changeInputDropDownCross(this)">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nObj2">Выберите клиента*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nObj2" name="nObj2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listClient')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClient')"
+              onclick="changeInputClickDropDown(this, 'listClient', event.key)" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nObj3">Введите адрес объекта*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nObj3" name="nObj3.textLht" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nObj3">Введите адрес объекта*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nObj3" name="nObj3.textLightValidation" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nObj4">Выберите регион объекта*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nObj4" name="nObj4.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-            autocomplete="off" oninput="changeInputDropDown(this, 'listRegion')"
-            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listRegion')"
-            onclick="changeInputClickDropDown(this, 'listRegion', event.key)" onchange="changeInputDropDownCross(this)">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nObj4">Выберите регион объекта*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nObj4" name="nObj4.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listRegion')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listRegion')"
+              onclick="changeInputClickDropDown(this, 'listRegion', event.key)" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nObj5">Введите координаты объекта*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nObj5" name="nObj5.textCRDNT" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nObj5">Введите координаты объекта*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nObj5" name="nObj5.textCRDNT" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nObj6">Введите клиентской название</label>
-        <div class="inputOutlinedContainer">
-          <input id="nObj6" name="nObj6.textNoValidRequired" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nObj6">Введите клиентской название</label>
+          <div class="inputOutlinedContainer">
+            <input id="nObj6" name="nObj6.textNoValidRequired" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <div class="inputContainer">
-        <label class="inputLabel" for="nObj7">Введите клиентский номер</label>
-        <div class="inputOutlinedContainer">
-          <input id="nObj7" name="nObj7.textNoValidRequired" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+        <div class="inputContainer">
+          <label class="inputLabel" for="nObj7">Введите клиентский номер</label>
+          <div class="inputOutlinedContainer">
+            <input id="nObj7" name="nObj7.textNoValidRequired" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <span class="inputsWarning"></span>
-      <div class="btnSubmitContainer">
-        <button id="btnSubmit" type="button" onclick="handleNewContainer('.newObjectContainer')">Сохранить</button>
-        <button id="btnCancel" type="button" onclick="cancelContainer('.newObjectContainer')">Отмена</button>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button" onclick="handleNewContainer('.newObjectContainer')">Сохранить</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.newObjectContainer')">Отмена</button>
+        </div>
       </div>
     </form>
     <form class="newRegionContainer">
       <div class="titleBar">Ввод нового региона</div>
-      <div class="inputContainer first">
-        <label class="inputLabel" for="nReg1">Введите новый регион*</label>
-        <div class="inputOutlinedContainer">
-          <input id="nReg1" name="nReg1.text" required="true" type="text" class="inputOutlined" value=""
-            autocomplete="off">
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nReg1">Введите новый регион*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nReg1" name="nReg1.text" required="true" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
         </div>
-        <span class="inputError"></span>
-      </div>
-      <span class="inputsWarning"></span>
-      <div class="btnSubmitContainer">
-        <button id="btnSubmit" type="button" onclick="handleNewContainer('.newRegionContainer')">Сохранить</button>
-        <button id="btnCancel" type="button" onclick="cancelContainer('.newRegionContainer')">Отмена</button>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button" onclick="handleNewContainer('.newRegionContainer')">Сохранить</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.newRegionContainer')">Отмена</button>
+        </div>
       </div>
     </form>
   </div>
@@ -1294,7 +1364,7 @@
       if (input.name.includes('textCRDNT')) {
         validate = coordinatesValidation(input.value)
       }
-      if (input.name.includes('textLht')) {
+      if (input.name.includes('textLightValidation')) {
         validate = textLightValidation(input.value)
       }
       if (input.name.includes('textNoValidRequired')) {
