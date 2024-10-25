@@ -1465,9 +1465,10 @@
   }
 
   function cancelContainer(container) {
+    const form = document.querySelector(container)
+    form.querySelector('.inputsContainer').scrollTo(0,0)
     document.querySelector('.back').style.display = "none";
     document.querySelector(container).style.display = "none";
-    const form = document.querySelector(container)
     form.reset()
     const allLabels = form.querySelectorAll('.inputLabelActive')
     Array.from(allLabels).map(item => item.classList.remove('inputLabelActive'))

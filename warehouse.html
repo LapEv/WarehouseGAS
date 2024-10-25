@@ -762,60 +762,78 @@
       </div>
     </div>
   </form>
-  <form class="newZIPContainer">
-    <div class="titleBar">Ввод новой запчасти</div>
-    <div class="inputContainer first">
-      <label class="inputLabel" for="nZIP1">Введите наименование запчасти*</label>
-      <div class="inputOutlinedContainer">
-        <input id="nZIP1" name="nZIP1.text" required="true" type="text" class="inputOutlined" value=""
-          autocomplete="off">
+  <form class="newArrivalPodmenaContainer">
+    <div class="titleBar">Ввод нового поступления подмены</div>
+    <div class="inputsContainer">
+      <div class="inputContainer first">
+        <label class="inputLabel" for="nArP1">Выберите поставщика*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArP1" name="nArP1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listClient')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClient')"
+            onclick="changeInputClickDropDown(this, 'listClient', event.key)" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
       </div>
-      <span class="inputError"></span>
-    </div>
-    <div class="inputContainer">
-      <label class="inputLabel" for="nZIP2">Введите наименование производителя запчасти*</label>
-      <div class="inputOutlinedContainer">
-        <input id="nZIP2" name="nZIP2.text" required="true" type="text" class="inputOutlined" value=""
-          autocomplete="off">
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArP2">Выберите классификатор*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArP2" name="nArP2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClassifier')"
+            onclick="changeInputClickDropDown(this, 'listClassifier', event.key)"
+            onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
       </div>
-      <span class="inputError"></span>
-    </div>
-    <span class="inputsWarning"></span>
-    <div class="btnSubmitContainer">
-      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newZIPContainer')">Сохранить</button>
-      <button id="btnCancel" type="button" onclick="cancelContainer('.newZIPContainer')">Отмена</button>
-    </div>
-  </form>
-  <form class="newPodmenaContainer">
-    <div class="titleBar">Ввод новой подмены</div>
-    <div class="inputContainer first">
-      <label class="inputLabel" for="nPdm1">Введите наименование подмены*</label>
-      <div class="inputOutlinedContainer">
-        <input id="nPdm1" name="nPdm1.text" required="true" type="text" class="inputOutlined" value=""
-          autocomplete="off">
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArP3">Выберите подмену*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArP3" name="nArP3.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listPodmena')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listPodmena')"
+            onclick="changeInputClickDropDown(this, 'listPodmena')" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
       </div>
-      <span class="inputError"></span>
-    </div>
-    <div class="inputContainer">
-      <label class="inputLabel" for="nPdm2">Введите классификатор подмены*</label>
-      <div class="inputOutlinedContainer">
-        <input id="nPdm2" name="nPdm2.text" required="true" type="text" class="inputOutlined" value=""
-          autocomplete="off">
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArP4">На какой склад*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArP4" name="nArP4.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+            onclick="changeInputClickDropDown(this, 'listWarehouses')" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
       </div>
-      <span class="inputError"></span>
-    </div>
-    <div class="inputContainer">
-      <label class="inputLabel" for="nPdm3">Введите модель подмены*</label>
-      <div class="inputOutlinedContainer">
-        <input id="nPdm3" name="nPdm3.text" required="true" type="text" class="inputOutlined" value=""
-          autocomplete="off">
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArP5">Введите серийнные номера</label>
+        <div class="inputOutlinedContainer multiInputContainer">
+          <textarea id="nArP5" name="nArP5.textLightValidation" required="true"  type="text" class="inputOutlined textareaOutlined" value=""
+            autocomplete="off"></textarea>
+        </div>
+        <span class="inputError"></span>
       </div>
-      <span class="inputError"></span>
-    </div>
-    <span class="inputsWarning"></span>
-    <div class="btnSubmitContainer">
-      <button id="btnSubmit" type="button" onclick="handleNewContainer('.newPodmenaContainer')">Сохранить</button>
-      <button id="btnCancel" type="button" onclick="cancelContainer('.newPodmenaContainer')">Отмена</button>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArP6">Введите комментарии</label>
+        <div class="inputOutlinedContainer multiInputContainer">
+          <textarea id="nArP6" name="nArP6.textNoValidRequired" type="text" class="inputOutlined textareaOutlined" value=""
+            autocomplete="off"></textarea>
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainerFile">
+        <label class="inputFileLabel" for="nArP7">Загрузите или перетащите акт*
+          <input id="nArP7" name="nArP7.textLightValidation" required="true" type="file" class="inputFile" value=""
+              autocomplete="off" multiple accept="application/pdf, image/*">
+        </label>
+        <span class="inputError"></span>
+      </div>
+      <span class="inputsWarning"></span>
+      <div class="btnSubmitContainer">
+        <button id="btnSubmit" type="button" onclick="handleNewContainer('.newArrivalPodmenaContainer')">Сохранить</button>
+        <button id="btnCancel" type="button" onclick="cancelContainer('.newArrivalPodmenaContainer')">Отмена</button>
+      </div>
     </div>
   </form>
 </div>
@@ -841,9 +859,11 @@
     listModel: [],
     listClient: [],
     listZIP: [],
+    listPodmena: [],
     listWarehouses: [],
     prepareListModel: [],
     prepareListZIP: [],
+    prepareListPodmena:[],
     count: 0,
     fullLoad: 0
 }
@@ -880,6 +900,16 @@
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
+    if (func === 'newArrivalZIP') {
+      const message1 = "Подмена ";
+      const message2 = " для классификатора ";
+      const message3 = " на склад ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[3]}</b>${message2}<b>${data[1]}</b>${message4}<b>${data[4]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newArrivalPodmenaContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
     if (func === 'newZIP') {
       const message1 = "Запчасть ";
       const message2 = " производителя ";
@@ -907,6 +937,17 @@
         list.count = 0
       }
     }
+    if (func === 'getDataListForNewArrivalPodmena') {
+      list[type] = data
+      list.count++
+      list.fullLoad = 4
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.newArrivalPodmenaContainer').style.display = "flex";
+        list.fullLoad = 0
+        list.count = 0
+      }
+    }
+
   }
 
   function closeModalMessage(container) {
@@ -918,6 +959,7 @@
 
   function newArrivalZIP() {
     document.querySelector('.back').style.display = "block";
+    list.fullLoad = 5
     onSuccess({
       result: 'success',
       func: 'getDataListForNewArrivalZIP',
@@ -961,27 +1003,28 @@
       ],
       type: 'prepareListModel'
     })
-    setTimeout(()=>{
     onSuccess({
       result: 'success',
       func: 'getDataListForNewArrivalZIP',
       data: [
-        ['Кабель от Raspberry к принтеру весов DP 403213',	'DP'],
-        ['Кабель питания принтера для весов DP 30503489',	'DP'],
-        ['Кассета для весов Dibal M525/D900',	'Dibal'],
-        ['Кассета для Dibal 500', 'Digi'],
-        ['Кассета для Digi SM100', 'Digi'],
-        ['Кассета для Digi SM5000bs', 'Digi']
+        ['Кабель от Raspberry к принтеру весов DP 403213', 'Весы',	'DP'],
+        ['Кабель питания принтера для весов DP 30503489',	'Весы',	'DP'],
+        ['Кассета для весов Dibal M525/D900',	'Весы',	'Dibal'],
+        ['Кассета для Dibal 500', 'Весы',	'Digi'],
+        ['Кассета для Digi SM100', 'Весы',	'Digi'],
+        ['Кассета для Digi SM5000bs', 'Весы',	'Digi'],
+        ['Аккумулятор для ИБП', 'ИБП',	'Noname'],
+        ['Кабель USB type A ext PWR 15', 'Прочее',	'Noname'],
+        ['Шлейф для подключения ФН', 'ФН',	'Noname']
       ],
       type: 'prepareListZIP'
-    })},1500)
+    })
     onSuccess({
       result: 'success',
       func: 'getDataListForNewArrivalZIP',
       data: ['офис СБИ', 'Клиент', 'Лапкин Е.В.', 'Четов П.А.'],
       type: 'listWarehouses'
     })
-    list.fullLoad = 4
     // google.script.run
     //   .withSuccessHandler(onSuccess)
     //   .getClients('getDataListForNewArrivalZIP','listClient')
@@ -994,6 +1037,64 @@
     // google.script.run
     //   .withSuccessHandler(onSuccess)
     //   .getModel('getDataListForNewArrivalZIP','listWarehouses')
+  }
+
+  function newArrivalPodmena(){
+    document.querySelector('.back').style.display = "block";
+    list.fullLoad = 4
+      onSuccess({
+        result: 'success',
+        func: 'getDataListForNewArrivalPodmena',
+        data: ['Перекресток', 'Азбука вкуса', 'Лента', 'Мираторг'],
+        type: 'listClient'
+      })
+      onSuccess({
+      result: 'success',
+      func: 'getDataListForNewArrivalPodmena',
+      data: ['Весы',
+        'ФР',
+        'ФН',
+        'ИБП',
+        'Кассовое оборудование',
+        'Прочее',
+        'Сетевое оборудование',
+        'Оргтехника',
+        'Прайсчекеры',
+        'Термопринтеры'
+      ],
+      type: 'listClassifier'
+    })
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewArrivalPodmena',
+      data: [
+        ['Весы штрих PC200C3 V4 15-2.5', 'Весы'],
+        ['Весы D-900 DIBAL (31760925)',	'Весы'],
+        ['Digi SM100PCS+WLAN',	'Весы'],
+        ['Дисплей покупателя CheckWay CD-13', 'Кассовое оборудование'],
+        ['Кассовый комплект Beetle/M-III01 с верт ДЯ', 'Кассовое оборудование'],
+        ['Ручной сканер 2D Symbol DS2208  ', 'Кассовое оборудование'],
+        ['Принтер Kyocera FS-1060DN', 'Оргтехника'],
+        ['Kyocera_M2040dn принтер', 'Оргтехника']
+      ],
+      type: 'prepareListPodmena'
+    })
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewArrivalPodmena',
+      data: ['офис СБИ', 'Клиент', 'Лапкин Е.В.', 'Четов П.А.'],
+      type: 'listWarehouses'
+    })
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getClients('getDataListForNewArrivalPodmena','listClient')
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getСlassifier('getDataListForNewArrivalPodmena','listClassifier')
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getModel('getDataListForNewArrivalPodmena','listWarehouses')
+
   }
 
   function newZIP() {
@@ -1025,9 +1126,17 @@
           document.getElementById('nArZ3').value = ''
         }
         if (inputPopover.name.includes('nArZ3')) {
-          list['listZIP'] = list.prepareListZIP.filter(value => value[1] === e.target.innerText).map(value =>
+          const classifier = document.getElementById('nArZ2').value
+          list['listZIP'] = list.prepareListZIP.filter(value => value[1] ===classifier && value[2] === e.target.innerText).map(value =>
             value[0])
           document.getElementById('nArZ4').value = ''
+        }
+        if (inputPopover.name.includes('nArP2')) {
+          console.log('list = ', list)
+          console.log('e.target.innerText = ', e.target.innerText)
+          list['listPodmena'] = list.prepareListPodmena.filter(value => value[1] === e.target.innerText).map(value =>
+            value[0])
+          document.getElementById('nArP3').value = ''
         }
         inputPopover.classList.remove('inputPopover')
         popover.remove();
@@ -1081,7 +1190,8 @@
           document.getElementById('nZIP3').value = ''
         }
         if (inputPopover.name.includes('nArZ3')) {
-          list['listZIP'] = list.prepareListZIP.filter(value => value[1] === e.target.innerText).map(value =>
+          const classifier = document.getElementById('nArZ2').value
+          list['listZIP'] = list.prepareListZIP.filter(value => value[1] ===classifier && value[2] === e.target.innerText).map(value =>
             value[0])
           document.getElementById('nArZ4').value = ''
         }
@@ -1259,9 +1369,10 @@
   }
 
   function cancelContainer(container) {
+    const form = document.querySelector(container)
+    form.querySelector('.inputsContainer').scrollTo(0,0)
     document.querySelector('.back').style.display = "none";
     document.querySelector(container).style.display = "none";
-    const form = document.querySelector(container)
     form.reset()
     const allLabels = form.querySelectorAll('.inputLabelActive')
     Array.from(allLabels).map(item => item.classList.remove('inputLabelActive'))
