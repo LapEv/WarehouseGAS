@@ -323,7 +323,7 @@
       outline: none;
     }
 
-    .inputFile::file-selector-button:hover {
+    .inputFile::file-selector-button:hover  {
       background-color: rgb(135, 166, 157);
       box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
     }
@@ -344,7 +344,7 @@
       transition: background .2s ease-in-out, border .2s ease-in-out;
     }
 
-    .inputFileLabel:hover {
+    .inputFileLabel:hover, .drag_active {
       background-color: rgb(135, 166, 157);
       border-color: #1E515D;
     }
@@ -900,7 +900,7 @@
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
-    if (func === 'newArrivalZIP') {
+    if (func === 'newArrivalPodmena') {
       const message1 = "Подмена ";
       const message2 = " для классификатора ";
       const message3 = " на склад ";
@@ -1107,7 +1107,6 @@
     document.querySelector('.newPodmenaContainer').style.display = "flex";
   }
 
-
   document.addEventListener('mouseup', function (e) {
     const popover = document.querySelector('.popover')
     const inputClasses = e.target.classList
@@ -1267,6 +1266,15 @@
   Array.from(inputFile).map((item, index) => {
     item.addEventListener('change', function (e) {
       const input = e.target
+      const inputError = input.parentNode.nextElementSibling
+      if (input.files.length <= 10 && inputError.textContent) {
+        inputError.textContent = ""
+      }
+      if (input.files.length > 10) {
+        inputError.textContent = 'Не более 10 файлов!'
+        input.value = ''
+        return
+      }
       const svg = input.querySelector('.svgFileClear')
       if (input.value && !svg) {
         input.style.color = '#C1EEE1'
@@ -1382,12 +1390,12 @@
   }
 
   async function handleNewContainer(container) {
-    const formInputs = document.querySelectorAll(`${container} input, textarea`)
+    const formInputs = document.querySelectorAll(`${container} input, ${container} textarea`)
     const data = Array.from(formInputs).map(item => item.value)
     const errors = document.querySelectorAll(`${container} .inputError`)
     const dataErr = Array.from(errors).map(item => item.innerText).filter(value => value)
     const checkEmptyValue = Array.from(formInputs).map(item => !item.value && item.required).filter(item => item)
-    if (dataErr.length > 0 || checkEmptyValue.length > 0) {
+   if (dataErr.length > 0 || checkEmptyValue.length > 0) {
       const inputsWarning = document.querySelector(`${container} .inputsWarning`)
       inputsWarning.textContent = 'Заполните необходимые поля и без ошибок!'
       return
@@ -1423,6 +1431,46 @@
       }))
     }))
   }
+
+  const dropFileZone = document.querySelectorAll(".inputFileLabel")
+  Array.from(dropFileZone).map((item, index) => {
+    item.addEventListener("dragover", function(event) {
+      event.preventDefault()
+      item.classList.add("drag_active")
+    })
+
+    item.addEventListener("dragleave", function(event) {
+      if (!item.contains(event.relatedTarget)){
+        event.preventDefault()
+        item.classList.remove("drag_active")
+      }
+    })
+
+    item.addEventListener("drop", function(event) {
+      event.preventDefault()
+      item.classList.remove("drag_active")
+      const file = event.dataTransfer?.files
+      if (!file) {
+        return
+      }
+      const uploadInput = document.querySelector(".inputFile")
+      const inputError = uploadInput.parentNode.nextElementSibling
+      if (file.length <= 10 && inputError.textContent) {
+        inputError.textContent = ""
+      }
+      if (file.length > 10) {
+        inputError.textContent = 'Не более 10 файлов!'
+        uploadInput.value = ''
+        return
+      }
+      uploadInput.files = event.dataTransfer.files
+      const svg = uploadInput.querySelector('.svgFileClear')
+        if (uploadInput.value && !svg) {
+          uploadInput.style.color = '#C1EEE1'
+          uploadInput.parentNode.parentNode.insertAdjacentHTML('beforeend', svgFileClear)
+        }
+    })
+  })
 
   function textValidation(value) {
     if (value === '') return {
