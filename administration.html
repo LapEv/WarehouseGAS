@@ -7,14 +7,14 @@
     *::-webkit-scrollbar {
       background-color: #1E515D;
       border-radius: 8px;
-      width: 12px
+      width: 8px
     }
     *::-webkit-scrollbar-track {
       background-color: #326f7c;
       -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
       -webkit-border-radius: 8px;
       border-radius: 8px;
-      width: 12px
+      width: 8px
     } 
     *::-webkit-scrollbar-thumb {
       border-radius: 8px;
@@ -23,7 +23,7 @@
       -webkit-border-radius: 8px;
       border-radius: 8px;
       -webkit-box-shadow: inset 0 0 6px rgba(31, 10, 10, 0.5);
-      width: 12px
+      width: 8px
     }
     *::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-track:hover{
       cursor: pointer
@@ -240,7 +240,7 @@
       align-items: center;
       justify-content: flex-start;
       flex-direction: column;
-      overflow-y: overlay;
+      overflow-y: scroll;
     }
 
     .titleBar {
@@ -430,6 +430,8 @@
     .popover li.popoverKeyActive,
     .popover li.popoverKeySelected {
       background-color: rgba(193, 238, 225, 0.08);
+      font-weight: bold;
+      color: #34db80
     }
 
     .popover li:hover {
@@ -1254,6 +1256,8 @@
         const inputPopover = document.querySelector('.inputPopover')
         inputPopover.classList.remove('inputPopover')
         popover.remove();
+        const inputsContainer = inputPopover.closest('.inputsContainer')
+        inputsContainer.style.overflowY = 'scroll'
       }
       if (popover.contains(e.target) && e.srcElement.tagName === 'LI') {
         const inputPopover = document.querySelector('.inputPopover')
@@ -1274,6 +1278,8 @@
         if (inputPopover.value && !svg) {
           container.insertAdjacentHTML('beforeend', svgCrossDropdown)
         }
+        const inputsContainer = inputPopover.closest('.inputsContainer')
+        inputsContainer.style.overflowY = 'scroll'
       }
     }
   })
@@ -1326,6 +1332,8 @@
         if (inputPopover.value && !svg) {
           container.insertAdjacentHTML('beforeend', svgCrossDropdown)
         }
+        const inputsContainer = inputPopover.closest('.inputsContainer')
+        inputsContainer.style.overflowY = 'scroll'
       }
     }
   })
@@ -1413,9 +1421,15 @@
 
   function createPopover(input, type, list) {
     const popover = document.querySelector('.popover')
+    if (input.classList.contains('inputPopover') && popover){
+      popover.remove()
+      return
+    } 
     if (popover) {
       popover.remove()
     }
+    const inputsContainer = input.closest('.inputsContainer')
+    inputsContainer.style.overflowY = 'hidden'
     const popoverdiv = document.createElement("div");
     popoverdiv.className = "popover";
     document.body.appendChild(popoverdiv);

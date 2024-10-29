@@ -7,7 +7,7 @@
     *::-webkit-scrollbar {
       background-color: #1E515D;
       border-radius: 8px;
-      width: 12px
+      width: 8px
     }
 
     *::-webkit-scrollbar-track {
@@ -15,7 +15,7 @@
       -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
       -webkit-border-radius: 8px;
       border-radius: 8px;
-      width: 12px
+      width: 8px
     }
 
     *::-webkit-scrollbar-thumb {
@@ -25,7 +25,7 @@
       -webkit-border-radius: 8px;
       border-radius: 8px;
       -webkit-box-shadow: inset 0 0 6px rgba(31, 10, 10, 0.5);
-      width: 12px
+      width: 8px
     }
 
     *::-webkit-scrollbar-thumb:hover,
@@ -212,10 +212,10 @@
       color: #08793b
     }
 
-    .newZIPContainer,
-    .newPodmenaContainer,
     .newArrivalZIPContainer,
-    .newArrivalPodmenaContainer {
+    .newArrivalPodmenaContainer,
+    .newMovingZIPContainer,
+    .newMovingPodmenaContainer {
       display: none;
       justify-content: flex-start;
       flex-direction: column;
@@ -239,7 +239,7 @@
       align-items: center;
       justify-content: flex-start;
       flex-direction: column;
-      overflow-y: overlay;
+      overflow-y: scroll;
     }
 
     .titleBar {
@@ -380,7 +380,7 @@
     }
 
     .inputOutlined {
-      height: 40px;
+      height: 35px;
       font-size: 14px;
       letter-spacing: inherit;
       color: currentColor;
@@ -388,7 +388,6 @@
       border: 0;
       box-sizing: content-box;
       background: none;
-      height: 1.4375em;
       margin: 0;
       -webkit-tap-highlight-color: transparent;
       display: block;
@@ -403,7 +402,7 @@
     }
 
     .textareaOutlined {
-      min-width: 96%;
+      min-width: 95%;
       min-height: 80px;
       background-color: #1E515D;
       color: #FFFFFF;
@@ -466,7 +465,6 @@
       margin: 0px;
       transform: translate(413px, 341px);
       z-index: 9999;
-      margin-top: 5px;
     }
 
     .popover_paper {
@@ -507,6 +505,8 @@
     .popover li.popoverKeyActive,
     .popover li.popoverKeySelected {
       background-color: rgba(193, 238, 225, 0.08);
+      font-weight: bold;
+      color: #34db80
     }
 
     .popover li:hover {
@@ -542,7 +542,9 @@
       }
 
       .newArrivalZIPContainer,
-      .newArrivalPodmenaContainer {
+      .newArrivalPodmenaContainer,
+      .newMovingZIPContainer,
+      .newMovingPodmenaContainer {
         width: 320px;
         max-height: 600px;
       }
@@ -625,7 +627,9 @@
       }
 
       .newArrivalZIPContainer,
-      .newArrivalPodmenaContainer {
+      .newArrivalPodmenaContainer,
+      .newMovingZIPContainer,
+      .newMovingPodmenaContainer {
         width: 280px;
         max-height: 570px;
       }
@@ -662,9 +666,9 @@
           <button id="btnNewArrivalPodmena" type="button" onclick="newArrivalPodmena()">Новое поступление
             подмены</button>
           <hr size=1>
-          <button id="btnCreateNewMovingZIP" type="button" onclick="createNewMovingZIP()">Создать перемещение
+          <button id="btnNewMovingZIP" type="button" onclick="newMovingZIP()">Создать перемещение
             ЗИП</button>
-          <button id="btnCreateNewMovingPodmena" type="button" onclick="createNewMovingPodmena()">Создать перемещение
+          <button id="btnNewMovingPodmena" type="button" onclick="newMovingPodmena()">Создать перемещение
             подмены</button>
           <hr size=1>
           <button id="btnWriteOffZip" type="button" onclick="witeOffZIP()">Списать ЗИП</button>
@@ -852,6 +856,73 @@
         </div>
       </div>
     </form>
+    <form class="newMovingZIPContainer">
+      <div class="titleBar">Ввод нового перемещения ЗИП</div>
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nMvZ1">Выберите склад откуда*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nMvZ1" name="nMvZ1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+              onclick="changeInputClickDropDown(this, 'listWarehouses', event.key)"
+              onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nMvZ2">Выберите ЗИП*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nMvZ2" name="nMvZ2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listZIP')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listZIP')"
+              onclick="changeInputClickDropDown(this, 'listZIP')" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel inputLabelActive" for="nMvZ3">Укажите количество*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nMvZ3" name="nMvZ3.number" required="true" type="number" class="inputOutlined" value="1"
+              autocomplete="off" min="1">
+          </div>
+          <span class=" inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nMvZ4">Выберите серийнные номера</label>
+          <div class="inputOutlinedContainer multiInputContainer">
+            <textarea id="nMvZ4" name="nMvZ4.textNoValidRequired" type="text" class="inputOutlined dropdown textareaOutlined" value=""
+              autocomplete="off" onclick="changeInputClickDropDown(this, 'listSerial')" onchange="changeInputDropDownCross(this)"></textarea>
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nMvZ5">Выберите склад куда*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nMvZ5" name="nMvZ5.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+              onclick="changeInputClickDropDown(this, 'listWarehouses')" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nMvZ6">Введите комментарии</label>
+          <div class="inputOutlinedContainer multiInputContainer">
+            <textarea id="nMvZ6" name="nMvZ6.textNoValidRequired" type="text" class="inputOutlined textareaOutlined"
+              value="" autocomplete="off"></textarea>
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button"
+            onclick="handleNewContainer('.newMovingZIPContainer')">Сохранить</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.newMovingZIPContainer')">Отмена</button>
+        </div>
+      </div>
+    </form>
+
   </div>
 
 </body>
@@ -875,6 +946,7 @@
     listModel: [],
     listClient: [],
     listZIP: [],
+    listSortZIP: [],
     listPodmena: [],
     listWarehouses: [],
     prepareListModel: [],
@@ -883,7 +955,7 @@
     count: 0,
     fullLoad: 0
   }
-
+  
   function onSuccess({
     result,
     func,
@@ -926,21 +998,23 @@
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
-    if (func === 'newZIP') {
-      const message1 = "Запчасть ";
-      const message2 = " производителя ";
+    if (func === 'newMovinglZIP') {
+      const message1 = "Перемещение ЗИП ";
+      const message2 = " со склада ";
+      const message3 = " на склад ";
       const modal = document.querySelector('.modalMessage');
       modal.innerHTML = svgOk +
-        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b> записана в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newZIPContainer")'>OK</button>`;
+        `<div class='modalMessage_text'>${message1}<b>${data[1]}</b>${message2}<b>${data[0]}</b>${message3}<b>${data[4]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newMovingZIPContainer")'>OK</button>`;
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
-    if (func === 'newPodmena') {
-      const message1 = "Подмена ";
-      const message2 = " производителя ";
+    if (func === 'newMovinglPodmena') {
+      const message1 = "Перемещение подмены ";
+      const message2 = " со склада ";
+      const message3 = " на склад ";
       const modal = document.querySelector('.modalMessage');
       modal.innerHTML = svgOk +
-        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b> записана в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newPodmenaContainer")'>OK</button>`;
+        `<div class='modalMessage_text'>${message1}<b>${data[1]}</b>${message2}<b>${data[0]}</b>${message3}<b>${data[4]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newMovingPodmenaContainer")'>OK</button>`;
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
@@ -962,7 +1036,15 @@
         list.count = 0
       }
     }
-
+    if (func === 'getDataListForNewMovingZIP') {
+      list[type] = data
+      list.count++
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.newMovingZIPContainer').style.display = "flex";
+        list.fullLoad = 0
+        list.count = 0
+      }
+    }
   }
 
   function closeModalMessage(container) {
@@ -1111,9 +1193,48 @@
     //   .getModel('getDataListForNewArrivalPodmena','listWarehouses')
   }
 
-  function newZIP() {
+  function newMovingZIP() {
     document.querySelector('.back').style.display = "block";
-    document.querySelector('.newZIPContainer').style.display = "flex";
+    list.fullLoad = 2
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewMovingZIP',
+      data: ['Офис СБИ', 'Гасанов', 'Платонов', 'Камалов'],
+      type: 'listWarehouses'
+    })
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForNewMovingZIP',
+      data: [
+        ['Термоголовка для весов DP, 30303022', 'Весы', 'DataPrint', '', 'Офис СБИ'],
+        ['Термоголовка для весов DP, 30303022', 'Весы', 'DataPrint', '', 'Офис СБИ'],
+        ['Термоголовка для весов DP, 30303022', 'Весы', 'DataPrint', '', 'Офис СБИ'],
+        ['Термоголовка для весов DP, 30303022', 'Весы', 'DataPrint', '', 'Офис СБИ'],
+        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123456', 'Офис СБИ'],
+        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123457', 'Офис СБИ'],
+        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123458', 'Офис СБИ'],
+        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123459', 'Офис СБИ'],
+        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123460', 'Офис СБИ'],
+        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123461', 'Офис СБИ'],
+        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123462', 'Офис СБИ'],
+        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123463', 'Офис СБИ'],
+        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123464', 'Офис СБИ'],
+        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123465', 'Офис СБИ']
+      ],
+      type: 'prepareListZIP'
+    })
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getClients('getDataListForNewArrivalZIP','listClient')
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getСlassifier('getDataListForNewArrivalZIP','listClassifier')
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getModel('getDataListForNewArrivalZIP','prepareListModel')
+    // google.script.run
+    //   .withSuccessHandler(onSuccess)
+    //   .getModel('getDataListForNewArrivalZIP','listWarehouses')
   }
 
   function newPodmena() {
@@ -1126,13 +1247,15 @@
     const inputClasses = e.target.classList
     if (popover && inputClasses) {
       if (!popover.contains(e.target) && !inputClasses.contains('inputPopover')) {
+        console.log('here = ', )
         const inputPopover = document.querySelector('.inputPopover')
         inputPopover.classList.remove('inputPopover')
         popover.remove();
+        const inputsContainer = inputPopover.closest('.inputsContainer')
+        inputsContainer.style.overflowY = 'scroll'
       }
       if (popover.contains(e.target) && e.srcElement.tagName === 'LI') {
         const inputPopover = document.querySelector('.inputPopover')
-        inputPopover.value = e.target.innerText
         if (inputPopover.name.includes('nArZ2')) {
           list['listModel'] = list.prepareListModel.filter(value => value[1] === e.target.innerText).map(value =>
             value[0])
@@ -1151,16 +1274,60 @@
             value[0])
           document.getElementById('nArP3').value = ''
         }
-        inputPopover.classList.remove('inputPopover')
-        popover.remove();
-        const label = inputPopover.parentNode.previousElementSibling
-        label.classList.add('inputLabelActive')
-        const inputError = inputPopover.parentNode.nextElementSibling
-        inputError.textContent = ""
-        const container = inputPopover.parentNode
-        const svg = container.querySelector('.svgDropdownCross')
-        if (inputPopover.value && !svg) {
-          container.insertAdjacentHTML('beforeend', svgCrossDropdown)
+        if (inputPopover.name.includes('nMvZ1')) {
+          list['listSortZIP'] = list.prepareListZIP.filter(value => value[4] === e.target.innerText)
+          list['listZIP'] = [... new Set(list['listSortZIP'].map(value => value[0]))]
+          document.getElementById('nMvZ2').value = ''
+        }
+        if (inputPopover.name.includes('nMvZ2')) {
+          const checkedZIP = list['listSortZIP'].filter(value => value[0] === e.target.innerText)
+          const countZIP = checkedZIP.length
+          const input = document.getElementById('nMvZ3')
+          input.max = countZIP
+          document.getElementById('nMvZ4').value = ''
+          const label = input.parentNode.previousElementSibling
+          label.innerText = `Укажите количество* (всего на складе - ${countZIP})`
+          list['listSerial'] = checkedZIP.filter(value => value[3]).map(value => value[3])
+          document.getElementById('nArP3').value = ''
+        }
+        if (inputPopover.classList.contains('textareaOutlined')){
+          const li = e.target
+          if (inputPopover.value.includes(li.innerText)) {
+            li.classList.remove('popoverKeySelected')
+            inputPopover.value = inputPopover.value.includes(`\n${li.innerText}`) 
+              ? inputPopover.value.replace(`\n${li.innerText}`,'') 
+              : inputPopover.value.includes(`\n`) 
+                ? inputPopover.value.replace(`${li.innerText}\n`,'') 
+                : inputPopover.value.replace(li.innerText,'') 
+          } else {
+            li.classList.add('popoverKeySelected')
+            inputPopover.value = inputPopover.value 
+              ? `${inputPopover.value}\n${li.innerText}` 
+              : li.innerText
+          }
+          const label = inputPopover.parentNode.previousElementSibling
+          if (inputPopover.value && !label.classList.contains('inputLabelActive')) {
+            label.classList.add('inputLabelActive')
+          }
+          if (!inputPopover.value && label.classList.contains('inputLabelActive')) {
+            label.classList.remove('inputLabelActive')
+          }
+        } else {
+          console.log('remove')
+          inputPopover.value = e.target.innerText
+          inputPopover.classList.remove('inputPopover')
+          popover.remove();
+          const label = inputPopover.parentNode.previousElementSibling
+          label.classList.add('inputLabelActive')
+          const inputError = inputPopover.parentNode.nextElementSibling
+          inputError.textContent = ""
+          const container = inputPopover.parentNode
+          const svg = container.querySelector('.svgDropdownCross')
+          if (inputPopover.value && !svg) {
+            container.insertAdjacentHTML('beforeend', svgCrossDropdown)
+          }
+          const inputsContainer = inputPopover.closest('.inputsContainer')
+          inputsContainer.style.overflowY = 'scroll'
         }
       }
     }
@@ -1169,6 +1336,8 @@
   document.addEventListener('keydown', function (e) {
     const popoverUL = document.querySelector('.popover_listbox')
     if (popoverUL && e.target.classList.contains('inputPopover')) {
+      const inputPopover = document.querySelector('.inputPopover')
+      if (inputPopover.classList.contains('textareaOutlined')) return
       const listOptions = document.querySelectorAll('[role="popover_option"]')
       const popoverKeyActive = Array.from(listOptions).findIndex(value => value.classList.value.includes(
         'popoverKeyActive'))
@@ -1195,7 +1364,6 @@
       if (e.key === 'Enter') {
         const option = document.querySelectorAll('[role="popover_option"]')[popoverKeyActive < 0 ? 0 :
           popoverKeyActive].innerText
-        const inputPopover = document.querySelector('.inputPopover')
         inputPopover.value = option
         if (inputPopover.name.includes('nArr2')) {
           list['listModel'] = list.prepareListModel.filter(value => value[1] === option).map(value =>
@@ -1227,6 +1395,8 @@
         if (inputPopover.value && !svg) {
           container.insertAdjacentHTML('beforeend', svgCrossDropdown)
         }
+        const inputsContainer = inputPopover.closest('.inputsContainer')
+        inputsContainer.style.overflowY = 'scroll'
       }
     }
   })
@@ -1240,6 +1410,8 @@
       if (noElements) {
         input.value = ''
         input.classList.remove('inputPopover')
+        const inputsContainer = input.closest('.inputsContainer')
+        inputsContainer.style.overflowY = 'scroll'
         const popover = document.querySelector('.popover')
         popover.remove();
       }
@@ -1339,9 +1511,18 @@
 
   function createPopover(input, type, list) {
     const popover = document.querySelector('.popover')
+    const inputsContainer = input.closest('.inputsContainer')
+    if (input.classList.contains('inputPopover') && popover){
+      popover.remove()
+      input.classList.remove('inputPopover')
+      inputsContainer.style.overflowY = 'scroll'
+      return
+    } 
     if (popover) {
       popover.remove()
+      input.classList.remove('inputPopover')
     }
+    inputsContainer.style.overflowY = 'hidden'
     const popoverdiv = document.createElement("div");
     popoverdiv.className = "popover";
     document.body.appendChild(popoverdiv);
@@ -1371,8 +1552,14 @@
           popoverLi.role = "popover_option"
           popoverLi.id = `popover_option_${index}`
           popoverLi.innerText = value
-          if (value === input.value) {
-            popoverLi.className = 'popoverKeySelected'
+          if (input.classList.contains('textareaOutlined')){
+            if (input.value.includes(value)){
+              popoverLi.className = 'popoverKeySelected'
+            }
+          } else {
+            if (value === input.value) {
+              popoverLi.className = 'popoverKeySelected'
+            }
           }
           popoverUL.appendChild(popoverLi)
         })
@@ -1450,6 +1637,7 @@
       //     .writeNewPodmena(data, files)
       return
     }
+    label.innerText = `Укажите количество* (всего на складе - ${countZIP})`
   }
 
   async function getFiles(idInput) {
