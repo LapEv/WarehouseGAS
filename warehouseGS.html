@@ -922,6 +922,64 @@
       </div>
     </div>
   </form>
+  <form class="newMovingPodmenaContainer">
+    <div class="titleBar">Ввод нового перемещения подмены</div>
+    <div class="inputsContainer">
+      <div class="inputContainer first">
+        <label class="inputLabel" for="nMvP1">Выберите склад откуда*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nMvP1" name="nMvP1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+            onclick="changeInputClickDropDown(this, 'listWarehouses', event.key)"
+            onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nMvP2">Выберите подмену*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nMvP2" name="nMvP2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listPodmena')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listPodmena')"
+            onclick="changeInputClickDropDown(this, 'listPodmena')" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nMvP3">Выберите серийнные номера</label>
+        <div class="inputOutlinedContainer multiInputContainer">
+          <textarea id="nMvP3" name="nMvP3.textLightValidation" type="text" class="inputOutlined dropdown textareaOutlined" value=""
+            autocomplete="off" required onclick="changeInputClickDropDown(this, 'listSerial')" onchange="changeInputDropDownCross(this)"></textarea>
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nMvP4">Выберите склад куда*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nMvP4" name="nMvP4.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+            onclick="changeInputClickDropDown(this, 'listWarehouses')" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nMvP5">Введите комментарии</label>
+        <div class="inputOutlinedContainer multiInputContainer">
+          <textarea id="nMvP6" name="nMvP6.textNoValidRequired" type="text" class="inputOutlined textareaOutlined"
+            value="" autocomplete="off"></textarea>
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <span class="inputsWarning"></span>
+      <div class="btnSubmitContainer">
+        <button id="btnSubmit" type="button"
+          onclick="handleNewContainer('.newMovingPodmenaContainer')">Сохранить</button>
+        <button id="btnCancel" type="button" onclick="cancelContainer('.newMovingPodmenaContainer')">Отмена</button>
+      </div>
+    </div>
+  </form>
 </div>
 
 </body>
@@ -941,6 +999,7 @@
     listZIP: [],
     listSortZIP: [],
     listPodmena: [],
+    listSerial: [],
     listWarehouses: [],
     prepareListModel: [],
     prepareListZIP: [],
@@ -1001,13 +1060,13 @@
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
-    if (func === 'newMovinglPodmena') {
+    if (func === 'newMovingPodmena') {
       const message1 = "Перемещение подмены ";
       const message2 = " со склада ";
       const message3 = " на склад ";
       const modal = document.querySelector('.modalMessage');
       modal.innerHTML = svgOk +
-        `<div class='modalMessage_text'>${message1}<b>${data[1]}</b>${message2}<b>${data[0]}</b>${message3}<b>${data[4]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newMovingPodmenaContainer")'>OK</button>`;
+        `<div class='modalMessage_text'>${message1}<b>${data[1]}</b>${message2}<b>${data[0]}</b>${message3}<b>${data[3]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newMovingPodmenaContainer")'>OK</button>`;
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
@@ -1034,6 +1093,15 @@
       list.count++
       if (list.count >= list.fullLoad) {
         document.querySelector('.newMovingZIPContainer').style.display = "flex";
+        list.fullLoad = 0
+        list.count = 0
+      }
+    }
+    if (func === 'getDataListForNewMovingPodmena') {
+      list[type] = data
+      list.count++
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.newMovingPodmenaContainer').style.display = "flex";
         list.fullLoad = 0
         list.count = 0
       }
@@ -1093,6 +1161,17 @@
     google.script.run
       .withSuccessHandler(onSuccess)
       .getZIPonWarehouses('getDataListForNewMovingZIP','prepareListZIP')
+  }
+
+  function newMovingPodmena() {
+    document.querySelector('.back').style.display = "block";
+    list.fullLoad = 2
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getWarehouses('getDataListForNewMovingPodmena','listWarehouses')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getPodmenaonWarehouses('getDataListForNewMovingPodmena','prepareListPodmena')
   }
 
   document.addEventListener('mouseup', function (e) {
@@ -1155,6 +1234,15 @@
             }
           }
           document.getElementById('nArP3').value = ''
+        }
+        if (inputPopover.name.includes('nMvP1')) {
+          list['listPodmena'] = [... new Set(list.prepareListPodmena.filter(value => value[3] === e.target.innerText).map(value => value[0]))]
+          document.getElementById('nMvP2').value = ''
+          document.getElementById('nMvP3').value = ''
+        }
+        if (inputPopover.name.includes('nMvP2')) {
+          list['listSerial'] = list.prepareListPodmena.filter(value => value[0] === e.target.innerText).map(value => value[2])
+          document.getElementById('nMvP3').value = ''
         }
         if (inputPopover.classList.contains('textareaOutlined')){
           const li = e.target
@@ -1514,6 +1602,13 @@
       google.script.run
         .withSuccessHandler(onSuccess)
         .writeNewMovingZIP(data)
+      return
+    }
+    if (container.includes('newMovingPodmenaContainer')) {
+      form.reset()
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewMovingPodmena(data)
       return
     }
   }

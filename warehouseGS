@@ -250,6 +250,90 @@ function writeNewMovingZIP(data) {
   return { result: 'success', func: 'newMovingZIP', data };
 }
 
+function writeNewMovingPodmena(data) {
+  const wsData =
+    SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameDataPodmena);
+  const getLastRow = wsData
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
+    .getRow();
+  const user = Session.getActiveUser().getEmail().toLowerCase();
+  let numRows = [];
+  const today = getToday();
+  const entrance = `${today}:: ${user}:: Перемещение: ${data[0]} -> ${data[3]}`;
+  if (data[2]) {
+    const snArr = data[2]
+      .split(/[ .:;?!~,"&|()<>{}\[\]\r\n/\\]+/)
+      .filter((item) => item !== '');
+    const rangesUnit = wsData
+      .getRange(1, 1, getLastRow, 1)
+      .createTextFinder(data[1])
+      .findAll()
+      .map((item) => item.getRow());
+    const rangesWarehouse = wsData
+      .getRange(1, 4, getLastRow, 1)
+      .createTextFinder(data[0])
+      .findAll()
+      .map((item) => item.getRow());
+    const numUW = rangesUnit.filter((value) => rangesWarehouse.includes(value));
+    const numSN = [].concat(
+      ...snArr.map((itemSN) =>
+        wsData
+          .getRange(1, 3, getLastRow, 1)
+          .createTextFinder(itemSN)
+          .findAll()
+          .map((item) => item.getRow())
+      )
+    );
+    numRows = numSN.filter((value) => numUW.includes(value));
+  }
+  if (!numRows.length) return;
+  let result = [];
+  numRows.map((item) => {
+    const [
+      unit,
+      classifier,
+      serial,
+      warehouse,
+      arrivalDate,
+      arrivalComment,
+      arrivalActs,
+      moving,
+      comments,
+    ] = wsData.getRange(item, 1, 1, 9).getValues()[0];
+    const newMoving = moving ? `${moving}\n${entrance}` : entrance;
+    const newComments = moving ? `${comments}\n${data[4]}` : data[4];
+    const newArr = [
+      unit,
+      classifier,
+      serial,
+      data[3],
+      arrivalDate,
+      arrivalComment,
+      arrivalActs,
+      newMoving,
+      newComments,
+    ];
+    const options = {
+      log: false,
+      ssID: ssIDWarehouse,
+      ssSheet: ssNameDataPodmena,
+      startRow: item,
+      startColumn: 1,
+      rows: 1,
+      columns: 9,
+      data: [newArr],
+    };
+    const res = writeToSheet(options);
+    result = [res, ...result];
+  });
+
+  if (!result.includes(200)) {
+    return { result: 'error', func: 'newMovingPodmena', data };
+  }
+  return { result: 'success', func: 'newMovingPodmena', data };
+}
+
 function getСlassifier(func, type) {
   const wsData =
     SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameClassifier);
@@ -330,6 +414,20 @@ function getZIPonWarehouses(func, type) {
     .getRow();
   const data = wsData
     .getRange(2, 1, getLastRow - 1, 5)
+    .getValues()
+    .sort();
+  return { result: 'success', func, data, type };
+}
+
+function getPodmenaonWarehouses(func, type) {
+  const wsData =
+    SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameDataPodmena);
+  const getLastRow = wsData
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
+    .getRow();
+  const data = wsData
+    .getRange(2, 1, getLastRow - 1, 4)
     .getValues()
     .sort();
   return { result: 'success', func, data, type };
