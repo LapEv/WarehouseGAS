@@ -667,11 +667,9 @@
       <div class="btnContainer">
         <div class="btnContainer1">
           <button id="btnNewArrivalZIP" type="button" onclick="newArrivalZIP()">Новое поступление ЗИП</button>
-          <button id="btnNewArrivalPodmena" type="button" onclick="newArrivalPodmena()">Новое поступление
-            подмены</button>
+          <button id="btnNewArrivalPodmena" type="button" onclick="newArrivalPodmena()">Новое поступление подмены</button>
           <hr size=1>
-          <button id="btnNewMovingZIP" type="button" onclick="newMovingZIP()">Создать перемещение
-            ЗИП</button>
+          <button id="btnNewMovingZIP" type="button" onclick="newMovingZIP()">Создать перемещение ЗИП</button>
           <button id="btnNewMovingPodmena" type="button" onclick="newMovingPodmena()">Создать перемещение
             подмены</button>
           <hr size=1>
@@ -680,8 +678,7 @@
         </div>
         <div class="btnContainer2">
           <button id="btnCreateDocumentZip" type="button" onclick="createDocumentZIP()">Создать документ ЗИП</button>
-          <button id="btnCreateDocumentPodmena" type="button" onclick="createDocumentPodmena()">Создать документ
-            подмены</button>
+          <button id="btnCreateDocumentPodmena" type="button" onclick="createDocumentPodmena()">Создать документ подмены</button>
           <hr size=1>
           <button id="btnZIPReport" type="button" onclick="ZIPReport()">Данные по ЗИП</button>
           <button id="btnPodmenaReport" type="button" onclick="PodmenaReport()">Данные по подмене</button>
@@ -689,260 +686,252 @@
           <button id="btnCollation" type="button" onclick="collation()">Сверка по складам</button>
         </div>
       </div>
-    </div>
-    <form class="newArrivalZIPContainer">
-      <div class="titleBar">Ввод нового поступления ЗИП</div>
-      <div class="inputsContainer">
-        <div class="inputContainer first">
-          <label class="inputLabel" for="nArZ1">Выберите поставщика*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nArZ1" name="nArZ1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-              autocomplete="off" oninput="changeInputDropDown(this, 'listClient')"
-              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClient')"
-              onclick="changeInputClickDropDown(this, 'listClient', event.key)"
-              onchange="changeInputDropDownCross(this)">
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nArZ2">Выберите классификатор*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nArZ2" name="nArZ2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-              autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
-              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClassifier')"
-              onclick="changeInputClickDropDown(this, 'listClassifier', event.key)"
-              onchange="changeInputDropDownCross(this)">
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nArZ3">Выберите модель*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nArZ3" name="nArZ3.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-              autocomplete="off" oninput="changeInputDropDown(this, 'listModel')"
-              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listModel')"
-              onclick="changeInputClickDropDown(this, 'listModel')" onchange="changeInputDropDownCross(this)">
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nArZ4">Выберите ЗИП*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nArZ4" name="nArZ4.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-              autocomplete="off" oninput="changeInputDropDown(this, 'listZIP')"
-              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listZIP')"
-              onclick="changeInputClickDropDown(this, 'listZIP')" onchange="changeInputDropDownCross(this)">
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nArZ5">На какой склад*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nArZ5" name="nArZ5.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-              autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
-              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
-              onclick="changeInputClickDropDown(this, 'listWarehouses')" onchange="changeInputDropDownCross(this)">
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel inputLabelActive" for="nArZ6">Укажите количество*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nArZ6" name="nArZ6.number" required="true" type="number" class="inputOutlined" value="1"
-              autocomplete="off" min="1">
-          </div>
-          <span class=" inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nArZ7">Введите серийнные номера</label>
-          <div class="inputOutlinedContainer multiInputContainer">
-            <textarea id="nArZ7" name="nArZ7.textNoValidRequired" type="text" class="inputOutlined textareaOutlined"
-              value="" autocomplete="off"></textarea>
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nArZ8">Введите комментарии</label>
-          <div class="inputOutlinedContainer multiInputContainer">
-            <textarea id="nArZ8" name="nArZ8.textNoValidRequired" type="text" class="inputOutlined textareaOutlined"
-              value="" autocomplete="off"></textarea>
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainerFile">
-          <label class="inputFileLabel" for="nArZ9">Загрузите или перетащите акт*
-            <input id="nArZ9" name="nArZ9.textLightValidation" required="true" type="file" class="inputFile" value=""
-              autocomplete="off" multiple accept="application/pdf, image/*">
-          </label>
-          <span class="inputError"></span>
-        </div>
-        <span class="inputsWarning"></span>
-        <div class="btnSubmitContainer">
-          <button id="btnSubmit" type="button"
-            onclick="handleNewContainer('.newArrivalZIPContainer')">Сохранить</button>
-          <button id="btnCancel" type="button" onclick="cancelContainer('.newArrivalZIPContainer')">Отмена</button>
-        </div>
-      </div>
-    </form>
-    <form class="newArrivalPodmenaContainer">
-      <div class="titleBar">Ввод нового поступления подмены</div>
-      <div class="inputsContainer">
-        <div class="inputContainer first">
-          <label class="inputLabel" for="nArP1">Выберите поставщика*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nArP1" name="nArP1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-              autocomplete="off" oninput="changeInputDropDown(this, 'listClient')"
-              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClient')"
-              onclick="changeInputClickDropDown(this, 'listClient', event.key)"
-              onchange="changeInputDropDownCross(this)">
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nArP2">Выберите классификатор*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nArP2" name="nArP2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-              autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
-              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClassifier')"
-              onclick="changeInputClickDropDown(this, 'listClassifier', event.key)"
-              onchange="changeInputDropDownCross(this)">
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nArP3">Выберите подмену*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nArP3" name="nArP3.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-              autocomplete="off" oninput="changeInputDropDown(this, 'listPodmena')"
-              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listPodmena')"
-              onclick="changeInputClickDropDown(this, 'listPodmena')" onchange="changeInputDropDownCross(this)">
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nArP4">На какой склад*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nArP4" name="nArP4.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-              autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
-              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
-              onclick="changeInputClickDropDown(this, 'listWarehouses')" onchange="changeInputDropDownCross(this)">
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nArP5">Введите серийнные номера*</label>
-          <div class="inputOutlinedContainer multiInputContainer">
-            <textarea id="nArP5" name="nArP5.textLightValidation" required="true" type="text"
-              class="inputOutlined textareaOutlined" value="" autocomplete="off"></textarea>
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nArP6">Введите комментарии</label>
-          <div class="inputOutlinedContainer multiInputContainer">
-            <textarea id="nArP6" name="nArP6.textNoValidRequired" type="text" class="inputOutlined textareaOutlined"
-              value="" autocomplete="off"></textarea>
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainerFile">
-          <label class="inputFileLabel" for="nArP7">Загрузите или перетащите акт*
-            <input id="nArP7" name="nArP7.textLightValidation" required="true" type="file" class="inputFile" value=""
-              autocomplete="off" multiple accept="application/pdf, image/*">
-          </label>
-          <span class="inputError"></span>
-        </div>
-        <span class="inputsWarning"></span>
-        <div class="btnSubmitContainer">
-          <button id="btnSubmit" type="button"
-            onclick="handleNewContainer('.newArrivalPodmenaContainer')">Сохранить</button>
-          <button id="btnCancel" type="button" onclick="cancelContainer('.newArrivalPodmenaContainer')">Отмена</button>
-        </div>
-      </div>
-    </form>
-    <form class="newMovingZIPContainer">
-      <div class="titleBar">Ввод нового перемещения ЗИП</div>
-      <div class="inputsContainer">
-        <div class="inputContainer first">
-          <label class="inputLabel" for="nMvZ1">Выберите склад откуда*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nMvZ1" name="nMvZ1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-              autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
-              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
-              onclick="changeInputClickDropDown(this, 'listWarehouses', event.key)"
-              onchange="changeInputDropDownCross(this)">
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nMvZ2">Выберите ЗИП*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nMvZ2" name="nMvZ2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-              autocomplete="off" oninput="changeInputDropDown(this, 'listZIP')"
-              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listZIP')"
-              onclick="changeInputClickDropDown(this, 'listZIP')" onchange="changeInputDropDownCross(this)">
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel inputLabelActive" for="nMvZ3">Укажите количество*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nMvZ3" name="nMvZ3.number" required="true" type="number" class="inputOutlined" value="1"
-              autocomplete="off" min="1">
-          </div>
-          <span class=" inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nMvZ4">Выберите серийнные номера</label>
-          <div class="inputOutlinedContainer multiInputContainer">
-            <textarea id="nMvZ4" name="nMvZ4.textNoValidRequired" type="text" class="inputOutlined dropdown textareaOutlined" value=""
-              autocomplete="off" readonly onclick="changeInputClickDropDown(this, 'listSerial')" onchange="changeInputDropDownCross(this)"></textarea>
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nMvZ5">Выберите склад куда*</label>
-          <div class="inputOutlinedContainer">
-            <input id="nMvZ5" name="nMvZ5.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
-              autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
-              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
-              onclick="changeInputClickDropDown(this, 'listWarehouses')" onchange="changeInputDropDownCross(this)">
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <div class="inputContainer">
-          <label class="inputLabel" for="nMvZ6">Введите комментарии</label>
-          <div class="inputOutlinedContainer multiInputContainer">
-            <textarea id="nMvZ6" name="nMvZ6.textNoValidRequired" type="text" class="inputOutlined textareaOutlined"
-              value="" autocomplete="off"></textarea>
-          </div>
-          <span class="inputError"></span>
-        </div>
-        <span class="inputsWarning"></span>
-        <div class="btnSubmitContainer">
-          <button id="btnSubmit" type="button"
-            onclick="handleNewContainer('.newMovingZIPContainer')">Сохранить</button>
-          <button id="btnCancel" type="button" onclick="cancelContainer('.newMovingZIPContainer')">Отмена</button>
-        </div>
-      </div>
-    </form>
-
   </div>
+  <form class="newArrivalZIPContainer">
+    <div class="titleBar">Ввод нового поступления ЗИП</div>
+    <div class="inputsContainer">
+      <div class="inputContainer first">
+        <label class="inputLabel" for="nArZ1">Выберите поставщика*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArZ1" name="nArZ1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listClient')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClient')"
+            onclick="changeInputClickDropDown(this, 'listClient', event.key)" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArZ2">Выберите классификатор*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArZ2" name="nArZ2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClassifier')"
+            onclick="changeInputClickDropDown(this, 'listClassifier', event.key)"
+            onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArZ3">Выберите модель*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArZ3" name="nArZ3.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listModel')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listModel')"
+            onclick="changeInputClickDropDown(this, 'listModel')" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArZ4">Выберите ЗИП*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArZ4" name="nArZ4.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listZIP')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listZIP')"
+            onclick="changeInputClickDropDown(this, 'listZIP')" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArZ5">На какой склад*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArZ5" name="nArZ5.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+            onclick="changeInputClickDropDown(this, 'listWarehouses')" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel inputLabelActive" for="nArZ6">Укажите количество*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArZ6" name="nArZ6.number" required="true" type="number" class="inputOutlined" value="1"
+            autocomplete="off" min="1">
+        </div>
+        <span class=" inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArZ7">Введите серийнные номера</label>
+        <div class="inputOutlinedContainer multiInputContainer">
+          <textarea id="nArZ7" name="nArZ7.textNoValidRequired" type="text" class="inputOutlined textareaOutlined" value=""
+            autocomplete="off"></textarea>
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArZ8">Введите комментарии</label>
+        <div class="inputOutlinedContainer multiInputContainer">
+          <textarea id="nArZ8" name="nArZ8.textNoValidRequired" type="text" class="inputOutlined textareaOutlined" value=""
+            autocomplete="off"></textarea>
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainerFile">
+        <label class="inputFileLabel" for="nArZ9">Загрузите или перетащите акт*
+          <span></span>
+          <input id="nArZ9" name="nArZ9.textLightValidation" required="true" type="file" class="inputFile" value=""
+              autocomplete="off" multiple accept="application/pdf, image/*">
+        </label>
+        <span class="inputError"></span>
+      </div>
+      <span class="inputsWarning"></span>
+      <div class="btnSubmitContainer">
+        <button id="btnSubmit" type="button" onclick="handleNewContainer('.newArrivalZIPContainer')">Сохранить</button>
+        <button id="btnCancel" type="button" onclick="cancelContainer('.newArrivalZIPContainer')">Отмена</button>
+      </div>
+    </div>
+  </form>
+  <form class="newArrivalPodmenaContainer">
+    <div class="titleBar">Ввод нового поступления подмены</div>
+    <div class="inputsContainer">
+      <div class="inputContainer first">
+        <label class="inputLabel" for="nArP1">Выберите поставщика*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArP1" name="nArP1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listClient')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClient')"
+            onclick="changeInputClickDropDown(this, 'listClient', event.key)"
+            onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArP2">Выберите классификатор*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArP2" name="nArP2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listClassifier')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClassifier')"
+            onclick="changeInputClickDropDown(this, 'listClassifier', event.key)"
+            onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArP3">Выберите подмену*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArP3" name="nArP3.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listPodmena')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listPodmena')"
+            onclick="changeInputClickDropDown(this, 'listPodmena')" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArP4">На какой склад*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nArP4" name="nArP4.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+            onclick="changeInputClickDropDown(this, 'listWarehouses')" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArP5">Введите серийнные номера*</label>
+        <div class="inputOutlinedContainer multiInputContainer">
+          <textarea id="nArP5" name="nArP5.textLightValidation" required="true" type="text"
+            class="inputOutlined textareaOutlined" value="" autocomplete="off"></textarea>
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nArP6">Введите комментарии</label>
+        <div class="inputOutlinedContainer multiInputContainer">
+          <textarea id="nArP6" name="nArP6.textNoValidRequired" type="text" class="inputOutlined textareaOutlined"
+            value="" autocomplete="off"></textarea>
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainerFile">
+        <label class="inputFileLabel" for="nArP7">Загрузите или перетащите акт*
+          <input id="nArP7" name="nArP7.textLightValidation" required="true" type="file" class="inputFile" value=""
+            autocomplete="off" multiple accept="application/pdf, image/*">
+        </label>
+        <span class="inputError"></span>
+      </div>
+      <span class="inputsWarning"></span>
+      <div class="btnSubmitContainer">
+        <button id="btnSubmit" type="button"
+          onclick="handleNewContainer('.newArrivalPodmenaContainer')">Сохранить</button>
+        <button id="btnCancel" type="button" onclick="cancelContainer('.newArrivalPodmenaContainer')">Отмена</button>
+      </div>
+    </div>
+  </form>
+  <form class="newMovingZIPContainer">
+    <div class="titleBar">Ввод нового перемещения ЗИП</div>
+    <div class="inputsContainer">
+      <div class="inputContainer first">
+        <label class="inputLabel" for="nMvZ1">Выберите склад откуда*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nMvZ1" name="nMvZ1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+            onclick="changeInputClickDropDown(this, 'listWarehouses', event.key)"
+            onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nMvZ2">Выберите ЗИП*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nMvZ2" name="nMvZ2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listZIP')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listZIP')"
+            onclick="changeInputClickDropDown(this, 'listZIP')" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel inputLabelActive" for="nMvZ3">Укажите количество*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nMvZ3" name="nMvZ3.number" required="true" type="number" class="inputOutlined" value="1"
+            autocomplete="off" min="1">
+        </div>
+        <span class=" inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nMvZ4">Выберите серийнные номера</label>
+        <div class="inputOutlinedContainer multiInputContainer">
+          <textarea id="nMvZ4" name="nMvZ4.textNoValidRequired" type="text" class="inputOutlined dropdown textareaOutlined" value=""
+            autocomplete="off" readonly onclick="changeInputClickDropDown(this, 'listSerial')" onchange="changeInputDropDownCross(this)"></textarea>
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nMvZ5">Выберите склад куда*</label>
+        <div class="inputOutlinedContainer">
+          <input id="nMvZ5" name="nMvZ5.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+            autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+            onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+            onclick="changeInputClickDropDown(this, 'listWarehouses')" onchange="changeInputDropDownCross(this)">
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <div class="inputContainer">
+        <label class="inputLabel" for="nMvZ6">Введите комментарии</label>
+        <div class="inputOutlinedContainer multiInputContainer">
+          <textarea id="nMvZ6" name="nMvZ6.textNoValidRequired" type="text" class="inputOutlined textareaOutlined"
+            value="" autocomplete="off"></textarea>
+        </div>
+        <span class="inputError"></span>
+      </div>
+      <span class="inputsWarning"></span>
+      <div class="btnSubmitContainer">
+        <button id="btnSubmit" type="button"
+          onclick="handleNewContainer('.newMovingZIPContainer')">Сохранить</button>
+        <button id="btnCancel" type="button" onclick="cancelContainer('.newMovingZIPContainer')">Отмена</button>
+      </div>
+    </div>
+  </form>
+</div>
 
 </body>
 <script>
   window.onload = function () {
     document.querySelector('.checkAccessPaper').style.display = "block";
     document.querySelector('.back').style.display = "block";
-    onSuccess({
-      result: 'success',
-      func: 'checkAccess',
-      data: ['evglapkin@gmail.com', 'Admin'],
-      type: 'listClassifier'
-    })
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .checkAccess('checkAccess')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .checkAccess('checkAccess')
   }
 
   const list = {
@@ -959,7 +948,7 @@
     count: 0,
     fullLoad: 0
   }
-  
+
   function onSuccess({
     result,
     func,
@@ -988,7 +977,7 @@
       const message5 = " в количестве ";
       const modal = document.querySelector('.modalMessage');
       modal.innerHTML = svgOk +
-        `<div class='modalMessage_text'>${message1}<b>${data[3]}</b>${message2}<b>${data[1]}</b>${message3}<b>${data[2]}</b>${message4}<b>${data[4]}</b>${message5}<b>${data[5]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newArrivalZIPContainer")'>OK</button>`;
+        `<div class='modalMessage_text'>${message1}<b>${data[0]}</b>${message2}<b>${data[1]}</b>${message3}<b>${data[2]}</b>${message4}<b>${data[3]}</b>${message5}<b>${data[4]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newArrivalZIPContainer")'>OK</button>`;
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
@@ -1061,189 +1050,49 @@
   function newArrivalZIP() {
     document.querySelector('.back').style.display = "block";
     list.fullLoad = 5
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewArrivalZIP',
-      data: ['Перекресток', 'Азбука вкуса', 'Лента', 'Мираторг'],
-      type: 'listClient'
-    })
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewArrivalZIP',
-      data: ['Весы',
-        'ФР',
-        'ФН',
-        'ИБП',
-        'Кассовое оборудование',
-        'Прочее',
-        'Сетевое оборудование',
-        'Оргтехника',
-        'Прайсчекеры',
-        'Термопринтеры'
-      ],
-      type: 'listClassifier'
-    })
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewArrivalZIP',
-      data: [
-        ['Digi', 'Весы'],
-        ['Атол-77Ф', 'ФР'],
-        ['Retail 01Ф', 'ФР'],
-        ['DataPrint', 'Весы'],
-        ['Noname', 'ИБП'],
-        ['Dosmar', 'Кассовое оборудование'],
-        ['A-data', 'Прочее'],
-        ['Noname', 'Прочее'],
-        ['Noname', 'ФН'],
-        ['СП-802', 'ФР'],
-        ['Netac', 'Прочее'],
-        ['AMD', 'Прочее'],
-        ['ChWay', 'Кассовое оборудование'],
-        ['ФН-1.2_Х5', 'ФН']
-      ],
-      type: 'prepareListModel'
-    })
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewArrivalZIP',
-      data: [
-        ['Кабель от Raspberry к принтеру весов DP 403213', 'Весы', 'DP'],
-        ['Кабель питания принтера для весов DP 30503489', 'Весы', 'DP'],
-        ['Кассета для весов Dibal M525/D900', 'Весы', 'Dibal'],
-        ['Кассета для Dibal 500', 'Весы', 'Digi'],
-        ['Кассета для Digi SM100', 'Весы', 'Digi'],
-        ['Кассета для Digi SM5000bs', 'Весы', 'Digi'],
-        ['Аккумулятор для ИБП', 'ИБП', 'Noname'],
-        ['Кабель USB type A ext PWR 15', 'Прочее', 'Noname'],
-        ['Шлейф для подключения ФН', 'ФН', 'Noname']
-      ],
-      type: 'prepareListZIP'
-    })
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewArrivalZIP',
-      data: ['офис СБИ', 'Клиент', 'Лапкин Е.В.', 'Четов П.А.'],
-      type: 'listWarehouses'
-    })
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getClients('getDataListForNewArrivalZIP','listClient')
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getСlassifier('getDataListForNewArrivalZIP','listClassifier')
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getModel('getDataListForNewArrivalZIP','prepareListModel')
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getModel('getDataListForNewArrivalZIP','listWarehouses')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getClients('getDataListForNewArrivalZIP','listClient')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getСlassifier('getDataListForNewArrivalZIP','listClassifier')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getModel('getDataListForNewArrivalZIP','prepareListModel')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getWarehouses('getDataListForNewArrivalZIP','listWarehouses')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getZIP('getDataListForNewArrivalZIP','prepareListZIP')
   }
 
   function newArrivalPodmena() {
     document.querySelector('.back').style.display = "block";
     list.fullLoad = 4
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewArrivalPodmena',
-      data: ['Перекресток', 'Азбука вкуса', 'Лента', 'Мираторг'],
-      type: 'listClient'
-    })
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewArrivalPodmena',
-      data: ['Весы',
-        'ФР',
-        'ФН',
-        'ИБП',
-        'Кассовое оборудование',
-        'Прочее',
-        'Сетевое оборудование',
-        'Оргтехника',
-        'Прайсчекеры',
-        'Термопринтеры'
-      ],
-      type: 'listClassifier'
-    })
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewArrivalPodmena',
-      data: [
-        ['Весы штрих PC200C3 V4 15-2.5', 'Весы'],
-        ['Весы D-900 DIBAL (31760925)', 'Весы'],
-        ['Digi SM100PCS+WLAN', 'Весы'],
-        ['Дисплей покупателя CheckWay CD-13', 'Кассовое оборудование'],
-        ['Кассовый комплект Beetle/M-III01 с верт ДЯ', 'Кассовое оборудование'],
-        ['Ручной сканер 2D Symbol DS2208  ', 'Кассовое оборудование'],
-        ['Принтер Kyocera FS-1060DN', 'Оргтехника'],
-        ['Kyocera_M2040dn принтер', 'Оргтехника']
-      ],
-      type: 'prepareListPodmena'
-    })
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewArrivalPodmena',
-      data: ['офис СБИ', 'Клиент', 'Лапкин Е.В.', 'Четов П.А.'],
-      type: 'listWarehouses'
-    })
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getClients('getDataListForNewArrivalPodmena','listClient')
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getСlassifier('getDataListForNewArrivalPodmena','listClassifier')
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getModel('getDataListForNewArrivalPodmena','listWarehouses')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getClients('getDataListForNewArrivalPodmena','listClient')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getСlassifier('getDataListForNewArrivalPodmena','listClassifier')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getWarehouses('getDataListForNewArrivalPodmena','listWarehouses')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getPodmena('getDataListForNewArrivalPodmena','prepareListPodmena')
   }
 
   function newMovingZIP() {
     document.querySelector('.back').style.display = "block";
     list.fullLoad = 2
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewMovingZIP',
-      data: ['Офис СБИ', 'Гасанов', 'Платонов', 'Камалов'],
-      type: 'listWarehouses'
-    })
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewMovingZIP',
-      data: [
-        ['Термоголовка для весов DP, 30303022', 'Весы', 'DataPrint', '', 'Офис СБИ'],
-        ['Термоголовка для весов DP, 30303022', 'Весы', 'DataPrint', '', 'Офис СБИ'],
-        ['Термоголовка для весов DP, 30303022', 'Весы', 'DataPrint', '', 'Офис СБИ'],
-        ['Термоголовка для весов DP, 30303022', 'Весы', 'DataPrint', '', 'Офис СБИ'],
-        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123456', 'Офис СБИ'],
-        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123457', 'Офис СБИ'],
-        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123458', 'Офис СБИ'],
-        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123459', 'Офис СБИ'],
-        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123460', 'Офис СБИ'],
-        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123461', 'Офис СБИ'],
-        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123462', 'Офис СБИ'],
-        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123463', 'Офис СБИ'],
-        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123464', 'Офис СБИ'],
-        ['ФН-1.2_Х5', 'ФН', 'ФН-1.2_Х5', '123465', 'Офис СБИ']
-      ],
-      type: 'prepareListZIP'
-    })
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getClients('getDataListForNewArrivalZIP','listClient')
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getСlassifier('getDataListForNewArrivalZIP','listClassifier')
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getModel('getDataListForNewArrivalZIP','prepareListModel')
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getModel('getDataListForNewArrivalZIP','listWarehouses')
-  }
-
-  function newPodmena() {
-    document.querySelector('.back').style.display = "block";
-    document.querySelector('.newPodmenaContainer').style.display = "flex";
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getWarehouses('getDataListForNewMovingZIP','listWarehouses')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getZIPonWarehouses('getDataListForNewMovingZIP','prepareListZIP')
   }
 
   document.addEventListener('mouseup', function (e) {
@@ -1607,7 +1456,7 @@
 
   function cancelContainer(container) {
     const form = document.querySelector(container)
-    form.querySelector('.inputsContainer').scrollTo(0, 0)
+    form.querySelector('.inputsContainer').scrollTo(0,0)
     document.querySelector('.back').style.display = "none";
     document.querySelector(container).style.display = "none";
     form.reset()
@@ -1631,31 +1480,21 @@
     }
     document.querySelector('.back').style.zIndex = 88;
     const form = document.querySelector(`${container}`)
-    form.querySelector('.inputsContainer').scrollTo(0, 0)
+    form.querySelector('.inputsContainer').scrollTo(0,0)
     if (container.includes('newArrivalZIPContainer')) {
       const files = await getFiles('nArZ9')
       form.reset()
-      onSuccess({
-        result: 'success',
-        func: 'newArrivalZIP',
-        data
-      })
-      //   google.script.run
-      //     .withSuccessHandler(onSuccess)
-      //     .writeNewPodmena(data, files)
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewArrivalZIP(data, files)
       return
     }
     if (container.includes('newArrivalPodmenaContainer')) {
       const files = await getFiles('nArP7')
       form.reset()
-      onSuccess({
-        result: 'success',
-        func: 'newArrivalPodmena',
-        data
-      })
-      //   google.script.run
-      //     .withSuccessHandler(onSuccess)
-      //     .writeNewPodmena(data, files)
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewArrivalPodmena(data, files)
       return
     }
     if (container.includes('newMovingZIPContainer')) {
@@ -1672,14 +1511,9 @@
         }
       })
       form.reset()
-      onSuccess({
-        result: 'success',
-        func: 'newMovingZIP',
-        data
-      })
-      //   google.script.run
-      //     .withSuccessHandler(onSuccess)
-      //     .writeNewPodmena(data, files)
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewMovingZIP(data, files)
       return
     }
   }
@@ -1688,14 +1522,10 @@
     const f = document.getElementById(idInput)
     return await Promise.all([...f.files].map((file, i) => {
       const fr = new FileReader();
-      return (new Promise((r) => {
+      return(new Promise((r) => {
         fr.onload = (e) => {
           const data = e.target.result.split(",");
-          return (r({
-            fileName: f.files[i].name,
-            mimeType: data[0].match(/:(\w.+);/)[1],
-            data: data[1]
-          }))
+          return(r({fileName: f.files[i].name, mimeType: data[0].match(/:(\w.+);/)[1], data: data[1]}))
         }
         fr.readAsDataURL(file);
       }))
@@ -1704,22 +1534,22 @@
 
   const dropFileZone = document.querySelectorAll(".inputFileLabel")
   Array.from(dropFileZone).map((item, index) => {
-    item.addEventListener("dragover", function (event) {
+    item.addEventListener("dragover", function(event) {
       event.preventDefault()
       item.classList.add("drag_active")
     })
 
-    item.addEventListener("dragleave", function (event) {
-      if (!item.contains(event.relatedTarget)) {
+    item.addEventListener("dragleave", function(event) {
+      if (!item.contains(event.relatedTarget)){
         event.preventDefault()
         item.classList.remove("drag_active")
       }
     })
 
-    item.addEventListener("drop", function (event) {
+    item.addEventListener("drop", function(event) {
       event.preventDefault()
       item.classList.remove("drag_active")
-      const file = event.dataTransfer.files
+      const file = event.dataTransfer?.files
       if (!file) {
         return
       }
@@ -1735,10 +1565,10 @@
       }
       uploadInput.files = event.dataTransfer.files
       const svg = uploadInput.querySelector('.svgFileClear')
-      if (uploadInput.value && !svg) {
-        uploadInput.style.color = '#C1EEE1'
-        uploadInput.parentNode.parentNode.insertAdjacentHTML('beforeend', svgFileClear)
-      }
+        if (uploadInput.value && !svg) {
+          uploadInput.style.color = '#C1EEE1'
+          uploadInput.parentNode.parentNode.insertAdjacentHTML('beforeend', svgFileClear)
+        }
     })
   })
 
@@ -1769,7 +1599,7 @@
       status: true,
       error: 'Поле не может быть пустым!'
     }
-    if (!value.match('^[-_?+!, .а-яА-ЯёЁ0-9a-zA-Zs]+$')) {
+    if (!value.match('^[-_?!, .а-яА-ЯёЁ0-9a-zA-Zs]+$')) {
       return {
         status: true,
         error: 'Только кирилица и английский, цифры, точка, пробел, тире!'
@@ -1852,14 +1682,14 @@
     }
   }
 
-  const svgErr =
-    "<svg class='modalSVGErr' version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 455.111 455.111' style='enable-background:new 0 0 455.111 455.111;' xml:space='preserve'><circle style='fill:#E24C4B;' cx='227.556' cy='227.556' r='227.556'/><path style='fill:#D1403F;' d='M455.111,227.556c0,125.156-102.4,227.556-227.556,227.556c-72.533,0-136.533-32.711-177.778-85.333c38.4,31.289,88.178,49.778,142.222,49.778c125.156,0,227.556-102.4,227.556-227.556c0-54.044-18.489-103.822-49.778-142.222C422.4,91.022,455.111,155.022,455.111,227.556z'/><path style='fill:#FFFFFF;' d='M331.378,331.378c-8.533,8.533-22.756,8.533-31.289,0l-72.533-72.533l-72.533,72.533c-8.533,8.533-22.756,8.533-31.289,0c-8.533-8.533-8.533-22.756,0-31.289l72.533-72.533l-72.533-72.533c-8.533-8.533-8.533-22.756,0-31.289c8.533-8.533,22.756-8.533,31.289,0l72.533,72.533l72.533-72.533c8.533-8.533,22.756-8.533,31.289,0c8.533,8.533,8.533,22.756,0,31.289l-72.533,72.533l72.533,72.533C339.911,308.622,339.911,322.844,331.378,331.378z'/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>";
+  const svgErr = "<svg class='modalSVGErr' version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 455.111 455.111' style='enable-background:new 0 0 455.111 455.111;' xml:space='preserve'><circle style='fill:#E24C4B;' cx='227.556' cy='227.556' r='227.556'/><path style='fill:#D1403F;' d='M455.111,227.556c0,125.156-102.4,227.556-227.556,227.556c-72.533,0-136.533-32.711-177.778-85.333c38.4,31.289,88.178,49.778,142.222,49.778c125.156,0,227.556-102.4,227.556-227.556c0-54.044-18.489-103.822-49.778-142.222C422.4,91.022,455.111,155.022,455.111,227.556z'/><path style='fill:#FFFFFF;' d='M331.378,331.378c-8.533,8.533-22.756,8.533-31.289,0l-72.533-72.533l-72.533,72.533c-8.533,8.533-22.756,8.533-31.289,0c-8.533-8.533-8.533-22.756,0-31.289l72.533-72.533l-72.533-72.533c-8.533-8.533-8.533-22.756,0-31.289c8.533-8.533,22.756-8.533,31.289,0l72.533,72.533l72.533-72.533c8.533-8.533,22.756-8.533,31.289,0c8.533,8.533,8.533,22.756,0,31.289l-72.533,72.533l72.533,72.533C339.911,308.622,339.911,322.844,331.378,331.378z'/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>";
   const svgOk =
     "<svg class='modalSVGOK' version='1.0' xmlns='http://www.w3.org/2000/svg'  width='1222.000000pt' height='1280.000000pt' viewBox='0 0 1222.000000 1280.000000' preserveAspectRatio='xMidYMid meet'><metadata>Created by potrace 1.15, written by Peter Selinger 2001-2017</metadata><g transform='translate(0.000000,1280.000000) scale(0.100000,-0.100000)'fill='#4caf50' stroke='none'><path d='M7271 12780 c-79 -21 -133 -55 -155 -98 -8 -16 -18 -93 -25 -187 -80 -1109 -253 -1873 -531 -2343 -141 -238 -279 -387 -585 -630 -340 -271 -528 -471 -629 -670 -15 -30 -72 -165 -128 -300 -300 -738 -565 -1282 -836 -1719 -265 -425 -548 -739 -783 -867 -116 -63 -180 -76 -365 -76 l-164 0 0 -2625 c0 -1444 2 -2625 5 -2625 3 0 62 -11 132 -24 71 -14 251 -48 400 -75 150 -28 393 -73 540 -101 1744 -324 1588 -298 1917 -325 485 -39 1028 -73 1566 -97 369 -16 1398 -16 1650 0 515 34 826 90 1010 182 324 163 742 555 873 818 l42 85 6 336 c4 246 9 345 19 371 29 76 94 154 305 366 236 236 306 319 360 429 80 163 68 256 -85 635 -101 252 -140 380 -140 464 0 103 64 208 270 441 229 260 292 369 276 481 -10 75 -62 184 -179 376 -202 333 -256 458 -243 557 10 73 56 154 182 321 223 295 252 353 240 486 -19 213 -189 556 -409 829 -83 103 -245 260 -322 311 -169 114 -421 159 -1110 195 -242 13 -1334 18 -2050 9 l-410 -5 -24 70 c-48 138 -29 362 53 622 81 256 179 480 450 1021 107 215 214 434 236 488 85 205 148 438 187 698 22 140 25 637 5 761 -73 454 -193 740 -413 978 -296 321 -816 521 -1138 437z'/> <path d='M386 6129 c-123 -29 -263 -139 -324 -255 -66 -127 -62 65 -62 -2674 0 -2181 2 -2493 15 -2549 43 -182 187 -329 370 -377 64 -17 1712 -20 1785 -3 181 42 346 215 380 398 14 74 14 4988 0 5062 -34 183 -199 356 -380 398 -57 13 -1728 13 -1784 0z'/> </g> </svg>";
   const svgCrossDropdown =
     '<svg class="svgDropdownCross" width="800px" height="800px" viewBox="0 0 24 24" fill="#C1EEE1" onclick="clearInput(this)"><path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"></path></svg>'
   const svgFileClear =
-    '<svg class="svgFileClear" width="800px" height="800px" viewBox="0 0 24 24" fill="#C1EEE1" onclick="fileClear(this)"><path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"></path></svg>'
+    '<svg class="svgFileClear" width="800px" height="800px" viewBox="0 0 24 24" fill="#C1EEE1" onclick="FileClear(this)"><path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"></path></svg>'
+
 </script>
 
 </html>

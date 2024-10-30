@@ -44,7 +44,7 @@
       display: flex;
       align-items: center;
       flex-direction: column;
-    }
+   }
 
     .checkAccessPaper {
       display: none;
@@ -253,7 +253,7 @@
       font-size: 18px;
     }
 
-    .inputContainer {
+    .inputContainer, .inputContainerFile {
       display: inline-flex;
       -webkit-flex-direction: column;
       -ms-flex-direction: column;
@@ -561,7 +561,7 @@
   </style>
 </head>
 
-<body style="word-break:break-word;font-family:sans-serif;">
+<body>
   <div class="checkAccessPaper"></div>
   <div class="back">
     <div class="loader"></div>
@@ -912,15 +912,9 @@
   window.onload = function () {
     document.querySelector('.checkAccessPaper').style.display = "block";
     document.querySelector('.back').style.display = "block";
-    onSuccess({
-      result: 'success',
-      func: 'checkAccess',
-      data: ['evglapkin@gmail.com', 'Admin'],
-      type: 'listClassifier'
-    })
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .checkAccess('checkAccess')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .checkAccess('checkAccess')
   }
 
   const list = {
@@ -942,6 +936,10 @@
     type
   }) {
     if (func === 'checkAccess') {
+      console.log(result)
+      console.log(func)
+      console.log(data)
+      console.log(type)
       if (!data.includes('Admin')) {
         const modal = document.querySelector('.modalMessage');
         modal.innerHTML = svgErr +
@@ -1077,8 +1075,8 @@
       list.count++
       if (list.count >= list.fullLoad) {
         document.querySelector('.newObjectContainer').style.display = "flex";
-        list.fullLoad = 0
         list.count = 0
+        list.fullLoad = 0
       }
     }
   }
@@ -1097,111 +1095,38 @@
 
   function newModel() {
     document.querySelector('.back').style.display = "block";
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewModel',
-      data: ['Ремонт', 'Профилактика', 'Плановые работы', 'Массовые работы'],
-      type: 'listClassifier'
-    })
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getСlassifier('getDataListForNewModel','listClassifier')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getСlassifier('getDataListForNewModel','listClassifier')
   }
 
   function newZIP() {
     document.querySelector('.back').style.display = "block";
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewZIP',
-      data: ['Весы',
-        'ФР',
-        'ФН',
-        'ИБП',
-        'Кассовое оборудование',
-        'Прочее',
-        'Сетевое оборудование',
-        'Оргтехника',
-        'Прайсчекеры',
-        'Термопринтеры'
-      ],
-      type: 'listClassifier'
-    })
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewZIP',
-      data: [
-        ['Digi SM-100', 'Весы'],
-        ['Digi SM-300', 'Весы'],
-        ['Digi SM-500', 'Весы'],
-        ['Атол-77Ф', 'ФР'],
-        ['Retail 01Ф', 'ФР'],
-        ['DataPrint', 'Весы'],
-        ['Noname', 'ИБП'],
-        ['Dosmar', 'Кассовое оборудование'],
-        ['A-data', 'Прочее'],
-        ['Noname', 'Прочее'],
-        ['Noname', 'ФН'],
-        ['СП-802', 'ФР'],
-        ['Netac', 'Прочее'],
-        ['AMD', 'Прочее'],
-        ['ChWay', 'Кассовое оборудование'],
-        ['ФН-1.2_Х5', 'ФН']
-      ],
-      type: 'prepareListModel'
-    })
     list.fullLoad = 2
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getСlassifier('getDataListForNewZIP', 'listClassifier')
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getModel('getDataListForNewZIP','prepareListModel')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getСlassifier('getDataListForNewZIP', 'listClassifier')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getModel('getDataListForNewZIP','prepareListModel')
   }
 
   function newPodmena() {
     document.querySelector('.back').style.display = "block";
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewPodmena',
-      data: ['Весы',
-        'ФР',
-        'ФН',
-        'ИБП',
-        'Кассовое оборудование',
-        'Прочее',
-        'Сетевое оборудование',
-        'Оргтехника',
-        'Прайсчекеры',
-        'Термопринтеры'
-      ],
-      type: 'listClassifier'
-    })
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getСlassifier('getDataListForNewPodmena', 'listClassifier')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getСlassifier('getDataListForNewPodmena', 'listClassifier')
   }
 
   function newEmployee() {
     document.querySelector('.back').style.display = "block";
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewEmployee',
-      data: ['Директор по сервису', 'Клиент', 'Диспетчер', 'Руководитель диспетчерской'],
-      type: 'listPost'
-    })
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewEmployee',
-      data: ['admin', 'engineer', 'dispatcher', 'client'],
-      type: 'listRole'
-    })
     list.fullLoad = 2
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getPosts('getDataListForNewEmployee','listPost')
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getRoles('getDataListForNewEmployee','listRole')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getPosts('getDataListForNewEmployee','listPost')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getRoles('getDataListForNewEmployee','listRole')
   }
 
   function newPost() {
@@ -1221,26 +1146,13 @@
 
   function newObject() {
     document.querySelector('.back').style.display = "block";
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewObject',
-      data: ['Перекресток', 'Азбука вкуса', 'Лента', 'Мираторг'],
-      type: 'listClient'
-    })
-    onSuccess({
-      result: 'success',
-      func: 'getDataListForNewObject',
-      data: ['Москва', 'Московская область', 'Санкт-Петербург', 'Ленинградская область'],
-      type: 'listRegion'
-    })
     list.fullLoad = 2
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getClients('getDataListForNewObject','listClient')
-    // google.script.run
-    //   .withSuccessHandler(onSuccess)
-    //   .getRegions('getDataListForNewObject','listRegion')
-
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getClients('getDataListForNewObject','listClient')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getRegions('getDataListForNewObject','listRegion')
   }
 
   function newRegion() {
@@ -1263,8 +1175,7 @@
         const inputPopover = document.querySelector('.inputPopover')
         inputPopover.value = e.target.innerText
         if (inputPopover.name.includes('nZIP2')) {
-          list['listModel'] = list.prepareListModel.filter(value => value[1] === e.target.innerText).map(value =>
-            value[0])
+          list['listModel'] = list.prepareListModel.filter(value => value[1] === e.target.innerText).map(value => value[0])
           document.getElementById('nZIP3').value = ''
         }
         inputPopover.classList.remove('inputPopover')
@@ -1290,11 +1201,11 @@
       const listOptions = document.querySelectorAll('[role="popover_option"]')
       const popoverKeyActive = Array.from(listOptions).findIndex(value => value.classList.value.includes(
         'popoverKeyActive'))
-        if (e.key === 'Tab') {
+      if (e.key === 'Tab') {
         e.preventDefault()
-          return
-        }
-        if (e.key === 'ArrowDown') {
+        return
+      }
+      if (e.key === 'ArrowDown') {
         if (popoverKeyActive < 0) {
           document.querySelectorAll('[role="popover_option"]:first-of-type')[0].classList.add('popoverKeyActive')
         }
@@ -1320,8 +1231,7 @@
         const inputPopover = document.querySelector('.inputPopover')
         inputPopover.value = option
         if (inputPopover.name.includes('nZIP2')) {
-          list['listModel'] = list.prepareListModel.filter(value => value[1] === option).map(value =>
-            value[0])
+          list['listModel'] = list.prepareListModel.filter(value => value[1] === option).map(value => value[0])
           document.getElementById('nZIP3').value = ''
         }
         inputPopover.classList.remove('inputPopover')
@@ -1446,8 +1356,7 @@
     popoverdiv.style.transform =
       `translate(${input.getBoundingClientRect().left}px,${input.getBoundingClientRect().bottom}px)`
     input.classList.add('inputPopover')
-    const listFilter = type === 'input' ? list.filter(value => value.toLocaleLowerCase().includes(input.value
-      .toLocaleLowerCase()) || input.value === '') : list
+    const listFilter = type === 'input' ? list.filter(value => value.toLocaleLowerCase().includes(input.value.toLocaleLowerCase()) || input.value === '') : list
     if (listFilter && listFilter.length) {
       const popoverUL = document.createElement("ul");
       popoverUL.className = "popover_listbox";
@@ -1555,69 +1464,39 @@
     }
     if (container.includes('newEmployeeContainer')) {
       data.push('Активный')
-      onSuccess({
-        result: 'success',
-        func: 'newEmployee',
-        data
-      })
-      // google.script.run
-      //   .withSuccessHandler(onSuccess)
-      //   .writeNewPodmena(data)
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewEmployee(data)
     }
     if (container.includes('newPostContainer')) {
       data.push('Активный')
-      onSuccess({
-        result: 'success',
-        func: 'newPost',
-        data
-      })
-      // google.script.run
-      //   .withSuccessHandler(onSuccess)
-      //   .writeNewPost(data)
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewPost(data)
     }
     if (container.includes('newRoleContainer')) {
       data.push('Активный')
-      onSuccess({
-        result: 'success',
-        func: 'newRole',
-        data
-      })
-      // google.script.run
-      //   .withSuccessHandler(onSuccess)
-      //   .writeNewRole(data)
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewRole(data)
     }
     if (container.includes('newClientContainer')) {
       data.push('Активный')
-      onSuccess({
-        result: 'success',
-        func: 'newClient',
-        data
-      })
-      // google.script.run
-      //   .withSuccessHandler(onSuccess)
-      //   .writeNewClient(data)
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewClient(data)
     }
     if (container.includes('newObjectContainer')) {
       data.push('Активный')
-      onSuccess({
-        result: 'success',
-        func: 'newObject',
-        data
-      })
-      // google.script.run
-      //   .withSuccessHandler(onSuccess)
-      //   .writeNewObject(data)
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewObject(data)
     }
     if (container.includes('newRegionContainer')) {
       data.push('Активный')
-      onSuccess({
-        result: 'success',
-        func: 'newRegion',
-        data
-      })
-      // google.script.run
-      //   .withSuccessHandler(onSuccess)
-      //   .writeNewObject(data)
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeNewRegion(data)
     }
   }
 
@@ -1726,11 +1605,8 @@
         error: 'Не соответсвует формату координат'
       }
     }
-    return {
-      status: false
-    }
+    return true
   }
-
 
   const svgErr =
     "<svg class='modalSVGErr' version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 455.111 455.111' style='enable-background:new 0 0 455.111 455.111;' xml:space='preserve'><circle style='fill:#E24C4B;' cx='227.556' cy='227.556' r='227.556'/><path style='fill:#D1403F;' d='M455.111,227.556c0,125.156-102.4,227.556-227.556,227.556c-72.533,0-136.533-32.711-177.778-85.333c38.4,31.289,88.178,49.778,142.222,49.778c125.156,0,227.556-102.4,227.556-227.556c0-54.044-18.489-103.822-49.778-142.222C422.4,91.022,455.111,155.022,455.111,227.556z'/><path style='fill:#FFFFFF;' d='M331.378,331.378c-8.533,8.533-22.756,8.533-31.289,0l-72.533-72.533l-72.533,72.533c-8.533,8.533-22.756,8.533-31.289,0c-8.533-8.533-8.533-22.756,0-31.289l72.533-72.533l-72.533-72.533c-8.533-8.533-8.533-22.756,0-31.289c8.533-8.533,22.756-8.533,31.289,0l72.533,72.533l72.533-72.533c8.533-8.533,22.756-8.533,31.289,0c8.533,8.533,8.533,22.756,0,31.289l-72.533,72.533l72.533,72.533C339.911,308.622,339.911,322.844,331.378,331.378z'/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>";
