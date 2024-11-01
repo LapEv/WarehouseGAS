@@ -10,6 +10,7 @@ const ssNameUsers = 'Пользователи';
 const ssNameDataZIP = 'ЗИП Данные';
 const ssNameDataPodmena = 'Подмена Данные';
 const ssNameClients = 'Клиенты';
+const ssNameObjects = 'Объекты';
 
 const ssNameClassifierZIP = 'Классификатор ЗИП';
 const ssNameClassifierPodmena = 'Классификатор подмены';
@@ -41,14 +42,8 @@ function checkAccess(func) {
     muteHttpExceptions: true,
   };
   const res = UrlFetchApp.fetch(urlGetDataScript, params);
-  const resDataArr = res.getContentText().split(',');
-  const resData = resDataArr.reduce((acc, _, index) => {
-    if (index % 6 === 0) {
-      acc.push(resDataArr.slice(index, index + 6));
-    }
-    return acc;
-  }, []);
-  const data = resData.filter((account) => account[1] === user)[0];
+  const resDataArr = JSON.parse(res.getContentText());
+  const data = resDataArr.filter((account) => account[1] === user)[0];
   return { result: 'success', func, data };
 }
 
@@ -389,17 +384,30 @@ function getClients(func, type) {
     muteHttpExceptions: true,
   };
   const res = UrlFetchApp.fetch(urlGetDataScript, params);
-  const resDataArr = res.getContentText().split(',');
-  const resData = resDataArr.reduce((acc, _, index) => {
-    if (index % 3 === 0) {
-      acc.push(resDataArr.slice(index, index + 3));
-    }
-    return acc;
-  }, []);
-  const data = resData
+  const resDataArr = JSON.parse(res.getContentText());
+  const data = resDataArr
     .filter((item) => item[2] === 'Активный')
     .map((item) => item[1])
     .sort();
+  return { result: 'success', func, data, type };
+}
+
+function getObjects(func, type) {
+  const options = {
+    ssID: ssIDAdmin,
+    sheet: ssNameObjects,
+  };
+  const token = ScriptApp.getOAuthToken();
+  const params = {
+    method: 'post',
+    headers: { Authorization: 'Bearer ' + token },
+    payload: JSON.stringify(options),
+    contentType: 'application/json',
+    muteHttpExceptions: true,
+  };
+  const res = UrlFetchApp.fetch(urlGetDataScript, params);
+  const resDataArr = JSON.parse(res.getContentText());
+  const data = resDataArr.filter((item) => item[7] === 'Активный').sort();
   return { result: 'success', func, data, type };
 }
 
@@ -417,14 +425,8 @@ function getWarehouses(func, type) {
     muteHttpExceptions: true,
   };
   const res = UrlFetchApp.fetch(urlGetDataScript, params);
-  const resDataArr = res.getContentText().split(',');
-  const resData = resDataArr.reduce((acc, _, index) => {
-    if (index % 6 === 0) {
-      acc.push(resDataArr.slice(index, index + 6));
-    }
-    return acc;
-  }, []);
-  const data = resData
+  const resDataArr = JSON.parse(res.getContentText());
+  const data = resDataArr
     .filter((item) => item[5] === 'Активный')
     .map((item) => item[0])
     .sort();

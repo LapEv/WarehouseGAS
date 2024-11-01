@@ -221,6 +221,8 @@
     .newArrivalPodmenaContainer,
     .newMovingZIPContainer,
     .newMovingPodmenaContainer,
+    .newWriteOffZIPContainer,
+    .newWriteOffPodmenaContainer,
     .PrintZIPContainer,
     .PrintPodmenaContainer,
     .PrintAllContainer {
@@ -569,6 +571,8 @@
       .newArrivalPodmenaContainer,
       .newMovingZIPContainer,
       .newMovingPodmenaContainer,
+      .newWriteOffZIPContainer,
+      .newWriteOffPodmenaContainer,
       .PrintZIPContainer,
       .PrintPodmenaContainer,
       .PrintAllContainer {
@@ -657,6 +661,8 @@
       .newArrivalPodmenaContainer,
       .newMovingZIPContainer,
       .newMovingPodmenaContainer,
+      .newWriteOffZIPContainer,
+      .newWriteOffPodmenaContainer,
       .PrintZIPContainer,
       .PrintPodmenaContainer,
       .PrintAllContainer {
@@ -720,7 +726,7 @@
           <button id="btnNewMovingPodmena" type="button" onclick="newMovingPodmena()">Создать перемещение
             подмены</button>
           <hr size=1>
-          <button id="btnWriteOffZip" type="button" onclick="witeOffZIP()">Списать ЗИП</button>
+          <button id="btnWriteOffZip" type="button" onclick="writeOffZIP()">Списать ЗИП</button>
           <button id="btnWriteOffPodmena" type="button" onclick="writeOffPodmena()">Списать подмену</button>
         </div>
         <div class="btnContainer2">
@@ -1031,6 +1037,182 @@
         </div>
       </div>
     </form>
+    <form class="newWriteOffZIPContainer">
+      <div class="titleBar">Списание ЗИП</div>
+      <div class="closeForm" onclick="cancelContainer('.newWriteOffZIPContainer')">&#x2716;</div>
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nWoZ1">Выберите склад откуда*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nWoZ1" name="nWoZ1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+              onclick="changeInputClickDropDown(this, 'listWarehouses', event.key)"
+              onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nWoZ2">Выберите ЗИП*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nWoZ2" name="nWoZ2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listZIP')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listZIP')"
+              onclick="changeInputClickDropDown(this, 'listZIP')" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel inputLabelActive" for="nWoZ3">Укажите количество*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nWoZ3" name="nWoZ3.number" required="true" type="number" class="inputOutlined" value="1"
+              autocomplete="off" min="1">
+          </div>
+          <span class=" inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nWoZ4">Выберите серийнные номера</label>
+          <div class="inputOutlinedContainer multiInputContainer">
+            <textarea id="nWoZ4" name="nWoZ4.textNoValidRequired" type="text" class="inputOutlined dropdown textareaOutlined" value=""
+              autocomplete="off" readonly onclick="changeInputClickDropDown(this, 'listSerial')" onchange="changeInputDropDownCross(this)"></textarea>
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nWoZ5">Выберите клиента*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nWoZ5" name="nWoZ5.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listClient')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClient')"
+              onclick="changeInputClickDropDown(this, 'listClient')" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nWoZ6">Выберите объект клиента*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nWoZ6" name="nWoZ6.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listObject')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listObject')"
+              onclick="changeInputClickDropDown(this, 'listObject')" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nWoZ7">Введите номер заявки*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nWoZ7" name="nWoZ7.textNoValidRequired" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nWoZ8">Введите комментарии</label>
+          <div class="inputOutlinedContainer multiInputContainer">
+            <textarea id="nWoZ8" name="nWoZ8.textNoValidRequired" type="text" class="inputOutlined textareaOutlined"
+              value="" autocomplete="off"></textarea>
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainerFile">
+          <label class="inputFileLabel" for="nWoZ9">Загрузите или перетащите акт*
+            <input id="nWoZ9" name="nWoZ9.textLightValidation" required="true" type="file" class="inputFile" value=""
+              autocomplete="off" multiple accept="application/pdf, image/*">
+          </label>
+          <span class="inputError"></span>
+        </div>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button"
+            onclick="handleNewContainer('.newWriteOffZIPContainer')">Сохранить</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.newWriteOffZIPContainer')">Отмена</button>
+        </div>
+      </div>
+    </form>
+    <form class="newWriteOffPodmenaContainer">
+      <div class="titleBar">Списание подмены</div>
+      <div class="closeForm" onclick="cancelContainer('.newWriteOffPodmenaContainer')">&#x2716;</div>
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nWoP1">Выберите склад откуда*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nWoP1" name="nWoP1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+              onclick="changeInputClickDropDown(this, 'listWarehouses', event.key)"
+              onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nWoP2">Выберите подмену*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nWoP2" name="nWoP2.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listPodmena')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listPodmena')"
+              onclick="changeInputClickDropDown(this, 'listPodmena')" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nWoP3">Выберите серийнные номера*</label>
+          <div class="inputOutlinedContainer multiInputContainer">
+            <textarea id="nWoP3" name="nWoP3.textNoValidRequired" type="text" class="inputOutlined dropdown textareaOutlined" value=""
+              autocomplete="off" readonly required onclick="changeInputClickDropDown(this, 'listSerial')" onchange="changeInputDropDownCross(this)"></textarea>
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nWoP4">Выберите клиента*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nWoP4" name="nWoP4.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listClient')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listClient')"
+              onclick="changeInputClickDropDown(this, 'listClient')" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nWoP5">Выберите объект клиента*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nWoP5" name="nWoP5.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listObject')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listObject')"
+              onclick="changeInputClickDropDown(this, 'listObject')" onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nWoP6">Введите номер заявки*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nWoP6" name="nWoP6.textNoValidRequired" type="text" class="inputOutlined" value=""
+              autocomplete="off">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainer">
+          <label class="inputLabel" for="nWoP7">Введите комментарии</label>
+          <div class="inputOutlinedContainer multiInputContainer">
+            <textarea id="nWoP7" name="nWoP7.textNoValidRequired" type="text" class="inputOutlined textareaOutlined"
+              value="" autocomplete="off"></textarea>
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div class="inputContainerFile">
+          <label class="inputFileLabel" for="nWoP8">Загрузите или перетащите акт*
+            <input id="nWoP8" name="nWoP8.textLightValidation" required="true" type="file" class="inputFile" value=""
+              autocomplete="off" multiple accept="application/pdf, image/*">
+          </label>
+          <span class="inputError"></span>
+        </div>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button"
+            onclick="handleNewContainer('.newWriteOffPodmenaContainer')">Сохранить</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.newWriteOffPodmenaContainer')">Отмена</button>
+        </div>
+      </div>
+    </form>
     <form class="PrintZIPContainer">
       <div class="titleBar">Печать перемещения ЗИП</div>
       <div class="closeForm" onclick="cancelContainer('.PrintZIPContainer')">&#x2716;</div>
@@ -1116,6 +1298,7 @@
     listClassifier: [],
     listModel: [],
     listClient: [],
+    listObject: [],
     listZIP: [],
     listSortZIP: [],
     listPodmena: [],
@@ -1124,6 +1307,7 @@
     prepareListModel: [],
     prepareListZIP: [],
     prepareListPodmena: [],
+    prepareListObject: [],
     count: 0,
     fullLoad: 0,
     actNumber: 0,
@@ -1137,7 +1321,7 @@
     type
   }) {
     if (func === 'checkAccess') {
-      console.log('checkAccess = '+data)
+      console.log("data = "+data)
       if (data.includes('Admin') || data.includes('Warehouse')) {
         list.user = data[0]
         document.querySelector('.checkAccessPaper').style.display = "none";
@@ -1191,6 +1375,30 @@
       const modal = document.querySelector('.modalMessage');
       modal.innerHTML = svgOk +
         `<div class='modalMessage_text'>${message1}<b>${data[1]}</b>${message2}<b>${data[0]}</b>${message3}<b>${data[3]}</b> записан в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newMovingPodmenaContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'newWriteOffZIP') {
+      const message1 = "Списание ЗИП ";
+      const message2 = " со склада ";
+      const message3 = " клиенту ";
+      const message4 = " объект ";
+      const message5 = " по заявке ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[1]}</b>${message2}<b>${data[0]}</b>${message3}<b>${data[4]}</b>${message4}<b>${data[5]}</b>${message5}<b>${data[6]}</b> записано в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newWriteOffZIPContainer")'>OK</button>`;
+      modal.style.display = "flex";
+      document.getElementById('buttonModalMessage').focus();
+    }
+    if (func === 'newWriteOffPodmena') {
+      const message1 = "Списание подмены ";
+      const message2 = " со склада ";
+      const message3 = " клиенту ";
+      const message4 = " объект ";
+      const message5 = " по заявке ";
+      const modal = document.querySelector('.modalMessage');
+      modal.innerHTML = svgOk +
+        `<div class='modalMessage_text'>${message1}<b>${data[1]}</b>${message2}<b>${data[0]}</b>${message3}<b>${data[3]}</b>${message4}<b>${data[4]}</b>${message5}<b>${data[5]}</b> записано в базу!</div><button id='buttonModalMessage' onClick='closeModalMessage(".newWriteOffPodmenaContainer")'>OK</button>`;
       modal.style.display = "flex";
       document.getElementById('buttonModalMessage').focus();
     }
@@ -1313,6 +1521,27 @@
         list.count = 0
       }
     }
+    if (func === 'getDataListForWriteOffZIP') {
+      console.log("func = "+func)
+      console.log("type = "+type)
+      console.log("data = "+data)
+      list[type] = data
+      list.count++
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.newWriteOffZIPContainer').style.display = "flex";
+        list.fullLoad = 0
+        list.count = 0
+      }
+    }
+    if (func === 'getDataListForWriteOffPodmena') {
+      list[type] = data
+      list.count++
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.newWriteOffPodmenaContainer').style.display = "flex";
+        list.fullLoad = 0
+        list.count = 0
+      }
+    }
     if (func === 'getDataListForPrintZIP') {
       list[type] = data
       list.count++
@@ -1406,6 +1635,40 @@
     google.script.run
       .withSuccessHandler(onSuccess)
       .getPodmenaonWarehouses('getDataListForNewMovingPodmena','prepareListPodmena')
+  }
+
+  function writeOffZIP() {
+    document.querySelector('.back').style.display = "block";
+    list.fullLoad = 4
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getWarehouses('getDataListForWriteOffZIP','listWarehouses')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getZIPonWarehouses('getDataListForWriteOffZIP','prepareListZIP')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getClients('getDataListForWriteOffZIP','listClient')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getObjects('getDataListForWriteOffZIP','prepareListObject')
+  }
+
+  function writeOffPodmena() {
+    document.querySelector('.back').style.display = "block";
+    list.fullLoad = 4
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getWarehouses('getDataListForWriteOffPodmena','listWarehouses')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getPodmenaonWarehouses('getDataListForWriteOffPodmena','prepareListPodmena')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getClients('getDataListForWriteOffPodmena','listClient')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getObjects('getDataListForWriteOffPodmena','prepareListObject')
   }
 
   function createDocumentZIP(){
@@ -1523,6 +1786,55 @@
         if (inputPopover.name.includes('nMvP2')) {
           list['listSerial'] = list.prepareListPodmena.filter(value => value[0] === e.target.innerText).map(value => value[2])
           document.getElementById('nMvP3').value = ''
+        }
+        if (inputPopover.name.includes('nWoZ1')) {
+          list['listSortZIP'] = list.prepareListZIP.filter(value => value[4] === e.target.innerText)
+          list['listZIP'] = [... new Set(list['listSortZIP'].map(value => value[0]))]
+          document.getElementById('nWoZ2').value = ''
+          document.getElementById('nWoZ4').value = ''
+        }
+        if (inputPopover.name.includes('nWoZ2')) {
+          const checkedZIP = list['listSortZIP'].filter(value => value[0] === e.target.innerText)
+          const countZIP = checkedZIP.length
+          const input = document.getElementById('nWoZ3')
+          input.max = countZIP
+          const inputSerial = document.getElementById('nWoZ4')
+          inputSerial.value = ''
+          const label = input.parentNode.previousElementSibling
+          label.innerText = `Укажите количество* (всего на складе - ${countZIP})`
+          list['listSerial'] = checkedZIP.filter(value => value[3]).map(value => value[3])
+          if (list['listSerial'].length){
+            input.disabled = true
+            input.classList.add('disabled')
+            inputSerial.required = true
+            inputSerial.name = 'nWoZ4.textLightValidation'
+          } else {
+            if (input.classList.contains('disabled')){
+              input.disabled = false
+              input.classList.remove('disabled')
+              inputSerial.required = false
+              inputSerial.name = 'nWoZ4.textNoValidRequired'
+            }
+          }
+          document.getElementById('nWoZ4').value = ''
+        }
+        if (inputPopover.name.includes('nWoZ5')) {
+          console.log(list)
+          list['listObject'] = list.prepareListObject.filter(value => value[0] === e.target.innerText).map(value => value[1])
+           document.getElementById('nWoZ6').value = ''
+        }
+        if (inputPopover.name.includes('nWoP1')) {
+          list['listPodmena'] = [... new Set(list.prepareListPodmena.filter(value => value[3] === e.target.innerText).map(value => value[0]))]
+          document.getElementById('nWoP2').value = ''
+          document.getElementById('nWoP3').value = ''
+        }
+        if (inputPopover.name.includes('nWoP2')) {
+          list['listSerial'] = list.prepareListPodmena.filter(value => value[0] === e.target.innerText).map(value => value[2])
+          document.getElementById('nWoP3').value = ''
+        }
+        if (inputPopover.name.includes('nWoP4')) {
+          list['listObject'] = list.prepareListObject.filter(value => value[0] === e.target.innerText).map(value => value[1])
+           document.getElementById('nWoP5').value = ''
         }
         if (inputPopover.name.includes('nPrZ1')) {
           list['listZIP'] = list.prepareListZIP.filter(value => value[4] === e.target.innerText)
@@ -1899,6 +2211,22 @@
       google.script.run
         .withSuccessHandler(onSuccess)
         .writeNewMovingPodmena(data)
+      return
+    }
+    if (container.includes('newWriteOffZIPContainer')) {
+      const files = await getFiles('nWoZ9')
+      form.reset()
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeOffZIP(data, files)
+      return
+    }
+    if (container.includes('newWriteOffPodmenaContainer')) {
+      const files = await getFiles('nWoP8')
+      form.reset()
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .writeOffPodmena(data, files)
       return
     }
     if (container.includes('PrintZIPContainer')) {

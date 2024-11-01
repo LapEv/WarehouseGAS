@@ -12,5 +12,5 @@ function doPost(e) {
     .getNextDataCell(SpreadsheetApp.Direction.NEXT)
     .getColumn();
   const data = wsData.getRange(2, 1, getLastRow - 1, getLastColumn).getValues();
-  return ContentService.createTextOutput(data);
+  return ContentService.createTextOutput(JSON.stringify(data));
 }
