@@ -20,6 +20,8 @@ const ssNameData = 'Данные';
 
 const folderUploadArrivalZIP = '1XIq0WIheYUmlj44c7nvA-8ZftRmWmXqV';
 const folderUploadArrivalPodmena = '1z2i4H2zcmHpIQh7gF-4Umc68XaNe5kH5';
+const folderUploadActZIP = '1FJaHHF5dj5b9n9sb0GOBQAajHsjuF9ny';
+const folderUploadActPodmena = '1blo-wNxxt4C5OAoE40TAEZ5oRcFisz2G';
 
 function doGet() {
   return HtmlService.createHtmlOutputFromFile('Warehouse').setXFrameOptionsMode(
@@ -159,6 +161,175 @@ function writeNewArrivalPodmena(data, files) {
     return { result: 'success', func: 'newArrivalPodmena', data };
   }
   return { result: 'error', func: 'newArrivalPodmena', data };
+}
+
+function writeOffZIP(data, files, user) {
+  const optionsUpload = {
+    folderUpload: folderUploadActZIP,
+    files: files,
+  };
+  const resUpload = writeToDrive(optionsUpload);
+  const urls = resUpload.getContentText();
+
+  const today = getToday();
+  const entrance = `${today}:: ${user}:: Закрытие: по заявке ${data[6]}:: клиент ${data[4]}:: объект ${data[5]}`;
+  const wsData =
+    SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameDataZIP);
+  const getLastRow = wsData
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
+    .getRow();
+  let numRows = [];
+  if (data[3]) {
+    const snArr = data[3]
+      .split(/[ .:;?!~,"&|()<>{}\[\]\r\n/\\]+/)
+      .filter((item) => item !== '');
+    const rangesUnit = wsData
+      .getRange(1, 1, getLastRow, 1)
+      .createTextFinder(data[1])
+      .findAll()
+      .map((item) => item.getRow());
+    const rangesWarehouse = wsData
+      .getRange(1, 5, getLastRow, 1)
+      .createTextFinder(data[0])
+      .findAll()
+      .map((item) => item.getRow());
+    const numUW = rangesUnit.filter((value) => rangesWarehouse.includes(value));
+    const numSN = [].concat(
+      ...snArr.map((itemSN) =>
+        wsData
+          .getRange(1, 4, getLastRow, 1)
+          .createTextFinder(itemSN)
+          .findAll()
+          .map((item) => item.getRow())
+      )
+    );
+    numRows = numSN.filter((value) => numUW.includes(value));
+  } else {
+    const rangesUnit = wsData
+      .getRange(1, 1, getLastRow, 1)
+      .createTextFinder(data[1])
+      .findAll()
+      .map((item) => item.getRowIndex());
+    const rangesWarehouse = wsData
+      .getRange(1, 5, getLastRow, 1)
+      .createTextFinder(data[0])
+      .findAll()
+      .map((item) => item.getRowIndex());
+    numRows = rangesUnit
+      .filter((value) => rangesWarehouse.includes(value))
+      .slice(0, data[2]);
+  }
+
+  if (!numRows.length) return;
+  let result = [];
+  numRows.map((item) => {
+    const newArr = [entrance, data[7], urls];
+    const options = {
+      log: false,
+      ssID: ssIDWarehouse,
+      ssSheet: ssNameDataZIP,
+      startRow: item,
+      startColumn: 11,
+      rows: 1,
+      columns: 3,
+      data: [newArr],
+    };
+    const res = writeToSheet(options);
+    result = [res, ...result];
+    const options2 = {
+      log: false,
+      ssID: ssIDWarehouse,
+      ssSheet: ssNameDataZIP,
+      startRow: item,
+      startColumn: 5,
+      rows: 1,
+      columns: 1,
+      data: [[data[4]]],
+    };
+    const res2 = writeToSheet(options2);
+    result = [res2, ...result];
+  });
+  return { result: 'error', func: 'newWriteOffZIP', data };
+}
+
+function writeOffPodmena(data, files, user) {
+  const optionsUpload = {
+    folderUpload: folderUploadActPodmena,
+    files: files,
+  };
+  const resUpload = writeToDrive(optionsUpload);
+  const urls = resUpload.getContentText();
+
+  const today = getToday();
+  const entrance = `${today}:: ${user}:: Закрытие: по заявке ${data[5]}:: клиент ${data[3]}:: объект ${data[4]}`;
+  const wsData =
+    SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameDataPodmena);
+  const getLastRow = wsData
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
+    .getRow();
+  let numRows = [];
+  if (data[2]) {
+    const snArr = data[2]
+      .split(/[ .:;?!~,"&|()<>{}\[\]\r\n/\\]+/)
+      .filter((item) => item !== '');
+    const rangesUnit = wsData
+      .getRange(1, 1, getLastRow, 1)
+      .createTextFinder(data[1])
+      .findAll()
+      .map((item) => item.getRow());
+    const rangesWarehouse = wsData
+      .getRange(1, 4, getLastRow, 1)
+      .createTextFinder(data[0])
+      .findAll()
+      .map((item) => item.getRow());
+    const numUW = rangesUnit.filter((value) => rangesWarehouse.includes(value));
+    const numSN = [].concat(
+      ...snArr.map((itemSN) =>
+        wsData
+          .getRange(1, 3, getLastRow, 1)
+          .createTextFinder(itemSN)
+          .findAll()
+          .map((item) => item.getRow())
+      )
+    );
+    numRows = numSN.filter((value) => numUW.includes(value));
+  }
+  if (!numRows.length) return;
+  let result = [];
+  numRows.map((item) => {
+    const newArr = [entrance, data[6], urls];
+    const options = {
+      log: false,
+      ssID: ssIDWarehouse,
+      ssSheet: ssNameDataPodmena,
+      startRow: item,
+      startColumn: 10,
+      rows: 1,
+      columns: 3,
+      data: [newArr],
+    };
+    const res = writeToSheet(options);
+    result = [res, ...result];
+    const options2 = {
+      log: false,
+      ssID: ssIDWarehouse,
+      ssSheet: ssNameDataPodmena,
+      startRow: item,
+      startColumn: 4,
+      rows: 1,
+      columns: 1,
+      data: [[data[3]]],
+    };
+    const res2 = writeToSheet(options2);
+    result = [res2, ...result];
+  });
+
+  if (!result.includes(200)) {
+    return { result: 'error', func: 'newWriteOffPodmena', data };
+  }
+  return { result: 'success', func: 'newWriteOffPodmena', data };
 }
 
 function writeNewMovingZIP(data) {

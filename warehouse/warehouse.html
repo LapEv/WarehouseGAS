@@ -1311,6 +1311,7 @@
     listZIP: [],
     listSortZIP: [],
     listPodmena: [],
+    listSortPodmena: [],
     listSerial: [],
     listWarehouses: [],
     prepareListModel: [],
@@ -1322,7 +1323,25 @@
     actNumber: 13,
     user: ''
   }
-  
+
+  function zeroingList(){
+    list.listClassifier = [],
+    list.listModel = [],
+    list.listClient = [],
+    list.listObject = [],
+    list.listZIP = [],
+    list.listSortZIP = [],
+    list.listPodmena = [],
+    list.listSerial = [],
+    list.listWarehouses = [],
+    list.prepareListModel = [],
+    list.prepareListZIP = [],
+    list.prepareListPodmena = [],
+    list.prepareListObject = [],
+    list.count = 0,
+    list.fullLoad = 0
+  }
+
   function onSuccess({
     result,
     func,
@@ -1583,6 +1602,7 @@
   }
 
   function newArrivalZIP() {
+    zeroingList()
     document.querySelector('.back').style.display = "block";
     list.fullLoad = 5
     onSuccess({
@@ -1665,6 +1685,7 @@
   }
 
   function newArrivalPodmena() {
+    zeroingList()
     document.querySelector('.back').style.display = "block";
     list.fullLoad = 4
     onSuccess({
@@ -1722,6 +1743,7 @@
   }
 
   function newMovingZIP() {
+    zeroingList()
     document.querySelector('.back').style.display = "block";
     list.fullLoad = 2
     onSuccess({
@@ -1760,6 +1782,7 @@
   }
 
   function newMovingPodmena() {
+    zeroingList()
     document.querySelector('.back').style.display = "block";
     list.fullLoad = 2
     onSuccess({
@@ -1789,6 +1812,7 @@
   }
 
   function writeOffZIP() {
+    zeroingList()
     document.querySelector('.back').style.display = "block";
     list.fullLoad = 4
     onSuccess({
@@ -1841,6 +1865,7 @@
   }
 
   function writeOffPodmena() {
+    zeroingList()
     document.querySelector('.back').style.display = "block";
     list.fullLoad = 4
     onSuccess({
@@ -1887,6 +1912,7 @@
   }
 
   function createDocumentZIP(){
+    zeroingList()
     document.querySelector('.back').style.display = "block";
     list.fullLoad = 3
     onSuccess({
@@ -1922,6 +1948,7 @@
   }
 
   function createDocumentPodmena(){
+    zeroingList()
     document.querySelector('.back').style.display = "block";
     list.fullLoad = 1
     onSuccess({
@@ -1951,6 +1978,7 @@
   }
 
   function createDocumentAll(){
+    zeroingList()
     document.querySelector('.back').style.display = "block";
     list.fullLoad = 4
     onSuccess({
@@ -2057,12 +2085,13 @@
           document.getElementById('nArP3').value = ''
         }
         if (inputPopover.name.includes('nMvP1')) {
-          list['listPodmena'] = [... new Set(list.prepareListPodmena.filter(value => value[3] === e.target.innerText).map(value => value[0]))]
+          list['listSortPodmena'] = list.prepareListPodmena.filter(value => value[3] === e.target.innerText)
+          list['listPodmena'] = [... new Set(list['listSortPodmena'].map(value => value[0]))]
           document.getElementById('nMvP2').value = ''
           document.getElementById('nMvP3').value = ''
         }
         if (inputPopover.name.includes('nMvP2')) {
-          list['listSerial'] = list.prepareListPodmena.filter(value => value[0] === e.target.innerText).map(value => value[2])
+          list['listSerial'] = list.listSortPodmena.filter(value => value[0] === e.target.innerText).map(value => value[2])
           document.getElementById('nMvP3').value = ''
         }
         if (inputPopover.name.includes('nWoZ1')) {
@@ -2101,12 +2130,13 @@
            document.getElementById('nWoZ6').value = ''
         }
         if (inputPopover.name.includes('nWoP1')) {
-          list['listPodmena'] = [... new Set(list.prepareListPodmena.filter(value => value[3] === e.target.innerText).map(value => value[0]))]
+          list['listSortPodmena'] = list.prepareListPodmena.filter(value => value[3] === e.target.innerText)
+          list['listPodmena'] = [... new Set(list['listSortPodmena'].map(value => value[0]))]
           document.getElementById('nWoP2').value = ''
-          document.getElementById('nMvP3').value = ''
+          document.getElementById('nWoP3').value = ''
         }
         if (inputPopover.name.includes('nWoP2')) {
-          list['listSerial'] = list.prepareListPodmena.filter(value => value[0] === e.target.innerText).map(value => value[2])
+          list['listSerial'] = list.listSortPodmena.filter(value => value[0] === e.target.innerText).map(value => value[2])
           document.getElementById('nWoP3').value = ''
         }
         if (inputPopover.name.includes('nWoP4')) {
