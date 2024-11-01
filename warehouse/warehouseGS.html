@@ -222,7 +222,8 @@
     .newMovingZIPContainer,
     .newMovingPodmenaContainer,
     .PrintZIPContainer,
-    .PrintPodmenaContainer {
+    .PrintPodmenaContainer,
+    .PrintAllContainer {
       display: none;
       justify-content: flex-start;
       flex-direction: column;
@@ -569,7 +570,8 @@
       .newMovingZIPContainer,
       .newMovingPodmenaContainer,
       .PrintZIPContainer,
-      .PrintPodmenaContainer {
+      .PrintPodmenaContainer,
+      .PrintAllContainer {
         width: 320px;
         max-height: 600px;
       }
@@ -656,7 +658,8 @@
       .newMovingZIPContainer,
       .newMovingPodmenaContainer,
       .PrintZIPContainer,
-      .PrintPodmenaContainer {
+      .PrintPodmenaContainer,
+      .PrintAllContainer {
         width: 280px;
         max-height: 570px;
       }
@@ -724,10 +727,10 @@
           <button id="btnCreateDocumentZip" type="button" onclick="createDocumentZIP()">Печать перемещение ЗИП</button>
           <button id="btnCreateDocumentPodmena" type="button" onclick="createDocumentPodmena()">Печать перемещение подмены</button>
           <hr size=1>
-          <button id="btnZIPReport" type="button" onclick="ZIPReport()">Данные по ЗИП</button>
-          <button id="btnPodmenaReport" type="button" onclick="PodmenaReport()">Данные по подмене</button>
+          <button id="btnZIPReport" type="button" onclick="reportZIP()">Данные по ЗИП</button>
+          <button id="btnPodmenaReport" type="button" onclick="reportPodmena()">Данные по подмене</button>
           <hr size=1>
-          <button id="btnCollation" type="button" onclick="collation()">Сверка по складам</button>
+          <button id="btnCollation" type="button" onclick="createDocumentAll()">Сверка по складам</button>
         </div>
       </div>
     </div>
@@ -1074,6 +1077,29 @@
         </div>
       </div>
     </form>
+    <form class="PrintAllContainer">
+      <div class="titleBar">Печать склада</div>
+      <div class="closeForm" onclick="cancelContainer('.PrintAllContainer')">&#x2716;</div>
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nPrA1">Выберите склад*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nPrA1" name="nPrA1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+              onclick="changeInputClickDropDown(this, 'listWarehouses', event.key)"
+              onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" type="button"
+          onclick="handleNewContainer('.PrintAllContainer')">Распечатать</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.PrintAllContainer')">Выйти</button>
+        </div>
+      </div>
+    </form>
   </div>
   <div id="printContent"></div>
 </body>
@@ -1212,6 +1238,45 @@
         </tr>`}).join('')
       preparePrintData(data, dataList)
     }
+    if (func === 'PrintAll'){
+      console.log(list)
+      document.querySelector('.back').style.zIndex = 13;
+      document.querySelector('.back').style.display = "none";
+      document.querySelector('.PrintAllContainer').style.display = "none";
+      const dataSerial = list.listZIP.filter(item => item[3])
+      const dataNotSerial = list.listZIP.filter(item => !item[3])
+      const unique = [...new Set(dataNotSerial.map(item => item[0]))]
+      const arrNotSerial = unique.map(item => {
+        const countData = dataNotSerial.filter(value => value[0] === item)
+        return [countData[0][0], countData[0][1], countData.length]
+      })
+      const dataListNotSerial = arrNotSerial.map((item, i) => {return `<tr>
+        <td>${i+1}</td>
+        <td>${item[0]}</td>
+        <td>${item[1]}</td>
+        <td>-</td>
+        <td>шт</td>
+        <td>${item[2]}</td>
+      </tr>`}).join('')
+      const dataListSerial = dataSerial.map((item, i) => {return `<tr>
+        <td>${i+arrNotSerial.length+1}</td>
+        <td>${item[0]}</td>
+        <td>${item[1]}</td>
+        <td>${item[3]}</td>
+        <td>шт</td>
+        <td>1</td>
+      </tr>`}).join('')
+      const dataListPodmena = list.listPodmena.map((item, i) => {return `<tr>
+          <td>${i+1}</td>
+          <td>${item[0]}</td>
+          <td>${item[1]}</td>
+          <td>${item[2]}</td>
+          <td>шт</td>
+          <td>1</td>
+        </tr>`}).join('')
+      const dataList = [dataListNotSerial, dataListSerial, dataListPodmena].join('')
+      preparePrintData(data, dataList)
+    }
     if (func === 'getDataListForNewArrivalZIP') {
       list[type] = data
       list.count++
@@ -1262,6 +1327,15 @@
       list.count++
       if (list.count >= list.fullLoad) {
         document.querySelector('.PrintPodmenaContainer').style.display = "flex";
+        list.fullLoad = 0
+        list.count = 0
+      }
+    }
+    if (func === 'getDataListForPrintAll') {
+      list[type] = data
+      list.count++
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.PrintAllContainer').style.display = "flex";
         list.fullLoad = 0
         list.count = 0
       }
@@ -1362,6 +1436,24 @@
       .getActNumber('getDataListForPrintPodmena','actNumber')
   }
 
+  function createDocumentAll(){
+    document.querySelector('.back').style.display = "block";
+    list.fullLoad = 4
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getWarehouses('getDataListForPrintAll','listWarehouses')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getZIPonWarehouses('getDataListForPrintAll','prepareListZIP')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getPodmenaonWarehouses('getDataListForPrintPodmena','prepareListPodmena')
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getActNumber('getDataListForPrintAll','actNumber')
+  }
+
+
   document.addEventListener('mouseup', function (e) {
     const popover = document.querySelector('.popover')
     const inputClasses = e.target.classList
@@ -1436,6 +1528,10 @@
           list['listZIP'] = list.prepareListZIP.filter(value => value[4] === e.target.innerText)
         }
         if (inputPopover.name.includes('nPrP1')) {
+          list['listPodmena'] = list.prepareListPodmena.filter(value => value[3] === e.target.innerText)
+        }
+        if (inputPopover.name.includes('nPrA1')) {
+          list['listZIP'] = list.prepareListZIP.filter(value => value[4] === e.target.innerText)
           list['listPodmena'] = list.prepareListPodmena.filter(value => value[3] === e.target.innerText)
         }
         if (inputPopover.classList.contains('textareaOutlined')){
@@ -1812,9 +1908,6 @@
         func: 'PrintZIP',
         data
       })
-      //   google.script.run
-      //     .withSuccessHandler(onSuccess)
-      //     .writeNewPodmena(data, files)
       return
     }
     if (container.includes('PrintPodmenaContainer')) {
@@ -1824,9 +1917,15 @@
         func: 'PrintPodmena',
         data
       })
-      //   google.script.run
-      //     .withSuccessHandler(onSuccess)
-      //     .writeNewPodmena(data, files)
+      return
+    }
+    if (container.includes('PrintAllContainer')) {
+      form.reset()
+      onSuccess({
+        result: 'success',
+        func: 'PrintAll',
+        data
+      })
       return
     }
   }
