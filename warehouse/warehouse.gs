@@ -2,6 +2,8 @@ const urlWriteToSheetScript =
   'https://script.google.com/macros/s/AKfycbyczQsUNQWUyaTO5FS1-sqr1ZBRBFvzo_ezlXjnd3L0YMuul1iC5J4V8IkFxaKCcW9H/exec';
 const urlWriteToDriveScript =
   'https://script.google.com/macros/s/AKfycbyGguDmQK0-SulZ4X1YH9BnCIYBROJ0hMUe7XXylnKjIkpgDrTmRLw8xAApcSKcqeDF/exec';
+const urlGetDataScript =
+  'https://script.google.com/macros/s/AKfycbxCcFhNhdtmepMMHGbjwetXU_8GyEOAAjYnROGixnUzgvdGJ_LVxGuv7iXMs_MU9F_Tqw/exec';
 const ssIDWarehouse = '1QHenRbqyifedRX-XN4uLMOnOiBFm5XYMzzjuksL2yyQ';
 const ssIDAdmin = '11x7Mh-OCuuC1WOC26WEDoVdx5jpZqTCCQyEvJks1OrQ';
 const ssNameUsers = 'Пользователи';
@@ -13,25 +15,40 @@ const ssNameClassifierZIP = 'Классификатор ЗИП';
 const ssNameClassifierPodmena = 'Классификатор подмены';
 const ssNameClassifier = 'Классификатор';
 const ssNameModel = 'Модели';
+const ssNameData = 'Данные';
 
 const folderUploadArrivalZIP = '1XIq0WIheYUmlj44c7nvA-8ZftRmWmXqV';
 const folderUploadArrivalPodmena = '1z2i4H2zcmHpIQh7gF-4Umc68XaNe5kH5';
 
 function doGet() {
-  return HtmlService.createHtmlOutputFromFile('Warehouse');
+  return HtmlService.createHtmlOutputFromFile('Warehouse').setXFrameOptionsMode(
+    HtmlService.XFrameOptionsMode.ALLOWALL
+  );
 }
 
 function checkAccess(func) {
   const user = Session.getActiveUser().getEmail().toLowerCase();
-  const wsData = SpreadsheetApp.openById(ssIDAdmin).getSheetByName(ssNameUsers);
-  const getLastRow = wsData
-    .getRange(1, 1)
-    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
-    .getRow();
-  const dataAccess = wsData
-    .getRange(2, 1, getLastRow - 1, wsData.getLastColumn())
-    .getValues();
-  const data = dataAccess.filter((account) => account[1] === user)[0];
+  const options = {
+    ssID: ssIDAdmin,
+    sheet: ssNameUsers,
+  };
+  const token = ScriptApp.getOAuthToken();
+  const params = {
+    method: 'post',
+    headers: { Authorization: 'Bearer ' + token },
+    payload: JSON.stringify(options),
+    contentType: 'application/json',
+    muteHttpExceptions: true,
+  };
+  const res = UrlFetchApp.fetch(urlGetDataScript, params);
+  const resDataArr = res.getContentText().split(',');
+  const resData = resDataArr.reduce((acc, _, index) => {
+    if (index % 6 === 0) {
+      acc.push(resDataArr.slice(index, index + 6));
+    }
+    return acc;
+  }, []);
+  const data = resData.filter((account) => account[1] === user)[0];
   return { result: 'success', func, data };
 }
 
@@ -359,15 +376,27 @@ function getModel(func, type) {
 }
 
 function getClients(func, type) {
-  const wsData =
-    SpreadsheetApp.openById(ssIDAdmin).getSheetByName(ssNameClients);
-  const getLastRow = wsData
-    .getRange(1, 1)
-    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
-    .getRow();
-  const data = wsData
-    .getRange(2, 1, getLastRow - 1, 3)
-    .getValues()
+  const options = {
+    ssID: ssIDAdmin,
+    sheet: ssNameClients,
+  };
+  const token = ScriptApp.getOAuthToken();
+  const params = {
+    method: 'post',
+    headers: { Authorization: 'Bearer ' + token },
+    payload: JSON.stringify(options),
+    contentType: 'application/json',
+    muteHttpExceptions: true,
+  };
+  const res = UrlFetchApp.fetch(urlGetDataScript, params);
+  const resDataArr = res.getContentText().split(',');
+  const resData = resDataArr.reduce((acc, _, index) => {
+    if (index % 3 === 0) {
+      acc.push(resDataArr.slice(index, index + 3));
+    }
+    return acc;
+  }, []);
+  const data = resData
     .filter((item) => item[2] === 'Активный')
     .map((item) => item[1])
     .sort();
@@ -375,14 +404,27 @@ function getClients(func, type) {
 }
 
 function getWarehouses(func, type) {
-  const wsData = SpreadsheetApp.openById(ssIDAdmin).getSheetByName(ssNameUsers);
-  const getLastRow = wsData
-    .getRange(1, 1)
-    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
-    .getRow();
-  const data = wsData
-    .getRange(2, 1, getLastRow - 1, 6)
-    .getValues()
+  const options = {
+    ssID: ssIDAdmin,
+    sheet: ssNameUsers,
+  };
+  const token = ScriptApp.getOAuthToken();
+  const params = {
+    method: 'post',
+    headers: { Authorization: 'Bearer ' + token },
+    payload: JSON.stringify(options),
+    contentType: 'application/json',
+    muteHttpExceptions: true,
+  };
+  const res = UrlFetchApp.fetch(urlGetDataScript, params);
+  const resDataArr = res.getContentText().split(',');
+  const resData = resDataArr.reduce((acc, _, index) => {
+    if (index % 6 === 0) {
+      acc.push(resDataArr.slice(index, index + 6));
+    }
+    return acc;
+  }, []);
+  const data = resData
     .filter((item) => item[5] === 'Активный')
     .map((item) => item[0])
     .sort();
@@ -419,6 +461,26 @@ function getZIPonWarehouses(func, type) {
   return { result: 'success', func, data, type };
 }
 
+function getZIPForPrint(func, type) {
+  const wsData =
+    SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameDataZIP);
+  const getLastRow = wsData
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
+    .getRow();
+  const getLastColumn = wsData
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.NEXT)
+    .getColumn();
+  const today = getTodayDDMMYYY();
+  const data = wsData
+    .getRange(2, 1, getLastRow - 1, getLastColumn)
+    .getValues()
+    .filter((item) => item[8].includes(today))
+    .sort();
+  return { result: 'success', func, data, type };
+}
+
 function getPodmenaonWarehouses(func, type) {
   const wsData =
     SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameDataPodmena);
@@ -429,6 +491,26 @@ function getPodmenaonWarehouses(func, type) {
   const data = wsData
     .getRange(2, 1, getLastRow - 1, 4)
     .getValues()
+    .sort();
+  return { result: 'success', func, data, type };
+}
+
+function getPodmenaForPrint(func, type) {
+  const wsData =
+    SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameDataPodmena);
+  const getLastRow = wsData
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
+    .getRow();
+  const getLastColumn = wsData
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.NEXT)
+    .getColumn();
+  const today = getTodayDDMMYYY();
+  const data = wsData
+    .getRange(2, 1, getLastRow - 1, getLastColumn)
+    .getValues()
+    .filter((item) => item[7].includes(today))
     .sort();
   return { result: 'success', func, data, type };
 }
@@ -448,6 +530,32 @@ function getPodmena(func, type) {
     .map((item) => [item[0], item[1]])
     .sort();
   return { result: 'success', func, data, type };
+}
+
+function getActNumber(func, type) {
+  const wsData =
+    SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameData);
+  const data = wsData.getRange(1, 2).getValue();
+  return { result: 'success', func, data, type };
+}
+
+function addToAct(func, actNumber) {
+  const options = {
+    log: false,
+    ssID: ssIDWarehouse,
+    ssSheet: ssNameData,
+    startRow: 1,
+    startColumn: 2,
+    rows: 1,
+    columns: 1,
+    data: [[actNumber]],
+  };
+
+  const res = writeToSheet(options);
+  if (res === 200) {
+    return { result: 'success', func };
+  }
+  return { result: 'error', func };
 }
 
 function writeToDrive(optionsUpload) {
@@ -487,4 +595,15 @@ function getToday() {
   const min =
     today.getMinutes() < 10 ? `0${today.getMinutes()}` : today.getMinutes();
   return `${dd}.${mm}.${yyyy} ${hh}:${min}`;
+}
+
+function getTodayDDMMYYY() {
+  const today = new Date();
+  const dd = today.getDate() < 10 ? `0${today.getDate()}` : today.getDate();
+  const mm =
+    today.getMonth() + 1 < 10
+      ? `0${today.getMonth() + 1}`
+      : today.getMonth() + 1;
+  const yyyy = today.getFullYear();
+  return `${dd}.${mm}.${yyyy}`;
 }

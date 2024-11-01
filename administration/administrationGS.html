@@ -240,7 +240,7 @@
       align-items: center;
       justify-content: flex-start;
       flex-direction: column;
-      overflow-y: scroll;
+      overflow-y: overlay;
     }
 
     .titleBar {
@@ -251,6 +251,13 @@
       align-items: center;
       justify-content: center;
       font-size: 18px;
+    }
+
+    .closeForm{
+      position: absolute;
+      right: 10px;
+      top: 7px;
+      cursor: pointer
     }
 
     .inputContainer, .inputContainerFile {
@@ -591,6 +598,7 @@
     </div>
     <form class="newСlassifierContainer">
       <div class="titleBar">Ввод нового классификатора</div>
+      <div class="closeForm" onclick="cancelContainer('.newСlassifierContainer')">&#x2716;</div>
       <div class="inputsContainer">
         <div class="inputContainer first">
         <label class="inputLabel" for="nClsf1">Введите наименование классификатора*</label>
@@ -609,6 +617,7 @@
     </form>
     <form class="newModelContainer">
       <div class="titleBar">Ввод новой модели</div>
+      <div class="closeForm" onclick="cancelContainer('.newModelContainer')">&#x2716;</div>
       <div class="inputsContainer">
         <div class="inputContainer first">
           <label class="inputLabel" for="nMdl1">Введите новую модель*</label>
@@ -636,6 +645,7 @@
     </form>
     <form class="newZIPContainer">
       <div class="titleBar">Ввод новой запчасти</div>
+      <div class="closeForm" onclick="cancelContainer('.newZIPContainer')">&#x2716;</div>
       <div class="inputsContainer">
         <div class="inputContainer first">
           <label class="inputLabel" for="nZIP1">Введите наименование запчасти*</label>
@@ -675,6 +685,7 @@
     </form>
     <form class="newPodmenaContainer">
       <div class="titleBar">Ввод новой подмены</div>
+      <div class="closeForm" onclick="cancelContainer('.newPodmenaContainer')">&#x2716;</div>
       <div class="inputsContainer">
         <div class="inputContainer first">
           <label class="inputLabel" for="nPdm1">Введите наименование подмены*</label>
@@ -704,6 +715,7 @@
     </form>
     <form class="newEmployeeContainer">
       <div class="titleBar">Ввод нового сотрудника</div>
+      <div class="closeForm" onclick="cancelContainer('.newEmployeeContainer')">&#x2716;</div>
       <div class="inputsContainer">
         <div class="inputContainer first">
           <label class="inputLabel" for="nEmp1">Введите Фамилию и инициалы*</label>
@@ -758,6 +770,7 @@
     </form>
     <form class="newPostContainer">
       <div class="titleBar">Ввод новой должности</div>
+      <div class="closeForm" onclick="cancelContainer('.newPostContainer')">&#x2716;</div>
       <div class="inputsContainer">
         <div class="inputContainer first">
           <label class="inputLabel" for="nPst1">Введите наименование должности*</label>
@@ -776,6 +789,7 @@
     </form>
     <form class="newRoleContainer">
       <div class="titleBar">Ввод новой роли</div>
+      <div class="closeForm" onclick="cancelContainer('.newRoleContainer')">&#x2716;</div>
       <div class="inputsContainer">
         <div class="inputContainer first">
           <label class="inputLabel" for="nRol1">Введите наименование роли*</label>
@@ -794,6 +808,7 @@
     </form>
     <form class="newClientContainer">
       <div class="titleBar">Ввод нового клиента</div>
+      <div class="closeForm" onclick="cancelContainer('.newClientContainer')">&#x2716;</div>
       <div class="inputsContainer">
         <div class="inputContainer first">
           <label class="inputLabel" for="nCli1">Введите юр. наименование клиента*</label>
@@ -820,6 +835,7 @@
     </form>
     <form class="newObjectContainer">
       <div class="titleBar">Ввод нового объекта</div>
+      <div class="closeForm" onclick="cancelContainer('.newObjectContainer')">&#x2716;</div>
       <div class="inputsContainer">
         <div class="inputContainer first">
           <label class="inputLabel" for="nObj1">Введите наименование нового объекта*</label>
@@ -890,6 +906,7 @@
     </form>
     <form class="newRegionContainer">
       <div class="titleBar">Ввод нового региона</div>
+      <div class="closeForm" onclick="cancelContainer('.newRegionContainer')">&#x2716;</div>
       <div class="inputsContainer">
         <div class="inputContainer first">
           <label class="inputLabel" for="nReg1">Введите новый регион*</label>
@@ -1169,7 +1186,7 @@
         inputPopover.classList.remove('inputPopover')
         popover.remove();
         const inputsContainer = inputPopover.closest('.inputsContainer')
-        inputsContainer.style.overflowY = 'scroll'
+        inputsContainer.style.overflowY = 'overlay'
       }
       if (popover.contains(e.target) && e.srcElement.tagName === 'LI') {
         const inputPopover = document.querySelector('.inputPopover')
@@ -1190,7 +1207,7 @@
           container.insertAdjacentHTML('beforeend', svgCrossDropdown)
         }
         const inputsContainer = inputPopover.closest('.inputsContainer')
-        inputsContainer.style.overflowY = 'scroll'
+        inputsContainer.style.overflowY = 'overlay'
       }
     }
   })
@@ -1247,7 +1264,7 @@
           container.insertAdjacentHTML('beforeend', svgCrossDropdown)
         }
         const inputsContainer = inputPopover.closest('.inputsContainer')
-        inputsContainer.style.overflowY = 'scroll'
+        inputsContainer.style.overflowY = 'overlay'
       }
     }
   })
