@@ -604,6 +604,35 @@ function getWarehouses(func, type) {
   return { result: 'success', func, data, type };
 }
 
+function getWarehouseforReport(func, type, option) {
+  const wsDataZIP =
+    SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameDataZIP);
+  const getLastRowZIP = wsDataZIP
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
+    .getRow();
+  const dataZIP = wsDataZIP
+    .getRange(2, 1, getLastRowZIP - 1, 5)
+    .getValues()
+    .filter((item) => item[4] === option.item)
+    .map((item) => item[0])
+    .sort();
+  const wsDataPodmena =
+    SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameDataPodmena);
+  const getLastRowPodmena = wsDataPodmena
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
+    .getRow();
+  const dataPodmena = wsDataPodmena
+    .getRange(2, 1, getLastRowPodmena - 1, 4)
+    .getValues()
+    .filter((item) => item[3] === option.item)
+    .map((item) => item[0])
+    .sort();
+  const data = [...dataZIP, ...dataPodmena];
+  return { result: 'success', func, data, type, option };
+}
+
 function getZIP(func, type) {
   const wsData =
     SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameClassifierZIP);
@@ -634,6 +663,22 @@ function getZIPonWarehouses(func, type) {
   return { result: 'success', func, data, type };
 }
 
+function getZIPName(func, type) {
+  const wsData =
+    SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameClassifierZIP);
+  const getLastRow = wsData
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
+    .getRow();
+  const data = wsData
+    .getRange(2, 1, getLastRow - 1, 4)
+    .getValues()
+    .filter((item) => item[3] === 'Активный')
+    .map((item) => [item[0]])
+    .sort();
+  return { result: 'success', func, data, type };
+}
+
 function getZIPForPrint(func, type) {
   const wsData =
     SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameDataZIP);
@@ -652,6 +697,23 @@ function getZIPForPrint(func, type) {
     .filter((item) => item[8].includes(today))
     .sort();
   return { result: 'success', func, data, type };
+}
+
+function getZIPforReport(func, type, option) {
+  const wsData =
+    SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameDataZIP);
+  const getLastRow = wsData
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
+    .getRow();
+  const warehouses = getWarehouses().data;
+  const data = wsData
+    .getRange(2, 1, getLastRow - 1, 5)
+    .getValues()
+    .filter((item) => item[0] === option.item && warehouses.includes(item[4]))
+    .map((item) => item[4])
+    .sort();
+  return { result: 'success', func, data, type, option };
 }
 
 function getPodmenaonWarehouses(func, type) {
@@ -688,6 +750,23 @@ function getPodmenaForPrint(func, type) {
   return { result: 'success', func, data, type };
 }
 
+function getPodmenaforReport(func, type, option) {
+  const wsData =
+    SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(ssNameDataPodmena);
+  const getLastRow = wsData
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
+    .getRow();
+  const warehouses = getWarehouses().data;
+  const data = wsData
+    .getRange(2, 1, getLastRow - 1, 4)
+    .getValues()
+    .filter((item) => item[0] === option.item && warehouses.includes(item[3]))
+    .map((item) => item[3])
+    .sort();
+  return { result: 'success', func, data, type, option };
+}
+
 function getPodmena(func, type) {
   const wsData = SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(
     ssNameClassifierPodmena
@@ -701,6 +780,23 @@ function getPodmena(func, type) {
     .getValues()
     .filter((item) => item[2] === 'Активный')
     .map((item) => [item[0], item[1]])
+    .sort();
+  return { result: 'success', func, data, type };
+}
+
+function getPodmenaName(func, type) {
+  const wsData = SpreadsheetApp.openById(ssIDWarehouse).getSheetByName(
+    ssNameClassifierPodmena
+  );
+  const getLastRow = wsData
+    .getRange(1, 1)
+    .getNextDataCell(SpreadsheetApp.Direction.DOWN)
+    .getRow();
+  const data = wsData
+    .getRange(2, 1, getLastRow - 1, 3)
+    .getValues()
+    .filter((item) => item[2] === 'Активный')
+    .map((item) => [item[0]])
     .sort();
   return { result: 'success', func, data, type };
 }

@@ -72,7 +72,7 @@
 
     .loader {
       display: block;
-      margin: 20% auto;
+      margin: 30% auto;
       border-top: 7px solid #34db80;
       border-radius: 50%;
       width: 60px;
@@ -224,7 +224,10 @@
     .newWriteOffPodmenaContainer,
     .PrintZIPContainer,
     .PrintPodmenaContainer,
-    .PrintAllContainer {
+    .PrintAllContainer,
+    .dataZIPContainer,
+    .dataPodmenaContainer,
+    .dataWarehouseContainer {
       display: none;
       justify-content: flex-start;
       flex-direction: column;
@@ -556,6 +559,52 @@
       z-index: -1;
     }
 
+    #dataZIP, 
+    #dataPodmena,
+    #dataWarehouse {
+      width: 100%
+    }
+
+    .dataForm, .printStyleReport {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+    }
+
+    .printStyleReport {
+      width: 120vH;
+      margin-top: 110px;
+    }
+
+    .dataForm td, .printStyleReport td{
+      padding: 5px 10px;
+      border: 1px solid #000;
+      text-align: left;
+      font-weight: normal;
+      font-size: 13px;
+    }
+
+    .dataForm th,  .printStyleReport th {
+      padding: 5px 10px;
+      border: 1px solid #000;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .dataForm th:nth-child(2), .printStyleReport th:nth-child(2) {
+      width: 85px
+    }
+
+    .dataForm td:nth-child(even), .printStyleReport  td:nth-child(even){
+      text-align: center;
+    }
+
+    .dataForm table, .printStyleReport table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 90%
+    }
+
     @media screen and (max-width: 800px) {
       button {
         width: 150px;
@@ -575,7 +624,10 @@
       .newWriteOffPodmenaContainer,
       .PrintZIPContainer,
       .PrintPodmenaContainer,
-      .PrintAllContainer {
+      .PrintAllContainer,
+      .dataZIPContainer,
+      .dataPodmenaContainer,
+      .dataWarehouseContainer {
         width: 320px;
         max-height: 600px;
       }
@@ -665,7 +717,10 @@
       .newWriteOffPodmenaContainer,
       .PrintZIPContainer,
       .PrintPodmenaContainer,
-      .PrintAllContainer {
+      .PrintAllContainer,
+      .dataZIPContainer,
+      .dataPodmenaContainer,
+      .dataWarehouseContainer {
         width: 280px;
         max-height: 570px;
       }
@@ -735,10 +790,11 @@
           <button id="btnCreateDocumentZip" type="button" onclick="createDocumentZIP()">Печать перемещение ЗИП</button>
           <button id="btnCreateDocumentPodmena" type="button" onclick="createDocumentPodmena()">Печать перемещение подмены</button>
           <hr size=1>
+          <button id="btnCollation" type="button" onclick="createDocumentAll()">Сверка по складам</button>
+          <hr size=1>
           <button id="btnZIPReport" type="button" onclick="reportZIP()">Данные по ЗИП</button>
           <button id="btnPodmenaReport" type="button" onclick="reportPodmena()">Данные по подмене</button>
-          <hr size=1>
-          <button id="btnCollation" type="button" onclick="createDocumentAll()">Сверка по складам</button>
+          <button id="btnWarehouseReport" type="button" onclick="reportWarehouse()">Данные по складам</button>
         </div>
       </div>
     </div>
@@ -1285,6 +1341,78 @@
         </div>
       </div>
     </form>
+    <form class="dataZIPContainer">
+      <div class="titleBar">Данные по ЗИП</div>
+      <div class="closeForm" onclick="cancelContainer('.dataZIPContainer')">&#x2716;</div>
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nDzC1">Выберите ЗИП*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nDzC1" name="nDzC1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listZip')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listZip')"
+              onclick="changeInputClickDropDown(this, 'listZip', event.key)"
+              onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div id="dataZIP"></div>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" class="btnReport btnZIPReport" type="button" style="display: none;"
+          onclick="printReport(this)">Распечатать</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.dataZIPContainer')">Выйти</button>
+        </div>
+      </div>
+    </form>
+    <form class="dataPodmenaContainer">
+      <div class="titleBar">Данные по подмене</div>
+      <div class="closeForm" onclick="cancelContainer('.dataPodmenaContainer')">&#x2716;</div>
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nDpC1">Выберите подмену*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nDpC1" name="nDpC1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listPodmena')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listPodmena')"
+              onclick="changeInputClickDropDown(this, 'listPodmena', event.key)"
+              onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div id="dataPodmena"></div>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" class="btnReport btnPodmenaReport" type="button" style="display: none;"
+          onclick="printReport(this)">Распечатать</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.dataPodmenaContainer')">Выйти</button>
+        </div>
+      </div>
+    </form>
+    <form class="dataWarehouseContainer">
+      <div class="titleBar">Данные по складам</div>
+      <div class="closeForm" onclick="cancelContainer('.dataWarehouseContainer')">&#x2716;</div>
+      <div class="inputsContainer">
+        <div class="inputContainer first">
+          <label class="inputLabel" for="nDwC1">Выберите склад*</label>
+          <div class="inputOutlinedContainer">
+            <input id="nDwC1" name="nDwC1.textRuEng" required="true" type="text" class="inputOutlined dropdown" value=""
+              autocomplete="off" oninput="changeInputDropDown(this, 'listWarehouses')"
+              onkeydown="changeInputKeyDownDropDown(event.key, this, 'listWarehouses')"
+              onclick="changeInputClickDropDown(this, 'listWarehouses', event.key)"
+              onchange="changeInputDropDownCross(this)">
+          </div>
+          <span class="inputError"></span>
+        </div>
+        <div id="dataWarehouse"></div>
+        <span class="inputsWarning"></span>
+        <div class="btnSubmitContainer">
+          <button id="btnSubmit" class="btnReport btnWarehouseReport" type="button" style="display: none;"
+          onclick="printReport(this)">Распечатать</button>
+          <button id="btnCancel" type="button" onclick="cancelContainer('.dataWarehouseContainer')">Выйти</button>
+        </div>
+      </div>
+    </form>
   </div>
   <div id="printContent"></div>
 </body>
@@ -1318,6 +1446,8 @@
     prepareListZIP: [],
     prepareListPodmena: [],
     prepareListObject: [],
+    reportData: [],
+    reportHTML: '',
     count: 0,
     fullLoad: 0,
     actNumber: 13,
@@ -1338,6 +1468,7 @@
     list.prepareListZIP = [],
     list.prepareListPodmena = [],
     list.prepareListObject = [],
+    list.reportData = [],
     list.count = 0,
     list.fullLoad = 0
   }
@@ -1346,7 +1477,8 @@
     result,
     func,
     data,
-    type
+    type,
+    option
   }) {
     if (func === 'checkAccess') {
       if (data.includes('Admin') || data.includes('Warehouse')) {
@@ -1591,6 +1723,38 @@
         list.fullLoad = 0
         list.count = 0
       }
+    }
+    if (func === 'getDataListForReportZip') {
+      list[type] = data
+      list.count++
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.dataZIPContainer').style.display = "flex";
+        list.fullLoad = 0
+        list.count = 0
+      }
+    }
+    if (func === 'getDataListForReportPodmena') {
+      list[type] = data
+      list.count++
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.dataPodmenaContainer').style.display = "flex";
+        list.fullLoad = 0
+        list.count = 0
+      }
+    }
+    if (func === 'getDataListForReportWarehouse') {
+      list[type] = data
+      list.count++
+      if (list.count >= list.fullLoad) {
+        document.querySelector('.dataWarehouseContainer').style.display = "flex";
+        list.fullLoad = 0
+        list.count = 0
+      }
+    }
+    if (func === 'gedDataforReport'){
+      list[type] = data
+      createData(option.item, option.label)
+      document.querySelector('.back').style.zIndex = 13;
     }
  }
 
@@ -2022,6 +2186,112 @@
     //   .getWarehouses('getDataListForPrintPodmena','listWarehouses')
   }
 
+  function reportZIP(){
+    zeroingList()
+    document.querySelector('.back').style.display = "block";
+    const isDataForm = document.querySelector('.dataForm')
+    if (isDataForm) {
+      isDataForm.remove()
+    }
+    list.fullLoad = 1
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForReportZip',
+      data: [['ФН-1.2_Х5'], ['Термоголовка для весов DP, 30303022'], ['Кабель питания принтера для весов ']],
+      type: 'listZip'
+    })
+  }
+
+  function reportPodmena(){
+    zeroingList()
+    document.querySelector('.back').style.display = "block";
+    const isDataForm = document.querySelector('.dataForm')
+    if (isDataForm) {
+      isDataForm.remove()
+    }
+    list.fullLoad = 1
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForReportPodmena',
+      data: [['ФН-1.2_Х5'], ['Термоголовка для весов DP, 30303022'], ['Кабель питания принтера для весов ']],
+      type: 'listPodmena'
+    })
+  }
+
+  function reportWarehouse(){
+    zeroingList()
+    document.querySelector('.back').style.display = "block";
+    const isDataForm = document.querySelector('.dataForm')
+    if (isDataForm) {
+      isDataForm.remove()
+    }
+    list.fullLoad = 1
+    onSuccess({
+      result: 'success',
+      func: 'getDataListForReportWarehouse',
+      data: [['Офис СБИ'],
+      ['Офис СБИ'],
+      ['Гасанов Х.Н.'],
+      ['Офис СБИ'],
+      ['Перекресток'],
+      ['Перекресток'],
+      ['Гасанов Х.Н.'],
+      ['Офис СБИ'],
+      ['Офис СБИ']],
+      type: 'listWarehouses'
+    })
+  }
+
+  function gedDataforReport(item, label){
+    document.querySelector('.back').style.zIndex = 88;
+    const isDataForm = document.querySelector('.dataForm')
+    if (isDataForm) {
+      isDataForm.remove()
+    }
+    if (label === 'ЗИП'){
+      onSuccess({
+        result: 'success',
+        func: 'gedDataforReport',
+        data: [['Офис СБИ'],
+              ['Офис СБИ'],
+              ['Гасанов Х.Н.'],
+              ['Гасанов Х.Н.'],
+              ['Офис СБИ'],
+              ['Офис СБИ']],
+        type: 'reportData',
+        option: {item, label}
+      })
+    }
+    if (label === 'Подмена'){
+      onSuccess({
+        result: 'success',
+        func: 'gedDataforReport',
+        data: [['Офис СБИ'],
+              ['Офис СБИ'],
+              ['Гасанов Х.Н.'],
+              ['Офис СБИ'],
+              ['Офис СБИ'],
+              ['Офис СБИ']],
+        type: 'reportData',
+        option: {item, label}
+      })
+    }
+    if (label === 'Склад'){
+      onSuccess({
+        result: 'success',
+        func: 'gedDataforReport',
+        data: [['Офис СБИ'],
+              ['Гасанов Х.Н.'],
+              ['Гасанов Х.Н.'],
+              ['Гасанов Х.Н.'],
+              ['Гасанов Х.Н.'],
+              ['Офис СБИ']],
+        type: 'reportData',
+        option: {item, label}
+      })
+    }
+  }
+
   document.addEventListener('mouseup', function (e) {
     const popover = document.querySelector('.popover')
     const inputClasses = e.target.classList
@@ -2153,6 +2423,15 @@
           list['listZIP'] = list.prepareListZIP.filter(value => value[4] === e.target.innerText)
           list['listPodmena'] = list.prepareListPodmena.filter(value => value[3] === e.target.innerText)
         }
+        if (inputPopover.name.includes('nDzC1')) {
+          gedDataforReport(e.target.innerText, 'ЗИП')
+        }
+        if (inputPopover.name.includes('nDpC1')) {
+          gedDataforReport(e.target.innerText, 'Подмена')
+        }
+        if (inputPopover.name.includes('nDwC1')) {
+          gedDataforReport(e.target.innerText, 'Склад')
+        }
         if (inputPopover.classList.contains('textareaOutlined')){
           const li = e.target
           if (inputPopover.value.includes(li.innerText)) {
@@ -2232,15 +2511,14 @@
         const option = document.querySelectorAll('[role="popover_option"]')[popoverKeyActive < 0 ? 0 :
           popoverKeyActive].innerText
         inputPopover.value = option
-        if (inputPopover.name.includes('nArr2')) {
+        if (inputPopover.name.includes('nArZ2')) {
           list['listModel'] = list.prepareListModel.filter(value => value[1] === option).map(value =>
             value[0])
-          document.getElementById('nZIP3').value = ''
+          document.getElementById('nArZ3').value = ''
         }
         if (inputPopover.name.includes('nArZ3')) {
           const classifier = document.getElementById('nArZ2').value
-          list['listZIP'] = list.prepareListZIP.filter(value => value[1] === classifier && value[2] === e.target
-            .innerText).map(value =>
+          list['listZIP'] = list.prepareListZIP.filter(value => value[1] === classifier && value[2] === option).map(value =>
             value[0])
           document.getElementById('nArZ4').value = ''
         }
@@ -2249,6 +2527,121 @@
             value =>
             value[0])
           document.getElementById('nArP3').value = ''
+        }
+        if (inputPopover.name.includes('nMvZ1')) {
+          list['listSortZIP'] = list.prepareListZIP.filter(value => value[4] === option)
+          list['listZIP'] = [... new Set(list['listSortZIP'].map(value => value[0]))]
+          document.getElementById('nMvZ2').value = ''
+          document.getElementById('nMvZ4').value = ''
+        }
+        if (inputPopover.name.includes('nMvZ2')) {
+          const checkedZIP = list['listSortZIP'].filter(value => value[0] === option)
+          const countZIP = checkedZIP.length
+          const input = document.getElementById('nMvZ3')
+          input.max = countZIP
+          const inputSerial = document.getElementById('nMvZ4')
+          inputSerial.value = ''
+          const label = input.parentNode.previousElementSibling
+          label.innerText = `Укажите количество* (всего на складе - ${countZIP})`
+          list['listSerial'] = checkedZIP.filter(value => value[3]).map(value => value[3])
+          if (list['listSerial'].length){
+            input.disabled = true
+            input.classList.add('disabled')
+            inputSerial.required = true
+            inputSerial.name = 'nMvZ4.textLightValidation'
+          } else {
+            if (input.classList.contains('disabled')){
+              input.disabled = false
+              input.classList.remove('disabled')
+              inputSerial.required = false
+              inputSerial.name = 'nMvZ4.textNoValidRequired'
+            }
+          }
+          document.getElementById('nArP3').value = ''
+        }
+        if (inputPopover.name.includes('nMvP1')) {
+          list['listSortPodmena'] = list.prepareListPodmena.filter(value => value[3] === option)
+          list['listPodmena'] = [... new Set(list['listSortPodmena'].map(value => value[0]))]
+          document.getElementById('nMvP2').value = ''
+          document.getElementById('nMvP3').value = ''
+        }
+        if (inputPopover.name.includes('nMvP2')) {
+          list['listSerial'] = list.listSortPodmena.filter(value => value[0] === option).map(value => value[2])
+          document.getElementById('nMvP3').value = ''
+        }
+        if (inputPopover.name.includes('nWoZ1')) {
+          list['listSortZIP'] = list.prepareListZIP.filter(value => value[4] === option)
+          list['listZIP'] = [... new Set(list['listSortZIP'].map(value => value[0]))]
+          document.getElementById('nWoZ2').value = ''
+          document.getElementById('nWoZ4').value = ''
+        }
+        if (inputPopover.name.includes('nWoZ2')) {
+          const checkedZIP = list['listSortZIP'].filter(value => value[0] === option)
+          const countZIP = checkedZIP.length
+          const input = document.getElementById('nWoZ3')
+          input.max = countZIP
+          const inputSerial = document.getElementById('nWoZ4')
+          inputSerial.value = ''
+          const label = input.parentNode.previousElementSibling
+          label.innerText = `Укажите количество* (всего на складе - ${countZIP})`
+          list['listSerial'] = checkedZIP.filter(value => value[3]).map(value => value[3])
+          if (list['listSerial'].length){
+            input.disabled = true
+            input.classList.add('disabled')
+            inputSerial.required = true
+            inputSerial.name = 'nWoZ4.textLightValidation'
+          } else {
+            if (input.classList.contains('disabled')){
+              input.disabled = false
+              input.classList.remove('disabled')
+              inputSerial.required = false
+              inputSerial.name = 'nWoZ4.textNoValidRequired'
+            }
+          }
+          document.getElementById('nWoZ4').value = ''
+        }
+        if (inputPopover.name.includes('nWoZ5')) {
+          list['listObject'] = list.prepareListObject.filter(value => value[0] === option).map(value => value[1])
+           document.getElementById('nWoZ6').value = ''
+        }
+        if (inputPopover.name.includes('nWoP1')) {
+          list['listSortPodmena'] = list.prepareListPodmena.filter(value => value[3] === option)
+          list['listPodmena'] = [... new Set(list['listSortPodmena'].map(value => value[0]))]
+          document.getElementById('nWoP2').value = ''
+          document.getElementById('nWoP3').value = ''
+        }
+        if (inputPopover.name.includes('nWoP2')) {
+          list['listSerial'] = list.listSortPodmena.filter(value => value[0] === option).map(value => value[2])
+          document.getElementById('nWoP3').value = ''
+        }
+        if (inputPopover.name.includes('nWoP4')) {
+          list['listObject'] = list.prepareListObject.filter(value => value[0] === option).map(value => value[1])
+           document.getElementById('nWoP5').value = ''
+        }
+        if (inputPopover.name.includes('nPrZ1')) {
+          e.preventDefault()
+          list['listZIP'] = list.prepareListZIP.filter(value => value[4] === option)
+        }
+        if (inputPopover.name.includes('nPrP1')) {
+          e.preventDefault()
+          list['listPodmena'] = list.prepareListPodmena.filter(value => value[3] === option)
+        }
+        if (inputPopover.name.includes('nPrA1')) {
+          e.preventDefault()
+          list['listZIP'] = list.prepareListZIP.filter(value => value[4] === option)
+          list['listPodmena'] = list.prepareListPodmena.filter(value => value[3] === option)
+        }
+        if (inputPopover.name.includes('nDzC1')) {
+          e.preventDefault()
+          gedDataforReport(option, 'ЗИП')
+        }
+        if (inputPopover.name.includes('nDpC1')) {
+          e.preventDefault()
+          gedDataforReport(option, 'Подмена')
+        }
+        if (inputPopover.name.includes('nDwC1')) {
+          e.preventDefault()
+          gedDataforReport(option, 'Склад')
         }
         inputPopover.classList.remove('inputPopover')
         const popover = document.querySelector('.popover')
@@ -2462,6 +2855,7 @@
     const allInputError = form.querySelectorAll('.inputError')
     Array.from(allInputError).map(item => item.textContent = '')
     form.querySelector('.inputsWarning').textContent = ''
+    form.querySelector('.btnReport').style.display = 'none'
   }
 
   async function handleNewContainer(container) {
@@ -2858,6 +3252,60 @@
     window.print();
     printform.remove()
     list.actNumber++
+  }
+
+  function createData(item, label){
+    const data = list.reportData.reduce((cnt, cur) => (cnt[cur] = cnt[cur] + 1 || 1, cnt), {});
+    let table = ''
+    for (var key of Object.keys(data)) {
+      table += `<tr><td>${key}</td><td>${data[key]}</td></tr>`
+    }
+    list.reportHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>${item}</th>
+            <th>Количество</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${table}
+      </table>
+    ` 
+    const dataForm = document.createElement('div');
+    dataForm.classList.add('dataForm');
+    dataForm.insertAdjacentHTML('afterbegin', list.reportHTML)
+    if (label === 'ЗИП'){
+      const dataElement = document.getElementById('dataZIP')
+      dataElement.appendChild(dataForm)
+      document.querySelector('.btnZIPReport').style.display = 'block'
+    }
+    if (label === 'Подмена'){
+      const dataElement = document.getElementById('dataPodmena')
+      dataElement.appendChild(dataForm)
+      document.querySelector('.btnPodmenaReport').style.display = 'block'
+    }
+    if (label === 'Склад'){
+      const dataElement = document.getElementById('dataWarehouse')
+      dataElement.appendChild(dataForm)
+      document.querySelector('.btnWarehouseReport').style.display = 'block'
+    }
+  }
+
+  function printReport(element){
+    document.querySelector('.back').style.zIndex = 13;
+    document.querySelector('.back').style.display = "none";
+
+    const printform = document.createElement('div');
+    printform.classList.add('printContainer');
+    printform.classList.add('printStyleReport');
+    printform.insertAdjacentHTML('afterbegin', list.reportHTML)
+
+    const printElement = document.getElementById('printContent')
+    printElement.appendChild(printform)
+    window.print();
+    document.querySelector('.back').style.display = "block";
+    printElement.replaceChildren()
   }
 
   function getTodayDDMMYYY(){
