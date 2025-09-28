@@ -12,4 +12,17 @@
   :heavy_check_mark: Печать перемещений, остатков по складам.    
   :heavy_check_mark: Получение отчётов по складам, сверка.   
 
-![Warehouse](https://github.com/LapEv/WarehouseGAS/blob/main/img/clients.png)
+![Warehouse](https://github.com/LapEv/WarehouseGAS/blob/main/warehouse.png)    
+![newArrival](https://github.com/LapEv/WarehouseGAS/blob/main/newArrival.png)  
+![PrintnewArrival](https://github.com/LapEv/WarehouseGAS/blob/main/printnewArrival.png)  
+![data](https://github.com/LapEv/WarehouseGAS/blob/main/data.png)  
+![table](https://github.com/LapEv/WarehouseGAS/blob/main/table.png)  
+
+## Автор
+
+**Евгений Лапкин**
+
+- GitHub: [@LapEv](https://github.com/LapEv)
+- Email: e_lap@mail.ru
+- Telegram: [@LapEv](https://t.me/LapEv)
+
