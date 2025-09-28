@@ -1,7 +1,10 @@
 ## WarehouseGAS 
 
 Проект создан для учёта материальных ценностей (запасных частей и подменного фонда), которые устанавливаются на объектах заказчика.    
-Сам проект реализован с помощью google apps script через развертывание веб-приложения, которое потом вставляется на гугл сайт и далее привязывается к домену.     
+Сам проект реализован с помощью google apps script через развертывание веб-приложения, которое потом вставляется на гугл сайт и далее привязывается к домену.    
+За базу данных отвечают гугл таблицы:     
+ :heavy_check_mark: [Склад](https://docs.google.com/spreadsheets/d/1QHenRbqyifedRX-XN4uLMOnOiBFm5XYMzzjuksL2yyQ)
+ :heavy_check_mark: [Админ](https://docs.google.com/spreadsheets/d/11x7Mh-OCuuC1WOC26WEDoVdx5jpZqTCCQyEvJks1OrQ)
 
 ### Стек технологий
 `Javascript`, `HTML`, `CSS`
